@@ -1,4 +1,4 @@
-r-appveyor
+R+AppVeyor
 ==========
 
 This is a solution for continuous integration for R projects on Windows.
