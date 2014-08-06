@@ -34,7 +34,7 @@ Function Bootstrap {
 }
 
 Function ThrowNastyError {
-  TryToExecuteACmdletThatSurelyDoesNotExist
+  Get-Content
 }
 
 Function Run_Tests {
