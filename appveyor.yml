@@ -1,2 +1,9 @@
+# Download script file from GitHub
+init:
+  - ps: date
+  - ps: Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+  - ps: Import-Module '..\appveyor-tool.ps1'
+  - ps: date
+
 build_script:
   - ps: date
