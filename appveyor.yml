@@ -9,4 +9,5 @@ install:
   - ps: Bootstrap
 
 build_script:
-  - ps: date
+  - ps: cd fakepackage
+  - ps: Run_Tests
