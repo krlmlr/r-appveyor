@@ -1,9 +1,5 @@
 # Download script file from GitHub
 init:
-  - cmd: reg query "HKLM"
-  - cmd: reg query "HKLM\SYSTEM"
-  - cmd: reg query "HKLM\SYSTEM\CurrentControlSet"
-  - cmd: reg query "HKLM\SYSTEM\CurrentControlSet\Control"
   - cmd: reg query "HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation"
   - cmd: reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones"
   - ps: date
