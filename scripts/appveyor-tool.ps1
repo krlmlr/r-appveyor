@@ -15,6 +15,8 @@ Function Bootstrap {
   ..\Rtools-current.exe /verysilent "/log=..\Rtools.log" | Out-Null
   Get-Content "..\Rtools.log" -Tail 10
   date
+  Invoke-Expression 'R.exe -e "sessionInfo()" 2>&1 | %{ "$_" }'
+  date
 }
 
 Function Run_Tests {
