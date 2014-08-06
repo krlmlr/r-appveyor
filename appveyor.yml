@@ -10,4 +10,4 @@ install:
 
 build_script:
   - ps: cd fakepackage
-  - ps: Run_Tests
+  - ps: Run_Tests -ErrorAction Stop
