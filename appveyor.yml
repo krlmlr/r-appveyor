@@ -1,3 +1,6 @@
+init:
+  - ps: date
+
 install:
   - ps: Import-Module 'scripts\appveyor-tool.ps1'
   - ps: date
