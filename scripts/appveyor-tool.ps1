@@ -33,6 +33,10 @@ Function Bootstrap {
   date
 }
 
+Function ThrowNastyError {
+  TryToExecuteACmdletThatSurelyDoesNotExist
+}
+
 Function Run_Tests {
   date
   $R_BUILD_ARGS = "--no-build-vignettes", "--no-manual"
