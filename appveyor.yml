@@ -5,6 +5,7 @@ init:
   - cmd: reg query "HKLM\SYSTEM\CurrentControlSet"
   - cmd: reg query "HKLM\SYSTEM\CurrentControlSet\Control"
   - cmd: reg query "HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation"
+  - cmd: reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones"
   - ps: date
   - ps: Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
   - ps: Import-Module '..\appveyor-tool.ps1'
