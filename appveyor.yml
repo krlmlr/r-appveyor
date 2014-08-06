@@ -4,7 +4,7 @@ init:
 install:
   - ps: ls
   - ps: ls 'scripts'
-  - ps: Import-Module 'scripts\appveyor-tool.ps1'
+  - ps: Import-Module '.\scripts\appveyor-tool.ps1'
   - ps: date
   - ps: Bootstrap
 
