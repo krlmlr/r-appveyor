@@ -3,7 +3,7 @@ init:
   - ps: ThrowNastyError
   - ps: date
   - ps: Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
-  - ps: Import-Module '..\appveyor-tool.ps1'
+  - ps: Import-Module 'scripts\appveyor-tool.ps1'
   - ps: date
 
 install:
