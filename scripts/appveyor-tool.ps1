@@ -2,7 +2,7 @@ Function Bootstrap {
   date
   $env:PATH = 'c:\Rtools\bin;c:\Rtools\MinGW\bin;c:\R\bin\i386;' + $env:PATH
   $env:PATH
-  $env:TZ = 'Europe/London'
+  $env:TZ = 'GMT Standard Time'
   $env:TZ
   Invoke-WebRequest http://cran.rstudio.com/bin/windows/base/R-3.1.1-win.exe -OutFile "..\R-current-win.exe"
   date
