@@ -1,9 +1,4 @@
 Function Bootstrap {
-  reg query "HKLM"
-  reg query "HKLM\SYSTEM"
-  reg query "HKLM\SYSTEM\CurrentControlSet"
-  reg query "HKLM\SYSTEM\CurrentControlSet\Control"
-  reg query "HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation"
   date
   $env:PATH = 'c:\Rtools\bin;c:\Rtools\MinGW\bin;c:\R\bin\i386;' + $env:PATH
   $env:PATH

@@ -1,5 +1,10 @@
 # Download script file from GitHub
 init:
+  - cmd: reg query "HKLM"
+  - cmd: reg query "HKLM\SYSTEM"
+  - cmd: reg query "HKLM\SYSTEM\CurrentControlSet"
+  - cmd: reg query "HKLM\SYSTEM\CurrentControlSet\Control"
+  - cmd: reg query "HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation"
   - ps: date
   - ps: Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
   - ps: Import-Module '..\appveyor-tool.ps1'
