@@ -1,4 +1,4 @@
-R+AppVeyor
+R+AppVeyor [![Build status](https://ci.appveyor.com/api/projects/status/xtc629xek00o5rui/branch/master)](https://ci.appveyor.com/project/krlmlr/r-appveyor/branch/master)
 ==========
 
 This is a solution for continuous integration for R projects on Windows.

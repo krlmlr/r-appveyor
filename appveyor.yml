@@ -1,13 +1,11 @@
-# Download script file from GitHub
 init:
   - cmd: reg query "HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation"
   - cmd: reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones"
   - ps: date
-  - ps: Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
-  - ps: Import-Module 'scripts\appveyor-tool.ps1'
-  - ps: date
 
 install:
+  - ps: Import-Module 'scripts\appveyor-tool.ps1'
+  - ps: date
   - ps: Bootstrap
 
 build_script:
