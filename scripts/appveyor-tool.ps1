@@ -40,6 +40,6 @@ Function Run_Tests {
   Invoke-Expression 'R.exe CMD build . $R_BUILD_ARGS 2>&1 | %{ "$_" }'
   date
   $File = $(ls "*.tar.gz" | Sort -Property LastWriteTime -Descending | Select-Object -First 1).Name
-  Exec 'R.exe CMD check $File $R_CHECK_ARGS 2>&1 | %{ "$_" }'
+  Exec R.exe CMD check $File $R_CHECK_ARGS
   date
 }
