@@ -2,8 +2,6 @@ Function Bootstrap {
   date
   $env:PATH = 'c:\Rtools\bin;c:\Rtools\MinGW\bin;c:\R\bin\i386;' + $env:PATH
   $env:PATH
-  $env:TZ = 'GMT Standard Time'
-  $env:TZ
   Invoke-WebRequest http://cran.rstudio.com/bin/windows/base/R-devel-win.exe -OutFile "..\R-current-win.exe"
   date
   ..\R-current-win.exe /verysilent /dir=c:\R "/log=..\R.log" | Out-Null
