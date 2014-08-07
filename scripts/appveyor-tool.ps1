@@ -11,7 +11,6 @@ Function Exec
     $ErrorActionPreference = "Continue"
     Invoke-Expression $Command
     $ErrorActionPreference = "Stop"
-    }
     if ($LastExitCode -ne 0) {
         throw "Exec: $ErrorMessage`nExit code: $LastExitCode"
     }
