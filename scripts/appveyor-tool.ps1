@@ -34,6 +34,8 @@ Function Bootstrap {
 }
 
 Function ThrowNastyError {
+  [CmdletBinding()]
+  Param ()
   TryToExecuteACmdletThatSurelyDoesNotExist
 }
 
