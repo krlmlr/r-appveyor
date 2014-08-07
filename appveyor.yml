@@ -4,6 +4,7 @@ init:
 install:
   - ps: Import-Module '.\scripts\appveyor-tool.ps1'
   - ps: date
+  - ps: ThrowNastyError
   - ps: ThrowNastyError -ErrorAction Stop
   - ps: Invoke-Expression 'ThrowNastyError' -ErrorAction Stop
   - ps: date
