@@ -12,4 +12,5 @@ install:
 build_script:
   ps: |
         cd fakepackage
-        Run_Tests
+        Exec { C:\MinGW\msys\1.0\bin\bash.exe $HOME\travis-tool.sh install_deps }
+        Exec { C:\MinGW\msys\1.0\bin\bash.exe $HOME\travis-tool.sh run_tests }
