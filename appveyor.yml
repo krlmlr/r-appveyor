@@ -10,8 +10,11 @@ install:
         Bootstrap
         date
         cd fakepackage
-        InstallDeps
 
 build_script:
+  ps: |
+        InstallDeps
+
+test_script:
   ps: |
         Run_Tests
