@@ -52,9 +52,9 @@ Function Run_Tests {
   date
   $R_BUILD_ARGS = "--no-build-vignettes", "--no-manual"
   $R_CHECK_ARGS = "--no-build-vignettes", "--no-manual", "--as-cran"
-  Exec R.exe CMD build . $R_BUILD_ARGS
+  Exec 'R.exe CMD build . $R_BUILD_ARGS'
   date
   $File = $(ls "*.tar.gz" | Sort -Property LastWriteTime -Descending | Select-Object -First 1).Name
-  Exec R.exe CMD check $File $R_CHECK_ARGS
+  Exec 'R.exe CMD check $File $R_CHECK_ARGS' 2>&1 | %{ "$_" }
   date
 }
