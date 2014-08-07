@@ -8,7 +8,10 @@ Function Exec
         [Parameter(Position=1, Mandatory=0)]
         [string]$ErrorMessage = "Execution of command failed.`n$Command"
     )
-    & $Command
+    & {
+        $ErrorActionPreference = "Continue"
+        $Command
+    }
     if ($LastExitCode -ne 0) {
         throw "Exec: $ErrorMessage`nExit code: $LastExitCode"
     }
