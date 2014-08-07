@@ -15,3 +15,7 @@ build_script:
 test_script:
   ps: |
         TravisTool run_tests
+
+on_failure:
+  ps: |
+        TravisTool dump_logs
