@@ -1,3 +1,5 @@
+$CRAN = "http://cran.rstudio.com"
+
 # Found at http://zduck.com/2012/powershell-batch-files-exit-codes/
 Function Exec
 {
@@ -32,7 +34,7 @@ Function Bootstrap {
 
   date
   $env:PATH = 'c:\Rtools\bin;c:\Rtools\MinGW\bin;c:\R\bin\i386;' + $env:PATH
-  $env:PATH
+  $env:PATH.Split(";")
   Invoke-WebRequest http://cran.rstudio.com/bin/windows/base/R-3.1.1-win.exe -OutFile "..\R-current-win.exe"
   date
   ..\R-current-win.exe /verysilent /dir=c:\R "/log=..\R.log" | Out-Null
@@ -49,7 +51,38 @@ Function Bootstrap {
   Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
 }
 
-Function Run_Tests {
+Function EnsureDevtools {
+  [CmdletBinding()]
+  Param()
+
+  Rscript.exe -e "if (!('devtools' %in% rownames(installed.packages()))) q(status=1)"
+  if ($LastExitCode -ne 0) {
+    # Install devtools and testthat.
+    RInstall "devtools", "testthat"
+  }
+}
+
+Function RInstall {
+  [CmdletBinding()]
+  Param(
+    [Parameter(Position=0, Mandatory=1)]
+    [string[]]$Packages
+  )
+
+  echo "Installing R package(s): $Packages"
+  Exec { Rscript.exe -e "install.packages(commandArgs(TRUE), repos='${CRAN}')" $Packages }
+}
+
+Function InstallDeps {
+  [CmdletBinding()]
+  Param()
+
+  EnsureDevtools
+  Exec { Rscript.exe -e "library(devtools); library(methods); options(repos=c(CRAN='$CRAN')); install_deps(dependencies = TRUE)" }
+}
+Set-Alias Install_Deps InstallDeps
+
+Function RunTests {
   [CmdletBinding()]
   Param()
 
@@ -62,3 +95,4 @@ Function Run_Tests {
   Exec { R.exe CMD check $File $R_CHECK_ARGS }
   date
 }
+Set-Alias Run_Tests RunTests
