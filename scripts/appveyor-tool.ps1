@@ -1,4 +1,24 @@
+# Found at http://zduck.com/2012/powershell-batch-files-exit-codes/
+Function Exec
+{
+    [CmdletBinding()]
+    param (
+        [Parameter(Position=0, Mandatory=1)]
+        [scriptblock]$Command,
+        [Parameter(Position=1, Mandatory=0)]
+        [string]$ErrorMessage = "Execution of command failed.`n$Command"
+    )
+    $ErrorActionPreference = "Continue"
+    & $Command 2>&1 | %{ "$_" }
+    if ($LastExitCode -ne 0) {
+        throw "Exec: $ErrorMessage`nExit code: $LastExitCode"
+    }
+}
+
 Function Bootstrap {
+  [CmdletBinding()]
+  Param()
+
   date
   $env:PATH = 'c:\Rtools\bin;c:\Rtools\MinGW\bin;c:\R\bin\i386;' + $env:PATH
   $env:PATH
@@ -18,12 +38,15 @@ Function Bootstrap {
 }
 
 Function Run_Tests {
+  [CmdletBinding()]
+  Param()
+
   date
   $R_BUILD_ARGS = "--no-build-vignettes", "--no-manual"
   $R_CHECK_ARGS = "--no-build-vignettes", "--no-manual", "--as-cran"
-  Invoke-Expression 'R.exe CMD build . $R_BUILD_ARGS 2>&1 | %{ "$_" }'
+  Exec { R.exe CMD build . $R_BUILD_ARGS }
   date
   $File = $(ls "*.tar.gz" | Sort -Property LastWriteTime -Descending | Select-Object -First 1).Name
-  Invoke-Expression 'R.exe CMD check $File $R_CHECK_ARGS 2>&1 | %{ "$_" }'
+  Exec { R.exe CMD check $File $R_CHECK_ARGS }
   date
 }

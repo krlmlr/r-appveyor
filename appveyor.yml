@@ -1,6 +1,7 @@
 init:
   ps: |
         date
+        $ErrorActionPreference = "Stop"
 
 install:
   ps: |
