@@ -1,3 +1,5 @@
+$CRAN = "http://cran.rstudio.com"
+
 # Found at http://zduck.com/2012/powershell-batch-files-exit-codes/
 Function Exec
 {
@@ -37,7 +39,38 @@ Function Bootstrap {
   date
 }
 
-Function Run_Tests {
+Function EnsureDevtools {
+  [CmdletBinding()]
+  Param()
+
+  Rscript.exe -e "if (!('devtools' %in% rownames(installed.packages()))) q(status=1)"
+  if ($LastExitCode -ne 0) {
+    # Install devtools and testthat.
+    RInstall "devtools", "testthat"
+  }
+}
+
+Function RInstall {
+  [CmdletBinding()]
+  Param(
+    [Parameter(Position=0, Mandatory=1)]
+    [string[]]$Packages
+  )
+
+  echo "Installing R package(s): $Packages"
+  Exec { Rscript.exe -e "install.packages(commandArgs(TRUE), repos='${CRAN}')" $Packages }
+}
+
+Function InstallDeps {
+  [CmdletBinding()]
+  Param()
+
+  EnsureDevtools
+  Exec { Rscript.exe -e "library(devtools); library(methods); options(repos=c(CRAN='$CRAN')); install_deps(dependencies = TRUE)" }
+}
+Set-Alias Install_Deps InstallDeps
+
+Function RunTests {
   [CmdletBinding()]
   Param()
 
@@ -50,3 +83,4 @@ Function Run_Tests {
   Exec { R.exe CMD check $File $R_CHECK_ARGS }
   date
 }
+Set-Alias Run_Tests RunTests
