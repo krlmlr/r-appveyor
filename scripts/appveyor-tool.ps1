@@ -58,7 +58,7 @@ Function RInstall {
   )
 
   echo "Installing R package(s): $Packages"
-  Rscript -e "install.packages(commandArgs(TRUE), repos='${CRAN}')" $Packages
+  Exec { Rscript.exe -e "install.packages(commandArgs(TRUE), repos='${CRAN}')" $Packages }
 }
 
 Function InstallDeps {
@@ -66,7 +66,7 @@ Function InstallDeps {
   Param()
 
   EnsureDevtools
-  Rscript.exe -e "library(devtools); library(methods); options(repos=c(CRAN='$CRAN')); install_deps(dependencies = TRUE)"
+  Exec { Rscript.exe -e "library(devtools); library(methods); options(repos=c(CRAN='$CRAN')); install_deps(dependencies = TRUE)" }
 }
 Set-Alias Install_Deps InstallDeps
 
