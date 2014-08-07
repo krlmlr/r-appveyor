@@ -15,6 +15,9 @@ Function Exec
 }
 
 Function Bootstrap {
+  [CmdletBinding()]
+  Param()
+
   date
   $env:PATH = 'c:\Rtools\bin;c:\Rtools\MinGW\bin;c:\R\bin\i386;' + $env:PATH
   $env:PATH
@@ -40,6 +43,9 @@ Function ThrowNastyError {
 }
 
 Function Run_Tests {
+  [CmdletBinding()]
+  Param()
+
   date
   $R_BUILD_ARGS = "--no-build-vignettes", "--no-manual"
   $R_CHECK_ARGS = "--no-build-vignettes", "--no-manual", "--as-cran"
