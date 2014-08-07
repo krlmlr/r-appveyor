@@ -10,7 +10,7 @@ Function Exec
     )
     {
         $ErrorActionPreference = "Continue"
-        InvokeExpression$Command
+        Invoke-Expression $Command
     }
     if ($LastExitCode -ne 0) {
         throw "Exec: $ErrorMessage`nExit code: $LastExitCode"
