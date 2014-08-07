@@ -1,5 +1,6 @@
 init:
   - ps: date
+  - ps: $ErrorActionPreference = "Stop"
 
 install:
   - ps: Import-Module '.\scripts\appveyor-tool.ps1'
