@@ -9,12 +9,13 @@ install:
         date
         Bootstrap
         date
+        cp ..\travis-tool.sh .
         cd fakepackage
 
 build_script:
   ps: |
-        InstallDeps
+        TravisTool install_deps
 
 test_script:
   ps: |
-        Run_Tests
+        TravisTool run_tests
