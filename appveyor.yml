@@ -8,10 +8,14 @@ install:
         Import-Module '.\scripts\appveyor-tool.ps1'
         date
         Bootstrap
+        date
+        cp ..\travis-tool.sh .
+        cd fakepackage
 
 build_script:
   ps: |
-        cp ..\travis-tool.sh .
-        cd fakepackage
         TravisTool install_deps
+
+test_script:
+  ps: |
         TravisTool run_tests
