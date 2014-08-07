@@ -11,5 +11,4 @@ install:
 build_script:
   - ps: cd fakepackage
   - ps: ThrowNastyError
-  - ps: TryToExecuteACmdletThatSurelyDoesNotExist
   - ps: Run_Tests -ErrorAction Stop
