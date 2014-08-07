@@ -5,13 +5,8 @@ init:
 install:
   - ps: Import-Module '.\scripts\appveyor-tool.ps1'
   - ps: date
-  - ps: ThrowNastyError
-  - ps: ThrowNastyError -ErrorAction Stop
-  - ps: Invoke-Expression 'ThrowNastyError' -ErrorAction Stop
-  - ps: date
   - ps: Bootstrap
 
 build_script:
   - ps: cd fakepackage
-  - ps: ThrowNastyError
-  - ps: Run_Tests -ErrorAction Stop
+  - ps: Run_Tests
