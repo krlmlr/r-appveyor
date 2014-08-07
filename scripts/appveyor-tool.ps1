@@ -37,12 +37,6 @@ Function Bootstrap {
   date
 }
 
-Function ThrowNastyError {
-  [CmdletBinding()]
-  Param ()
-  TryToExecuteACmdletThatSurelyDoesNotExist
-}
-
 Function Run_Tests {
   [CmdletBinding()]
   Param()
