@@ -48,7 +48,7 @@ Function Bootstrap {
   ..\Rtools-current.exe /verysilent "/log=..\Rtools.log" | Out-Null
   Get-Content "..\Rtools.log" -Tail 10
   date
-  Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "$HOME\travis-tool.sh"
+  Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
 }
 
 Function Run_Tests {
