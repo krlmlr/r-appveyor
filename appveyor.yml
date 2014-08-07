@@ -11,6 +11,7 @@ install:
 
 build_script:
   ps: |
+        cp ..\travis-tool.sh .
         cd fakepackage
         TravisTool install_deps
         TravisTool run_tests
