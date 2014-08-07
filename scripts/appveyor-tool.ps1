@@ -61,7 +61,7 @@ Function RInstall {
   Rscript -e "install.packages(commandArgs(TRUE), repos='${CRAN}')" $Packages
 }
 
-Function Run_Tests {
+Function RunTests {
   [CmdletBinding()]
   Param()
 
@@ -74,3 +74,4 @@ Function Run_Tests {
   Exec { R.exe CMD check $File $R_CHECK_ARGS }
   date
 }
+Set-Alias Run_Tests RunTests
