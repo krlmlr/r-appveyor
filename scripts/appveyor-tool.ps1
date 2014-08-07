@@ -15,6 +15,19 @@ Function Exec
     }
 }
 
+Function TravisTool
+{
+  [CmdletBinding()]
+  param (
+      [Parameter(Position=0, Mandatory=1)]
+      [string[]]$Params
+  )
+
+  $env:PATH.Split(";")
+  $env:PATH = "C:\MinGW\msys\1.0\bin;" + $env:PATH
+  Exec { bash.exe ../travis-tool.sh $Params }
+}
+
 Function Bootstrap {
   [CmdletBinding()]
   Param()
