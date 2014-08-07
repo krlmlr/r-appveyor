@@ -10,8 +10,8 @@ install:
 
 build_script:
   ps: |
-        InstallDeps
+        TravisTool install_deps
 
 test_script:
   ps: |
-        Run_Tests
+        TravisTool run_tests
