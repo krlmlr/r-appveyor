@@ -61,6 +61,14 @@ Function RInstall {
   Rscript -e "install.packages(commandArgs(TRUE), repos='${CRAN}')" $Packages
 }
 
+Function InstallDeps {
+  [CmdletBinding()]
+  Param()
+
+  EnsureDevtools
+  Rscript.exe -e "library(devtools); library(methods); options(repos=c(CRAN='$CRAN')); install_deps(dependencies = TRUE)"
+}
+
 Function RunTests {
   [CmdletBinding()]
   Param()
