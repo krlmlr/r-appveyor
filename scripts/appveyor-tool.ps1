@@ -68,6 +68,7 @@ Function InstallDeps {
   EnsureDevtools
   Rscript.exe -e "library(devtools); library(methods); options(repos=c(CRAN='$CRAN')); install_deps(dependencies = TRUE)"
 }
+Set-Alias Install_Deps InstallDeps
 
 Function RunTests {
   [CmdletBinding()]
