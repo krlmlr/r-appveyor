@@ -1,12 +1,15 @@
 init:
-  - ps: date
-  - ps: $ErrorActionPreference = "Stop"
+  ps: |
+        date
+        $ErrorActionPreference = "Stop"
 
 install:
-  - ps: Import-Module '.\scripts\appveyor-tool.ps1'
-  - ps: date
-  - ps: Bootstrap
+  ps: |
+        Import-Module '.\scripts\appveyor-tool.ps1'
+        date
+        Bootstrap
 
 build_script:
-  - ps: cd fakepackage
-  - ps: Run_Tests
+  ps: |
+        cd fakepackage
+        Run_Tests
