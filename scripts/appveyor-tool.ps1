@@ -4,13 +4,13 @@ Function Exec
     [CmdletBinding()]
     param (
         [Parameter(Position=0, Mandatory=1)]
-        [scriptblock]$Command,
+        [string]$Command,
         [Parameter(Position=1, Mandatory=0)]
         [string]$ErrorMessage = "Execution of command failed.`n$Command"
     )
-    & {
+    {
         $ErrorActionPreference = "Continue"
-        $Command
+        InvokeExpression$Command
     }
     if ($LastExitCode -ne 0) {
         throw "Exec: $ErrorMessage`nExit code: $LastExitCode"
