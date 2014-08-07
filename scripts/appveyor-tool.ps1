@@ -9,7 +9,7 @@ Function Exec
         [string]$ErrorMessage = "Execution of command failed.`n$Command"
     )
     $ErrorActionPreference = "Continue"
-    & $Command
+    & $Command 2>&1 | %{ "$_" }
     if ($LastExitCode -ne 0) {
         throw "Exec: $ErrorMessage`nExit code: $LastExitCode"
     }
