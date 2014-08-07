@@ -8,8 +8,10 @@ install:
         Import-Module '.\scripts\appveyor-tool.ps1'
         date
         Bootstrap
+        date
+        cd fakepackage
+        InstallDeps
 
 build_script:
   ps: |
-        cd fakepackage
         Run_Tests
