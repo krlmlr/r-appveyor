@@ -33,7 +33,7 @@ Function Bootstrap {
   Param()
 
   date
-  $env:PATH = 'c:\Rtools\bin;c:\Rtools\MinGW\bin;c:\R\bin\i386;' + $env:PATH
+  $env:PATH = 'c:\Rtools\bin;c:\Rtools\MinGW\bin;c:\Rtools\gcc-4.6.3\bin;c:\R\bin\i386;' + $env:PATH
   $env:PATH.Split(";")
   Invoke-WebRequest http://cran.rstudio.com/bin/windows/base/R-3.1.1-win.exe -OutFile "..\R-current-win.exe"
   date
