@@ -17,7 +17,7 @@ Usage
     ^appveyor\.yml$
     ```
 5. Push to your repo to start building.
-6. (Optional) Add a badge as described in the "Badges" section of your project's](https://ci.appveyor.com/projects)  "SETTINGS" to your `README.md`.
+6. (Optional) Add a badge as described in the "Badges" section of [your project's](https://ci.appveyor.com/projects) "SETTINGS" to your `README.md`.
 7. Enjoy!
 
 
