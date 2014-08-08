@@ -4,18 +4,18 @@ init:
         $ErrorActionPreference = "Stop"
 
 install:
-  ps: |
+  - ps: |
         Import-Module '.\scripts\appveyor-tool.ps1'
         date
         Bootstrap
         date
         cp ..\travis-tool.sh .
         cd fakepackage
+  - cmd: echo @bash.exe ../travis-tool.sh "%*" > travis-tool.sh.cmd
+  - cmd: bash.exe "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
 
 build_script:
-  ps: |
-        TravisTool install_deps
+  - travis-tool.sh install_deps
 
 test_script:
-  ps: |
-        TravisTool run_tests
+  - travis-tool.sh run_tests
