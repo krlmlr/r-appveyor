@@ -6,15 +6,13 @@ init:
 install:
   - ps: |
         Import-Module '.\scripts\appveyor-tool.ps1'
-        date
         Bootstrap
-        date
-        cp ..\travis-tool.sh .
-        cd fakepackage
-        cp ..\travis-tool.sh.cmd .
 
 build_script:
   - travis-tool.sh install_deps
 
 test_script:
   - travis-tool.sh run_tests
+
+on_failure:
+  - travis-tool.sh dump_logs

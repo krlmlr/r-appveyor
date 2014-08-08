@@ -1,0 +1,4 @@
+^appveyor\.yml$
+^README\.md$
+^sample\.appveyor\.yml$
+^scripts$
