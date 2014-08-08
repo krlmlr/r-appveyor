@@ -9,13 +9,8 @@ install:
         date
         Bootstrap
         date
-        cp ..\travis-tool.sh .
+        cp ..\travis-tool.sh ..\travis-tool.sh.cmd .
         cd fakepackage
-        echo '@bash.exe ../travis-tool.sh "%*"' | Out-File -Encoding ASCII .\travis-tool.sh.cmd
-        cat .\travis-tool.sh.cmd
-        echo '^travis-tool\.sh\.cmd$' | Out-File -Append -Encoding ASCII .\.Rbuildignore
-        cat .\.Rbuildignore
-  - cmd: type .\travis-tool.sh.cmd
 
 build_script:
   - travis-tool.sh install_deps
