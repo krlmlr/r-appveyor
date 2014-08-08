@@ -11,14 +11,15 @@ Usage
 1. Sign up to [AppVeyor](http://appveyor.com).
 2. [Enable testing](https://ci.appveyor.com/projects/new) for your project.
 3. Save a copy of [`sample.appveyor.yml`](/sample.appveyor.yml) as `appveyor.yml` to the root of your project.
-4. Add the following line to `.Rbuildignore` of your project:
+4. (Optional) Adapt `appveyor.yml` to your needs according to the [documentation](http://www.appveyor.com/docs/appveyor-yml).
+5. Add the following line to `.Rbuildignore` of your project:
 
     ```
     ^appveyor\.yml$
     ```
-5. Push to your repo to start building.
-6. (Optional) Add a badge as described in the "Badges" section of [your project's](https://ci.appveyor.com/projects) "SETTINGS" to your `README.md`.
-7. Enjoy!
+6. Push to your repo to start building.
+7. (Optional) Add a badge as described in the "Badges" section of [your project's](https://ci.appveyor.com/projects) "SETTINGS" to your `README.md`.
+8. Enjoy!
 
 
 Coming soon
