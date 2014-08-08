@@ -12,7 +12,7 @@ install:
         cp ..\travis-tool.sh .
         cd fakepackage
   - cmd: echo @bash.exe ../travis-tool.sh "%*" > travis-tool.sh.cmd
-  - cmd: bash.exe "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
+  - cmd: bash.exe -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
 
 build_script:
   - travis-tool.sh install_deps
