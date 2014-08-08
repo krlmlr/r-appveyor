@@ -8,12 +8,13 @@ Under the hood, [r-travis](https://github.com/craigcitro/r-travis) is used to pe
 Usage
 -----
 
-1. Sign up at [AppVeyor](http://appveyor.com).
-2. Enable testing for your project.
+1. Sign up to [AppVeyor](http://appveyor.com).
+2. [Enable testing](https://ci.appveyor.com/projects/new) for your project.
 3. Save a copy of [`sample.appveyor.yml`](/sample.appveyor.yml) as `appveyor.yml` to the root of your project.
 4. Add the following line to `.Rbuildignore` of your project:
+
     ```
-    ^\.appveyor\.yml$
+    ^appveyor\.yml$
     ```
 5. Push to your repo to start building.
 6. (Optional) Add a badge as described in the "Badges" section of your project's](https://ci.appveyor.com/projects)  "SETTINGS" to your `README.md`.
