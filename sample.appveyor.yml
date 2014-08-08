@@ -9,13 +9,10 @@ install:
   ps: Bootstrap
 
 build_script:
-  ps: |
-        TravisTool install_deps
+  - travis-tool.sh install_deps
 
 test_script:
-  ps: |
-        TravisTool run_tests
+  - travis-tool.sh run_tests
 
 on_failure:
-  ps: |
-        TravisTool dump_logs
+  - travis-tool.sh dump_logs
