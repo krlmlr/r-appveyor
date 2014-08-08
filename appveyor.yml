@@ -10,8 +10,8 @@ install:
         Bootstrap
         date
         cp ..\travis-tool.sh .
-        cp ..\travis-tool.sh.cmd .
         cd fakepackage
+        cp ..\travis-tool.sh.cmd .
 
 build_script:
   - travis-tool.sh install_deps
