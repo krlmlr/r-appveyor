@@ -11,7 +11,7 @@ install:
         date
         cp ..\travis-tool.sh .
         cd fakepackage
-        echo '@bash.exe ../travis-tool.sh "%*"' > .\travis-tool.sh.cmd
+        echo '@echo off`nbash.exe ../travis-tool.sh "%*"' > .\travis-tool.sh.cmd
         cat .\travis-tool.sh.cmd
         echo '^travis-tool\.sh\.cmd$' >> .\.Rbuildignore
         cat .\.Rbuildignore
