@@ -2,6 +2,7 @@ init:
   ps: |
         date
         $ErrorActionPreference = "Stop"
+        git config --global core.autocrlf input
 
 install:
   - ps: |
