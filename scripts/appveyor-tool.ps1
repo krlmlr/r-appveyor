@@ -55,8 +55,4 @@ Function Bootstrap {
   echo '^travis-tool\.sh\.cmd$' | Out-File -Append -Encoding ASCII .\.Rbuildignore
   cat .\.Rbuildignore
   date
-  git config --global core.autocrlf input
-  git rm --cached -r .
-  git reset --hard
-  date
 }
