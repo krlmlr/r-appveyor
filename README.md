@@ -17,9 +17,10 @@ Usage
     ```
     ^appveyor\.yml$
     ```
-6. Push to your repo to start building.
-7. (Optional) Add a badge as described in the "Badges" section of [your project's](https://ci.appveyor.com/projects) "SETTINGS" to your `README.md`.
-8. Enjoy!
+6. Be sure to supply a `.gitattributes` file that takes care of fixing CRLF conversion settings that are relevant on Windows.  [The one in this repo](/.gitattributes) can be used for starters.
+7. Push to your repo to start building.
+8. (Optional) Add a badge as described in the "Badges" section of [your project's](https://ci.appveyor.com/projects) "SETTINGS" to your `README.md`.
+9. Enjoy!
 
 
 Coming soon
