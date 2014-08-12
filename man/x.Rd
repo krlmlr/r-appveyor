@@ -10,5 +10,4 @@ x
 The answer to all questions, now neatly packaged.
 }
 \examples{
-x
 }
