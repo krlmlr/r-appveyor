@@ -52,7 +52,7 @@ Function Bootstrap {
   date
   echo '@bash.exe ../travis-tool.sh "%*"' | Out-File -Encoding ASCII .\travis-tool.sh.cmd
   cat .\travis-tool.sh.cmd
-  bash -c "echo '^travis-tool\.sh\.cmd$' >> .\.Rbuildignore"
+  bash -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
   cat .\.Rbuildignore
   date
 }
