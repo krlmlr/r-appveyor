@@ -50,9 +50,9 @@ Function Bootstrap {
   date
   Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
   date
-  Write-Host '@bash.exe ../travis-tool.sh "%*"' | Out-File -Encoding ASCII .\travis-tool.sh.cmd
+  echo '@bash.exe ../travis-tool.sh "%*"' | Out-File -Encoding ASCII .\travis-tool.sh.cmd
   cat .\travis-tool.sh.cmd
-  Write-Host '^travis-tool\.sh\.cmd$`n' -NoNewLine | Out-File -Append -Encoding ASCII .\.Rbuildignore
+  bash -c "echo '^travis-tool\.sh\.cmd$' >> .\.Rbuildignore"
   cat .\.Rbuildignore
   date
 }
