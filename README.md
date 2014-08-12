@@ -1,7 +1,7 @@
 R+AppVeyor
 ==========
 
-![Build status](https://ci.appveyor.com/api/projects/status/xtc629xek00o5rui/branch/master)](https://ci.appveyor.com/project/krlmlr/r-appveyor/branch/master) ([`master` branch](/), success expected)
+[![Build status](https://ci.appveyor.com/api/projects/status/xtc629xek00o5rui/branch/master)](https://ci.appveyor.com/project/krlmlr/r-appveyor/branch/master) ([`master` branch](/), success expected)
 
 [![Build status for expected failure](https://ci.appveyor.com/api/projects/status/xtc629xek00o5rui/branch/test-failure)](https://ci.appveyor.com/project/krlmlr/r-appveyor/branch/test-failure) ([`test-failure` branch](/tree/test-failure), failure expected)
 
