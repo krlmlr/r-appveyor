@@ -27,7 +27,7 @@ Function Progress
 
     $ProgressMessage = (Date) + ': ' + $Message
 
-    Add-AppveyorCompilationMessage $ProgressMessage -Category Information
+    Add-AppveyorMessage $ProgressMessage -Category Information
 }
 
 Function TravisTool
