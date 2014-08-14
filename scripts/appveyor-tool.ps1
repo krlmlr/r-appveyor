@@ -37,26 +37,31 @@ Function Bootstrap {
   tzutil /s "GMT Standard Time"
   tzutil /g
   date
-  $env:PATH = 'c:\Rtools\bin;c:\Rtools\MinGW\bin;c:\Rtools\gcc-4.6.3\bin;c:\R\bin\i386;' + $env:PATH
-  $env:PATH.Split(";")
-  Invoke-WebRequest http://cran.rstudio.com/bin/windows/base/R-3.1.1-win.exe -OutFile "..\R-current-win.exe"
+  Invoke-WebRequest https://rportable.blob.core.windows.net/r-portable/master/R.iso -OutFile "..\R.iso"
   date
-  ..\R-current-win.exe /verysilent /dir=c:\R "/log=..\R.log" | Out-Null
+
+  # Enumerating drive letters takes about 10 seconds:
+  # http://www.powershellmagazine.com/2013/03/07/pstip-finding-the-drive-letter-of-a-mounted-disk-image/
+  # Hard-coding mounted drive letter here
+
+  $ImageFullPath = Get-ChildItem "..\R.iso" | % { $_.FullName }
+  $ImageFullPath
   date
-  Get-Content "..\R.log" -Tail 10
+  Mount-DiskImage -ImagePath $ImageFullPath
+  $ISODriveLetter = "E"
   date
-  $rtoolsver = $(Invoke-WebRequest http://cran.rstudio.com/bin/windows/Rtools/VERSION.txt).Content.Split(' ')[2].Split('.')[0..1] -Join ''
-  $rtoolsurl = "http://cran.rstudio.com/bin/windows/Rtools/Rtools$rtoolsver.exe"
-  Invoke-WebRequest $rtoolsurl -OutFile "..\Rtools-current.exe"
-  date
-  ..\Rtools-current.exe /verysilent "/log=..\Rtools.log" | Out-Null
-  Get-Content "..\Rtools.log" -Tail 10
-  date
+
   Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
   date
   echo '@bash.exe ../travis-tool.sh "%*"' | Out-File -Encoding ASCII .\travis-tool.sh.cmd
   cat .\travis-tool.sh.cmd
   bash -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
   cat .\.Rbuildignore
+  date
+  $env:PATH = $ISODriveLetter + ':\Rtools\bin;' + $ISODriveLetter + ':\Rtools\MinGW\bin;' + $ISODriveLetter + ':\Rtools\gcc-4.6.3\bin;' + $ISODriveLetter + ':\R\bin\i386;' + $env:PATH
+  $env:PATH.Split(";")
+  date
+  $env:R_LIBS_USER = 'c:\RLibrary'
+  mkdir $env:R_LIBS_USER
   date
 }
