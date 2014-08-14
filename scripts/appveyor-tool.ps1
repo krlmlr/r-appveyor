@@ -17,6 +17,19 @@ Function Exec
     }
 }
 
+Function Progress
+{
+    [CmdletBinding()]
+    param (
+        [Parameter(Position=0, Mandatory=0)]
+        [string]$Message = ""
+    )
+
+    $ProgressMessage = '== ' + (date) + ': ' + $Message
+
+    Write-Output $ProgressMessage
+}
+
 Function TravisTool
 {
   [CmdletBinding()]
@@ -32,36 +45,40 @@ Function Bootstrap {
   [CmdletBinding()]
   Param()
 
-  date
+  Progress "Bootstrap: Start"
+
+  Progress "Setting time zone"
   tzutil /g
   tzutil /s "GMT Standard Time"
   tzutil /g
-  date
+  Progress "Downloading R.iso"
   Invoke-WebRequest https://rportable.blob.core.windows.net/r-portable/master/R.iso -OutFile "..\R.iso"
-  date
 
   # Enumerating drive letters takes about 10 seconds:
   # http://www.powershellmagazine.com/2013/03/07/pstip-finding-the-drive-letter-of-a-mounted-disk-image/
   # Hard-coding mounted drive letter here
 
+  Progress "Getting full path for R.iso"
   $ImageFullPath = Get-ChildItem "..\R.iso" | % { $_.FullName }
   $ImageFullPath
-  date
+  Progress "Mounting R.iso"
   Mount-DiskImage -ImagePath $ImageFullPath
   $ISODriveLetter = "E"
-  date
 
+  Progress "Downloading and installing travis-tool.sh"
   Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
-  date
   echo '@bash.exe ../travis-tool.sh "%*"' | Out-File -Encoding ASCII .\travis-tool.sh.cmd
   cat .\travis-tool.sh.cmd
   bash -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
   cat .\.Rbuildignore
-  date
+
+  Progress "Setting PATH"
   $env:PATH = $ISODriveLetter + ':\Rtools\bin;' + $ISODriveLetter + ':\Rtools\MinGW\bin;' + $ISODriveLetter + ':\Rtools\gcc-4.6.3\bin;' + $ISODriveLetter + ':\R\bin\i386;' + $env:PATH
   $env:PATH.Split(";")
-  date
+
+  Progress "Setting R_LIBS_USER"
   $env:R_LIBS_USER = 'c:\RLibrary'
   mkdir $env:R_LIBS_USER
-  date
+
+  Progress "Bootstrap: Done"
 }
