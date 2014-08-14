@@ -52,7 +52,7 @@ Function Bootstrap {
   tzutil /s "GMT Standard Time"
   tzutil /g
   Progress "Downloading R.iso"
-  bash -c 'curl -L http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh -o "../R.iso"'
+  bash -c 'curl -s -L http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh -o "../R.iso"'
 
   # Enumerating drive letters takes about 10 seconds:
   # http://www.powershellmagazine.com/2013/03/07/pstip-finding-the-drive-letter-of-a-mounted-disk-image/
