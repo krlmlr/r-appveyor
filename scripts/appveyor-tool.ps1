@@ -52,7 +52,7 @@ Function Bootstrap {
   tzutil /s "GMT Standard Time"
   tzutil /g
   Progress "Downloading R.iso"
-  bash -c 'curl -s -L http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh -o "../R.iso"'
+  bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.iso -o "../R.iso"'
   md5sum "../R.iso"
 
   # Enumerating drive letters takes about 10 seconds:
