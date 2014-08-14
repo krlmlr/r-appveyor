@@ -18,7 +18,7 @@ test_script:
   - travis-tool.sh run_tests
 
 deploy_script:
-  - travis-tool.sh dump_logs bash -c ./push-artifact.sh
+  - travis-tool.sh dump_logs ./push-artifact.sh
 
 on_failure:
   - travis-tool.sh dump_logs
