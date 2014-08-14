@@ -3,7 +3,7 @@ environment:
 
 init:
   ps: |
-        date
+        Get-Date
         $ErrorActionPreference = "Stop"
 
 install:

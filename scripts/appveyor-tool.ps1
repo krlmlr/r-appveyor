@@ -25,9 +25,9 @@ Function Progress
         [string]$Message = ""
     )
 
-    $ProgressMessage = '== ' + (date) + ': ' + $Message
+    $ProgressMessage = '== ' + (Get-Date) + ': ' + $Message
 
-    Write-Output $ProgressMessage
+    Write-Host $ProgressMessage -ForegroundColor Magenta
 }
 
 Function TravisTool
@@ -52,7 +52,7 @@ Function Bootstrap {
   tzutil /s "GMT Standard Time"
   tzutil /g
   Progress "Downloading R.iso"
-  Invoke-WebRequest https://rportable.blob.core.windows.net/r-portable/master/R.iso -OutFile "..\R.iso"
+  bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/gzip/R.iso.gz | gunzip -c > ../R.iso'
 
   # Enumerating drive letters takes about 10 seconds:
   # http://www.powershellmagazine.com/2013/03/07/pstip-finding-the-drive-letter-of-a-mounted-disk-image/
