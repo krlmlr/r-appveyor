@@ -27,7 +27,7 @@ Function Progress
 
     $ProgressMessage = '== ' + (date) + ': ' + $Message
 
-    Write-Output $ProgressMessage
+    Write-Host $ProgressMessage -ForegroundColor Green
 }
 
 Function TravisTool
