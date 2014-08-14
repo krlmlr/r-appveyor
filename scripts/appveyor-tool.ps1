@@ -42,7 +42,8 @@ Function Bootstrap {
 
   # http://www.powershellmagazine.com/2013/03/07/pstip-finding-the-drive-letter-of-a-mounted-disk-image/
   $DriveLettersBefore = (Get-Volume).DriveLetter
-  Mount-DiskImage -ImagePath "..\R.iso"
+  $ImageFullPath = Get-ChildItem "..\R.iso" | % { $_.FullName }
+  Mount-DiskImage -ImagePath $ImageFullPath
   $DriveLettersAfter = (Get-Volume).DriveLetter
   $ISODriveLetter = compare $DriveLettersBefore $DriveLettersAfter -Passthru
   $ISODriveLetter
