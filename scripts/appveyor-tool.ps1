@@ -40,18 +40,15 @@ Function Bootstrap {
   Invoke-WebRequest https://rportable.blob.core.windows.net/r-portable/R.iso -OutFile "..\R.iso"
   date
 
+  # Enumerating drive letters takes about 10 seconds:
   # http://www.powershellmagazine.com/2013/03/07/pstip-finding-the-drive-letter-of-a-mounted-disk-image/
-  $DriveLettersBefore = (Get-Volume).DriveLetter
-  date
+  # Hard-coding mounted drive letter here
+
   $ImageFullPath = Get-ChildItem "..\R.iso" | % { $_.FullName }
   $ImageFullPath
   date
   Mount-DiskImage -ImagePath $ImageFullPath
-  date
-  $DriveLettersAfter = (Get-Volume).DriveLetter
-  date
-  $ISODriveLetter = compare $DriveLettersBefore $DriveLettersAfter -Passthru
-  $ISODriveLetter
+  $ISODriveLetter = "E"
   date
 
   $rtoolsver = $(Invoke-WebRequest http://cran.rstudio.com/bin/windows/Rtools/VERSION.txt).Content.Split(' ')[2].Split('.')[0..1] -Join ''
