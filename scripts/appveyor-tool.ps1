@@ -37,7 +37,7 @@ Function Bootstrap {
   tzutil /s "GMT Standard Time"
   tzutil /g
   date
-  Invoke-WebRequest https://rportable.blob.core.windows.net/r-portable/R.iso -OutFile "..\R.iso"
+  Invoke-WebRequest https://rportable.blob.core.windows.net/r-portable/master/R.iso -OutFile "..\R.iso"
   date
 
   # Enumerating drive letters takes about 10 seconds:
