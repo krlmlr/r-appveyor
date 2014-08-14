@@ -17,10 +17,8 @@ build_script:
 test_script:
   - travis-tool.sh run_tests
 
+deploy_script:
+  - travis-tool.sh dump_logs appveyor PushArtifact
+
 on_failure:
   - travis-tool.sh dump_logs
-
-artifacts:
-  - path: "../r-appveyor"
-    name: Everything
-    type: zip
