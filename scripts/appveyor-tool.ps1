@@ -37,7 +37,7 @@ Function Bootstrap {
   tzutil /s "GMT Standard Time"
   tzutil /g
   date
-  Invoke-WebRequest https://rportable.blob.core.windows.net/r-portable/1.0.5/Output/R.iso -OutFile "..\R.iso"
+  Invoke-WebRequest https://rportable.blob.core.windows.net/r-portable/R.iso -OutFile "..\R.iso"
   date
 
   # http://www.powershellmagazine.com/2013/03/07/pstip-finding-the-drive-letter-of-a-mounted-disk-image/
