@@ -25,7 +25,7 @@ Function Progress
         [string]$Message = ""
     )
 
-    $ProgressMessage = '== ' + (date) + ': ' + $Message
+    $ProgressMessage = '== ' + (Get-Date) + ': ' + $Message
 
     Write-Host $ProgressMessage -ForegroundColor Magenta
 }
