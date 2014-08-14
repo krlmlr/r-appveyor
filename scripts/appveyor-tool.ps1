@@ -53,7 +53,6 @@ Function Bootstrap {
   tzutil /g
   Progress "Downloading R.iso"
   bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.iso -o "../R.iso"'
-  md5sum "../R.iso"
 
   # Enumerating drive letters takes about 10 seconds:
   # http://www.powershellmagazine.com/2013/03/07/pstip-finding-the-drive-letter-of-a-mounted-disk-image/
