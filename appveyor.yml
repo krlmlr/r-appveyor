@@ -21,5 +21,6 @@ on_failure:
   - travis-tool.sh dump_logs
 
 artifacts:
-  - path: "*"
+  - path: "."
     name: Everything
+    type: zip
