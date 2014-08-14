@@ -17,6 +17,19 @@ Function Exec
     }
 }
 
+Function Progress
+{
+    [CmdletBinding()]
+    param (
+        [Parameter(Position=0, Mandatory=0)]
+        [string]$Message = ""
+    )
+
+    $ProgressMessage = (Date) + ': ' + $Message
+
+    Add-AppveyorCompilationMessage $ProgressMessage -Category Information
+}
+
 Function TravisTool
 {
   [CmdletBinding()]
@@ -32,7 +45,7 @@ Function Bootstrap {
   [CmdletBinding()]
   Param()
 
-  date
+  Progress "Setting time zone"
   tzutil /g
   tzutil /s "GMT Standard Time"
   tzutil /g
