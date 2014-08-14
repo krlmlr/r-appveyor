@@ -37,14 +37,19 @@ Function Bootstrap {
   tzutil /s "GMT Standard Time"
   tzutil /g
   date
-  $env:PATH = 'c:\Rtools\bin;c:\Rtools\MinGW\bin;c:\Rtools\gcc-4.6.3\bin;c:\R\bin\i386;' + $env:PATH
+  Invoke-WebRequest https://rportable.blob.core.windows.net/r-portable/1.0.5/Output/R.iso -OutFile "..\R.iso"
+  date
+
+  # http://www.powershellmagazine.com/2013/03/07/pstip-finding-the-drive-letter-of-a-mounted-disk-image/
+  $DriveLettersBefore = (Get-Volume).DriveLetter
+  Mount-DiskImage -ImagePath "..\R.iso"
+  $DriveLettersAfter = (Get-Volume).DriveLetter
+  $ISODriveLetter = compare $DriveLettersBefore $DriveLettersAfter -Passthru
+  $ISODriveLetter
+  date
+
+  $env:PATH = 'c:\Rtools\bin;c:\Rtools\MinGW\bin;c:\Rtools\gcc-4.6.3\bin;' + $ISODriveLetter + ':\R\bin\i386;' + $env:PATH
   $env:PATH.Split(";")
-  Invoke-WebRequest http://cran.rstudio.com/bin/windows/base/R-3.1.1-win.exe -OutFile "..\R-current-win.exe"
-  date
-  ..\R-current-win.exe /verysilent /dir=c:\R "/log=..\R.log" | Out-Null
-  date
-  Get-Content "..\R.log" -Tail 10
-  date
   $rtoolsver = $(Invoke-WebRequest http://cran.rstudio.com/bin/windows/Rtools/VERSION.txt).Content.Split(' ')[2].Split('.')[0..1] -Join ''
   $rtoolsurl = "http://cran.rstudio.com/bin/windows/Rtools/Rtools$rtoolsver.exe"
   Invoke-WebRequest $rtoolsurl -OutFile "..\Rtools-current.exe"
