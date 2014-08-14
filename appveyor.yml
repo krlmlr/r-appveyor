@@ -18,6 +18,7 @@ test_script:
   - travis-tool.sh run_tests
 
 deploy_script:
+  - appveyor PushArtifact .\fakepackage.Rcheck\tests\test-all.Rout
   - travis-tool.sh dump_logs ./push-artifact.sh
 
 on_failure:
