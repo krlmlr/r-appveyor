@@ -51,13 +51,6 @@ Function Bootstrap {
   $ISODriveLetter = "E"
   date
 
-  $rtoolsver = $(Invoke-WebRequest http://cran.rstudio.com/bin/windows/Rtools/VERSION.txt).Content.Split(' ')[2].Split('.')[0..1] -Join ''
-  $rtoolsurl = "http://cran.rstudio.com/bin/windows/Rtools/Rtools$rtoolsver.exe"
-  Invoke-WebRequest $rtoolsurl -OutFile "..\Rtools-current.exe"
-  date
-  ..\Rtools-current.exe /verysilent "/log=..\Rtools.log" | Out-Null
-  Get-Content "..\Rtools.log" -Tail 10
-  date
   Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
   date
   echo '@bash.exe ../travis-tool.sh "%*"' | Out-File -Encoding ASCII .\travis-tool.sh.cmd
@@ -65,7 +58,7 @@ Function Bootstrap {
   bash -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
   cat .\.Rbuildignore
   date
-  $env:PATH = 'c:\Rtools\bin;c:\Rtools\MinGW\bin;c:\Rtools\gcc-4.6.3\bin;' + $ISODriveLetter + ':\R\bin\i386;' + $env:PATH
+  $env:PATH = $ISODriveLetter + ':\Rtools\bin;' + $ISODriveLetter + ':\Rtools\MinGW\bin;' + $ISODriveLetter + ':\Rtools\gcc-4.6.3\bin;' + $ISODriveLetter + ':\R\bin\i386;' + $env:PATH
   $env:PATH.Split(";")
   date
   $env:R_LIBS_USER = 'c:\RLibrary'
