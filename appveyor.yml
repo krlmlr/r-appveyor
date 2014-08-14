@@ -21,6 +21,6 @@ on_failure:
   - travis-tool.sh dump_logs
 
 artifacts:
-  - path: "."
+  - path: "fakepackage.Rcheck"
     name: Everything
     type: zip
