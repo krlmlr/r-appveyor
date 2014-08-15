@@ -18,7 +18,10 @@ test_script:
   - travis-tool.sh run_tests
 
 artifacts:
-  - path: '\*_*.tar.gz' '\*_*.zip'
+  - path: '\*_*.tar.gz'
+    name: Bits
+
+  - path: '\*_*.zip'
     name: Bits
 
 on_failure:
