@@ -18,6 +18,18 @@ test_script:
   - travis-tool.sh run_tests
 
 artifacts:
+  - path: '*.Rcheck\**\*.log'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.out'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.fail'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.Rout'
+    name: Logs
+
   - path: '\*_*.tar.gz'
     name: Bits
 
