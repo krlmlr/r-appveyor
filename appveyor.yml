@@ -17,11 +17,11 @@ build_script:
 test_script:
   - travis-tool.sh run_tests
 
-deploy_script:
-  - ls .\fakepackage.Rcheck\tests\test-all.Rout
-  - cat .\fakepackage.Rcheck\tests\test-all.Rout
-  - appveyor PushArtifact .\fakepackage.Rcheck\tests\test-all.Rout
-  - travis-tool.sh dump_logs ./push-artifact.sh
+artifacts:
+  - path: '*.Rcheck\**\*.log' '*.Rcheck\**\*.out' '*.Rcheck\**\*.fail' '*.Rcheck\**\*.Rout'
+    name: Logs
+  - path: '\*_*.tar.gz' '\*_*.zip'
+    name: Bits
 
 on_failure:
   - travis-tool.sh dump_logs
