@@ -20,6 +20,7 @@ test_script:
 artifacts:
   - path: '*.Rcheck\**\*.log' '*.Rcheck\**\*.out' '*.Rcheck\**\*.fail' '*.Rcheck\**\*.Rout'
     name: Logs
+
   - path: '\*_*.tar.gz' '\*_*.zip'
     name: Bits
 
