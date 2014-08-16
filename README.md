@@ -27,12 +27,10 @@ Usage
 9. Enjoy!
 
 
-Coming soon
------------
+Artifacts
+---------
 
-Deployment of Windows binary packages.
-It is not at all clear where to deploy them best.
-Should it be one CRAN-like repository, or GitHub, or...?
+In contrast to Travis-CI, AppVeyor offers facilities for hosting artifacts.  This can be configured by adding a section to the `appveyor.yml`.  The sample file is configured to deploy logs, and source and **binary** versions of the built package.  Check the "ARTIFACTS" section for [your project at AppVeyor](https://ci.appveyor.com/projects).
 
 
 Acknowledgements
