@@ -7,3 +7,6 @@ three <- function() {
 is_three <- function(x) {
   see_if(are_equal(3, x))
 }
+
+#' Use something from MASS
+MASS_huber <- MASS::huber
