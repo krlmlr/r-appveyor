@@ -64,6 +64,7 @@ Function Bootstrap {
   # http://www.powershellmagazine.com/2013/03/07/pstip-finding-the-drive-letter-of-a-mounted-disk-image/
   # Hard-coding mounted drive letter here
   $ISOPath = "E:"
+  $RPath = $ISOPath
 
   Progress "Downloading and installing travis-tool.sh"
   Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
@@ -73,7 +74,7 @@ Function Bootstrap {
   cat .\.Rbuildignore
 
   Progress "Setting PATH"
-  $env:PATH = $ISOPath + '\Rtools\bin;' + $ISOPath + '\Rtools\MinGW\bin;' + $ISOPath + '\Rtools\gcc-4.6.3\bin;' + $ISOPath + '\R\bin\i386;' + $env:PATH
+  $env:PATH = $ISOPath + '\Rtools\bin;' + $ISOPath + '\Rtools\MinGW\bin;' + $ISOPath + '\Rtools\gcc-4.6.3\bin;' + $RPath + '\R\bin\i386;' + $env:PATH
   $env:PATH.Split(";")
 
   Progress "Setting R_LIBS_USER"
