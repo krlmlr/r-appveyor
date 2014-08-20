@@ -66,6 +66,10 @@ Function Bootstrap {
   $ISOPath = "E:"
   $RPath = $ISOPath
 
+  Progress "Copying R to hard disk"
+  $RPath = "C:"
+  cp -Recurse $ISOPath + "\R" $RPath
+
   Progress "Downloading and installing travis-tool.sh"
   Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
   echo '@bash.exe ../travis-tool.sh %*' | Out-File -Encoding ASCII .\travis-tool.sh.cmd
