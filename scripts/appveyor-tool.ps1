@@ -69,6 +69,11 @@ Function Bootstrap {
   Progress "Copying R to hard disk"
   $RPath = "C:"
   cp -Recurse ($ISOPath + "\R") ($RPath + "\")
+  Progress "Testing write permissions for DESCRIPTION files"
+  gci ($RPath + "\") -Include DESCRIPTION -Recurse | Select fullname,isreadonly
+  Progress "Setting write permissions for DESCRIPTION files"
+  gci ($RPath + "\") -Include DESCRIPTION -Recurse | % { if($_.IsReadOnly){$_.IsReadOnly= $false} }
+  gci ($RPath + "\") -Include DESCRIPTION -Recurse | Select fullname,isreadonly
 
   Progress "Downloading and installing travis-tool.sh"
   Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
