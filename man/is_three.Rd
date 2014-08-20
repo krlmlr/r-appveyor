@@ -5,6 +5,9 @@
 \usage{
 is_three(x)
 }
+\arguments{
+\item{x}{Argument to check}
+}
 \description{
 Check to see if our argument is three.
 }
