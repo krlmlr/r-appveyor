@@ -5,6 +5,8 @@ R+AppVeyor
 
 [![Build status for expected failure](https://ci.appveyor.com/api/projects/status/xtc629xek00o5rui/branch/master-fail)](https://ci.appveyor.com/project/krlmlr/r-appveyor/branch/master-fail) ([`master-fail` branch](https://github.com/krlmlr/r-appveyor/tree/master-fail), failure expected)
 
+[![Build status for run without copying R](https://ci.appveyor.com/api/projects/status/xtc629xek00o5rui/branch/master-nocopy)](https://ci.appveyor.com/project/krlmlr/r-appveyor/branch/master-fail) ([`master-nocopy` branch](https://github.com/krlmlr/r-appveyor/tree/master-nocopy), watch out for a successful build)
+
 This is a solution for continuous integration for R projects on Windows, using [AppVeyor](http://appveyor.com) -- a CI testing service similar to [Travis-CI](http://travis-ci.org).
 Under the hood, [r-travis](https://github.com/craigcitro/r-travis) is used to perform the testing; this works even on Windows thanks to [MinGW and MSYS](http://www.mingw.org/).
 
