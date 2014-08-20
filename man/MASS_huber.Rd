@@ -3,7 +3,7 @@
 \alias{MASS_huber}
 \title{Use something from MASS}
 \usage{
-MASS_huber(y, k = 1.5, tol = 1e-06)
+MASS_huber()
 }
 \description{
 Use something from MASS

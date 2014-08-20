@@ -1,7 +1,3 @@
-#' @docType package
-#' @import assertthat
-NULL
-
 #' Returns 3.
 #' @export
 three <- function() {
@@ -16,4 +12,5 @@ is_three <- function(x) {
 
 #' Use something from MASS
 #' @import MASS
-MASS_huber <- MASS::huber
+#' @import assertthat
+MASS_huber <- function() MASS::huber
