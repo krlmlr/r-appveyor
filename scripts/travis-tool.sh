@@ -238,12 +238,17 @@ RunTests() {
     # We want to grab the version we just built.
     FILE=$(ls -1t *.tar.gz | head -n 1)
 
-    echo "Testing with: R CMD check \"${FILE}\" ${R_CHECK_ARGS}"
+    # Create binary package (currently Windows only)
+    if [[ "${OS:0:5}" == "MINGW" ]]; then
+        R_CHECK_INSTALL_ARGS="--install-args=--build"
+    fi
+
+    echo "Testing with: R CMD check \"${FILE}\" ${R_CHECK_ARGS} ${R_CHECK_INSTALL_ARGS}"
     _R_CHECK_CRAN_INCOMING_=${_R_CHECK_CRAN_INCOMING_:-FALSE}
     if [[ "$_R_CHECK_CRAN_INCOMING_" == "FALSE" ]]; then
         echo "(CRAN incoming checks are off)"
     fi
-    _R_CHECK_CRAN_INCOMING_=${_R_CHECK_CRAN_INCOMING_} R CMD check "${FILE}" ${R_CHECK_ARGS}
+    _R_CHECK_CRAN_INCOMING_=${_R_CHECK_CRAN_INCOMING_} R CMD check "${FILE}" ${R_CHECK_ARGS} ${R_CHECK_INSTALL_ARGS}
 
     # Check reverse dependencies
     if [[ -n "$R_CHECK_REVDEP" ]]; then
