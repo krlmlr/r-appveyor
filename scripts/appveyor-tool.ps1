@@ -56,7 +56,7 @@ Function Bootstrap {
   bash -c 'cd ../R && curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.tar.gz | tar -xz'
 
   Progress "Getting full path for R image"
-  $ImageFullPath = Get-ChildItem -Directory "..\R" | % { $_.FullName }
+  $ImageFullPath = Get-ChildItem -Directory -Filter "R" .. | % { $_.FullName }
   $ImageFullPath
 
   $ISOPath = $ImageFullPath
