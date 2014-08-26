@@ -51,7 +51,7 @@ Function Bootstrap {
   tzutil /g
   tzutil /s "GMT Standard Time"
   tzutil /g
-  Progress "Downloading R.iso"
+  Progress "Downloading R.vhd"
   bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.vhd.gz | gunzip -c > ../R.vhd'
 
   Progress "Getting full path for R.vhd"
