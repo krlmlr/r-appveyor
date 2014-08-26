@@ -51,26 +51,15 @@ Function Bootstrap {
   tzutil /g
   tzutil /s "GMT Standard Time"
   tzutil /g
-  Progress "Downloading R.iso"
-  bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.iso.gz | gunzip -c > ../R.iso'
+  Progress "Downloading R.tar.gz"
+  bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.tar.gz | gunzip -c > ../R'
 
-  Progress "Getting full path for R.iso"
-  $ImageFullPath = Get-ChildItem "..\R.iso" | % { $_.FullName }
+  Progress "Getting full path for R image"
+  $ImageFullPath = Get-ChildItem "..\R" | % { $_.FullName }
   $ImageFullPath
 
-  Progress "Mounting R.iso"
-  Mount-DiskImage -ImagePath $ImageFullPath
-  # Enumerating drive letters takes about 10 seconds:
-  # http://www.powershellmagazine.com/2013/03/07/pstip-finding-the-drive-letter-of-a-mounted-disk-image/
-  # Hard-coding mounted drive letter here
-  $ISOPath = "E:"
+  $ISOPath = $ImageFullPath
   $RPath = $ISOPath
-
-  Progress "Copying R to hard disk"
-  $RPath = "C:"
-  cp -Recurse ($ISOPath + "\R") ($RPath + "\")
-  Progress "Setting write permissions for DESCRIPTION files"
-  gci ($RPath + "\R") -Include DESCRIPTION -Recurse | % { if($_.IsReadOnly){$_.IsReadOnly= $false} }
 
   Progress "Downloading and installing travis-tool.sh"
   Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
