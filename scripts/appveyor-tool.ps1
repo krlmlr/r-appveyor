@@ -46,6 +46,12 @@ Function Bootstrap {
   Param()
 
   Progress "Bootstrap: Start"
+  ls "C:\"
+  ls "C:\Program Files (x86)"
+  ls "C:\Program Files (x86)\Git"
+  ls "C:\Program Files (x86)\Git\bin"
+
+  $env:PATH = "C:\Program Files (x86)\Git\bin;" + $env:PATH
 
   Progress "Setting time zone"
   tzutil /g
