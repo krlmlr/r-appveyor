@@ -79,7 +79,7 @@ Function Bootstrap {
   cat .\.Rbuildignore
 
   Progress "Setting PATH"
-  $env:PATH = $ISOPath + '\Rtools\bin;' + $ISOPath + '\Rtools\MinGW\bin;' + $ISOPath + '\Rtools\gcc-4.6.3\bin;' + $RDrive + '\R\bin\i386;' + $env:PATH
+  $env:PATH = $RDrive + '\Rtools\bin;' + $RDrive + '\Rtools\MinGW\bin;' + $RDrive + '\Rtools\gcc-4.6.3\bin;' + $RDrive + '\R\bin\i386;' + $env:PATH
   $env:PATH.Split(";")
 
   Progress "Setting R_LIBS_USER"
