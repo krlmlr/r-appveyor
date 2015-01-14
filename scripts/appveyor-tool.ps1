@@ -60,15 +60,26 @@ Function Bootstrap {
 
   Progress "Getting full path for R.vhd"
   $ImageFullPath = Get-ChildItem "..\R.vhd" | % { $_.FullName }
-  $ImageFullPath
+  $ImageSize = (Get-Item $ImageFullPath).length
+  echo "$ImageFullPath [$ImageSize bytes]"
 
   Progress "Mounting R.vhd"
   Mount-DiskImage -ImagePath $ImageFullPath
-  # Enumerating drive letters takes about 10 seconds:
-  # http://www.powershellmagazine.com/2013/03/07/pstip-finding-the-drive-letter-of-a-mounted-disk-image/
-  # Hard-coding mounted drive letter here
-  $ISOPath = "E:"
+
+  $drives=@("C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"
+            "O", "P", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+  foreach ($ISODrive in $drives) { 
+    $ISOPath = "${ISODrive}:"
+    if (Test-Path "${ISOPath}\R\bin" -PathType Container) {
+      break
+    }
+  }
+  # Assert that R was mounted properly
+  if ( -not (Test-Path "${ISOPath}\R\bin" -PathType Container) ) {
+    Throw "Failed to mount R. Could not find directory: <any drive letter>\R\bin"
+  }
   $RPath = $ISOPath
+  echo "R is now available on drive $RPath"
 
   Progress "Downloading and installing travis-tool.sh"
   Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
