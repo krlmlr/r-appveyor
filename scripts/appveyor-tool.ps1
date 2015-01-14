@@ -64,7 +64,7 @@ Function Bootstrap {
   echo "$ImageFullPath [$ImageSize bytes]"
 
   Progress "Mounting R.vhd"
-  $mountedISO = [string](Mount-DiskImage -ImagePath $ImageFullPath -Passthru) | Get-DiskImage | Get-Volume).DriveLetter + ":"
+  $mountedISO = [string](Mount-DiskImage -ImagePath $ImageFullPath -Passthru | Get-DiskImage | Get-Volume).DriveLetter + ":"
   echo "mountedISO=$mountedISO"
 
   $drives=@("C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"
