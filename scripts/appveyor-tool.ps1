@@ -64,23 +64,12 @@ Function Bootstrap {
   echo "$ImageFullPath [$ImageSize bytes]"
 
   Progress "Mounting R.vhd"
-  $mountedISO = [string](Mount-DiskImage -ImagePath $ImageFullPath -Passthru | Get-DiskImage | Get-Disk | Get-Partition | Get-Volume).DriveLetter + ":"
-  echo "mountedISO=$mountedISO"
-
-  $drives=@("C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"
-            "O", "P", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
-  foreach ($ISODrive in $drives) { 
-    $ISOPath = "${ISODrive}:"
-    if (Test-Path "${ISOPath}\R\bin" -PathType Container) {
-      break
-    }
-  }
+  $RDrive = [string](Mount-DiskImage -ImagePath $ImageFullPath -Passthru | Get-DiskImage | Get-Disk | Get-Partition | Get-Volume).DriveLetter + ":"
   # Assert that R was mounted properly
-  if ( -not (Test-Path "${ISOPath}\R\bin" -PathType Container) ) {
-    Throw "Failed to mount R. Could not find directory: <any drive letter>\R\bin"
+  if ( -not (Test-Path "${RDrive}\R\bin" -PathType Container) ) {
+    Throw "Failed to mount R. Could not find directory: ${RDrive}\R\bin"
   }
-  $RPath = $ISOPath
-  echo "R is now available on drive $RPath"
+  echo "R is now available on drive $RDrive"
 
   Progress "Downloading and installing travis-tool.sh"
   Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
@@ -90,7 +79,7 @@ Function Bootstrap {
   cat .\.Rbuildignore
 
   Progress "Setting PATH"
-  $env:PATH = $ISOPath + '\Rtools\bin;' + $ISOPath + '\Rtools\MinGW\bin;' + $ISOPath + '\Rtools\gcc-4.6.3\bin;' + $RPath + '\R\bin\i386;' + $env:PATH
+  $env:PATH = $ISOPath + '\Rtools\bin;' + $ISOPath + '\Rtools\MinGW\bin;' + $ISOPath + '\Rtools\gcc-4.6.3\bin;' + $RDrive + '\R\bin\i386;' + $env:PATH
   $env:PATH.Split(";")
 
   Progress "Setting R_LIBS_USER"
