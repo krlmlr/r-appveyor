@@ -1,4 +1,6 @@
 $CRAN = "http://cran.rstudio.com"
+$RVersion = "R-stable"
+
 
 # Found at http://zduck.com/2012/powershell-batch-files-exit-codes/
 Function Exec
@@ -66,8 +68,8 @@ Function Bootstrap {
   Progress "Mounting R.vhd"
   $RDrive = [string](Mount-DiskImage -ImagePath $ImageFullPath -Passthru | Get-DiskImage | Get-Disk | Get-Partition | Get-Volume).DriveLetter + ":"
   # Assert that R was mounted properly
-  if ( -not (Test-Path "${RDrive}\R\bin" -PathType Container) ) {
-    Throw "Failed to mount R. Could not find directory: ${RDrive}\R\bin"
+  if ( -not (Test-Path "${RDrive}\${RVersion}\bin" -PathType Container) ) {
+    Throw "Failed to mount R. Could not find directory: ${RDrive}\${RVersion}\bin"
   }
   echo "R is now available on drive $RDrive"
 
@@ -79,7 +81,7 @@ Function Bootstrap {
   cat .\.Rbuildignore
 
   Progress "Setting PATH"
-  $env:PATH = $RDrive + '\Rtools\bin;' + $RDrive + '\Rtools\MinGW\bin;' + $RDrive + '\Rtools\gcc-4.6.3\bin;' + $RDrive + '\R\bin\i386;' + $env:PATH
+  $env:PATH = $RDrive + '\Rtools\bin;' + $RDrive + '\Rtools\MinGW\bin;' + $RDrive + '\Rtools\gcc-4.6.3\bin;' + $RDrive + '\' + $RVersion + '\bin\i386;' + $env:PATH
   $env:PATH.Split(";")
 
   Progress "Setting R_LIBS_USER"
