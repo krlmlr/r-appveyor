@@ -47,30 +47,29 @@ Function Bootstrap {
 
   Progress "Bootstrap: Start"
 
+  Progress "Adding GnuWin32 tools to PATH"
+  $env:PATH = "C:\Program Files (x86)\Git\bin;" + $env:PATH
+
   Progress "Setting time zone"
   tzutil /g
   tzutil /s "GMT Standard Time"
   tzutil /g
-  Progress "Downloading R.iso"
-  bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.iso.gz | gunzip -c > ../R.iso'
 
-  Progress "Getting full path for R.iso"
-  $ImageFullPath = Get-ChildItem "..\R.iso" | % { $_.FullName }
-  $ImageFullPath
+  Progress "Downloading R.vhd"
+  bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.vhd.gz | gunzip -c > ../R.vhd'
 
-  Progress "Mounting R.iso"
-  Mount-DiskImage -ImagePath $ImageFullPath
-  # Enumerating drive letters takes about 10 seconds:
-  # http://www.powershellmagazine.com/2013/03/07/pstip-finding-the-drive-letter-of-a-mounted-disk-image/
-  # Hard-coding mounted drive letter here
-  $ISOPath = "E:"
-  $RPath = $ISOPath
+  Progress "Getting full path for R.vhd"
+  $ImageFullPath = Get-ChildItem "..\R.vhd" | % { $_.FullName }
+  $ImageSize = (Get-Item $ImageFullPath).length
+  echo "$ImageFullPath [$ImageSize bytes]"
 
-  Progress "Copying R to hard disk"
-  $RPath = "C:"
-  cp -Recurse ($ISOPath + "\R") ($RPath + "\")
-  Progress "Setting write permissions for DESCRIPTION files"
-  gci ($RPath + "\R") -Include DESCRIPTION -Recurse | % { if($_.IsReadOnly){$_.IsReadOnly= $false} }
+  Progress "Mounting R.vhd"
+  $RDrive = [string](Mount-DiskImage -ImagePath $ImageFullPath -Passthru | Get-DiskImage | Get-Disk | Get-Partition | Get-Volume).DriveLetter + ":"
+  # Assert that R was mounted properly
+  if ( -not (Test-Path "${RDrive}\R\bin" -PathType Container) ) {
+    Throw "Failed to mount R. Could not find directory: ${RDrive}\R\bin"
+  }
+  echo "R is now available on drive $RDrive"
 
   Progress "Downloading and installing travis-tool.sh"
   Invoke-WebRequest http://raw.github.com/jread-usgs/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
@@ -80,7 +79,7 @@ Function Bootstrap {
   cat .\.Rbuildignore
 
   Progress "Setting PATH"
-  $env:PATH = $ISOPath + '\Rtools\bin;' + $ISOPath + '\Rtools\MinGW\bin;' + $ISOPath + '\Rtools\gcc-4.6.3\bin;' + $RPath + '\R\bin\i386;' + $env:PATH
+  $env:PATH = $RDrive + '\Rtools\bin;' + $RDrive + '\Rtools\MinGW\bin;' + $RDrive + '\Rtools\gcc-4.6.3\bin;' + $RDrive + '\R\bin\i386;' + $env:PATH
   $env:PATH.Split(";")
 
   Progress "Setting R_LIBS_USER"
