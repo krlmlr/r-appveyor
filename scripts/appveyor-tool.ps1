@@ -1,5 +1,5 @@
 $CRAN = "http://cran.rstudio.com"
-$RVersion = "R-devel"
+$RVersion = "R-unstable"
 
 
 # Found at http://zduck.com/2012/powershell-batch-files-exit-codes/
