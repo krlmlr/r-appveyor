@@ -1,2 +1,2 @@
 library(testthat)
-test_package("fakepackage")
+test_check("fakepackage")
