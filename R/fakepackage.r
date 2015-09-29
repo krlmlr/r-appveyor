@@ -18,3 +18,4 @@ MASS_huber <- function() MASS::huber
 
 #' @useDynLib fakepackage
 #' @importFrom Rcpp sourceCpp
+NULL
