@@ -55,8 +55,8 @@ Function Bootstrap {
   tzutil /s "GMT Standard Time"
   tzutil /g
 
-  Progress "Downloading R.vhd"
-  bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.vhd.gz | gunzip -c > ../R.vhd'
+  Progress "Downloading R.vhd and Rtools.vhd"
+  bash -c '(curl -s -L https://rportable.blob.core.windows.net/r-portable/master/Rtools.vhd.gz | gunzip -c > ../Rtools.vhd) &; rtools_pid=$!; curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.vhd.gz | gunzip -c > ../R.vhd; wait $rtools_pid'
 
   Progress "Getting full path for R.vhd"
   $ImageFullPath = Get-ChildItem "..\R.vhd" | % { $_.FullName }
@@ -70,6 +70,19 @@ Function Bootstrap {
     Throw "Failed to mount R. Could not find directory: ${RDrive}\R\bin"
   }
   echo "R is now available on drive $RDrive"
+
+  Progress "Getting full path for Rtools.vhd"
+  $ImageFullPath = Get-ChildItem "..\Rtools.vhd" | % { $_.FullName }
+  $ImageSize = (Get-Item $ImageFullPath).length
+  echo "$ImageFullPath [$ImageSize bytes]"
+
+  Progress "Mounting Rtools.vhd"
+  $RtoolsDrive = [string](Mount-DiskImage -ImagePath $ImageFullPath -Passthru | Get-DiskImage | Get-Disk | Get-Partition | Get-Volume).DriveLetter + ":"
+  # Assert that R was mounted properly
+  if ( -not (Test-Path "${RtoolsDrive}\Rtools\bin" -PathType Container) ) {
+    Throw "Failed to mount Rtools. Could not find directory: ${RtoolsDrive}\Rtools\bin"
+  }
+  echo "Rtools is now available on drive $RtoolsDrive"
 
   Progress "Downloading and installing travis-tool.sh"
   Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
