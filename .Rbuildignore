@@ -3,3 +3,5 @@
 ^sample\.appveyor\.yml$
 ^scripts$
 ^Makefile$
+^.*\.Rproj$
+^\.Rproj\.user$

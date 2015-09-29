@@ -7,9 +7,13 @@ Depends:
     R (>= 3.0.1)
 License: Apache License (== 2.0)
 Description: This is just a fake package allowing me to use travis to check my
-    package to make it easier to use travis. <insert meme here>
+    package to make it easier to use travis.
 Imports:
     assertthat,
-    MASS
+    MASS,
+    Rcpp
 Suggests:
-    testthat
+    testthat,
+    knitr
+VignetteBuilder: knitr
+LinkingTo: Rcpp
