@@ -56,7 +56,7 @@ Function Bootstrap {
   tzutil /g
 
   Progress "Downloading R.vhd and Rtools.vhd"
-  bash -c '(curl -s -L https://rportable.blob.core.windows.net/r-portable/master/Rtools.vhd.gz | gunzip -c > ../Rtools.vhd) &; rtools_pid=$!; curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.vhd.gz | gunzip -c > ../R.vhd; wait $rtools_pid'
+  bash -c '(curl -s -L https://rportable.blob.core.windows.net/r-portable/master/Rtools.vhd.gz | gunzip -c > ../Rtools.vhd) & rtools_pid=$!; curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.vhd.gz | gunzip -c > ../R.vhd; wait $rtools_pid'
 
   Progress "Getting full path for R.vhd"
   $ImageFullPath = Get-ChildItem "..\R.vhd" | % { $_.FullName }
