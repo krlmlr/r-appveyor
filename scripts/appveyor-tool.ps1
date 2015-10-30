@@ -71,15 +71,15 @@ Function Bootstrap {
   }
   echo "R is now available on drive $RDrive"
 
-  Progress "Getting full path for Rtools.vhd"
-  $ImageFullPath = Get-ChildItem "..\Rtools.vhd" | % { $_.FullName }
-  $ImageSize = (Get-Item $ImageFullPath).length
-  echo "$ImageFullPath [$ImageSize bytes]"
-
   if ( Test-Path "src" ) {
 
   Progress "Downloading Rtools.vhd"
   bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/Rtools.vhd.gz | gunzip -c > ../Rtools.vhd'
+
+  Progress "Getting full path for Rtools.vhd"
+  $ImageFullPath = Get-ChildItem "..\Rtools.vhd" | % { $_.FullName }
+  $ImageSize = (Get-Item $ImageFullPath).length
+  echo "$ImageFullPath [$ImageSize bytes]"
 
   Progress "Mounting Rtools.vhd"
   $RtoolsDrive = [string](Mount-DiskImage -ImagePath $ImageFullPath -Passthru | Get-DiskImage | Get-Disk | Get-Partition | Get-Volume).DriveLetter + ":"
