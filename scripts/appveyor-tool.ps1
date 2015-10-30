@@ -71,6 +71,9 @@ Function Bootstrap {
   }
   echo "R is now available on drive $RDrive"
 
+  Progress "Setting PATH"
+  $env:PATH = $RDrive + '\R\bin\i386;' + $env:PATH
+
   if ( Test-Path "src" ) {
 
   Progress "Downloading Rtools.vhd"
@@ -89,19 +92,20 @@ Function Bootstrap {
   }
   echo "Rtools is now available on drive $RtoolsDrive"
 
+  Progress "Setting PATH"
+  $env:PATH = $RtoolsDrive + '\Rtools\bin;' + $RtoolsDrive + '\Rtools\MinGW\bin;' + $RtoolsDrive + '\Rtools\gcc-4.6.3\bin;' + $env:PATH
+  }
+  Else {
+    Progress "Skipping download of Rtools because src/ directory is missing."
+  }
+
   Progress "Downloading and installing travis-tool.sh"
   Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
   echo '@bash.exe ../travis-tool.sh %*' | Out-File -Encoding ASCII .\travis-tool.sh.cmd
   cat .\travis-tool.sh.cmd
   bash -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
   cat .\.Rbuildignore
-  }
-  Else {
-    Progress "Skipping download of Rtools because src/ directory is missing."
-  }
 
-  Progress "Setting PATH"
-  $env:PATH = $RtoolsDrive + '\Rtools\bin;' + $RtoolsDrive + '\Rtools\MinGW\bin;' + $RtoolsDrive + '\Rtools\gcc-4.6.3\bin;' + $RDrive + '\R\bin\i386;' + $env:PATH
   $env:PATH.Split(";")
 
   Progress "Setting R_LIBS_USER"
