@@ -88,6 +88,10 @@ Function Bootstrap {
     Throw "Failed to mount Rtools. Could not find directory: ${RtoolsDrive}\Rtools\bin"
   }
   echo "Rtools is now available on drive $RtoolsDrive"
+  }
+  Else {
+    Progress "Skipping download of Rtools because src/ directory is missing."
+  }
 
   Progress "Downloading and installing travis-tool.sh"
   Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
@@ -95,10 +99,6 @@ Function Bootstrap {
   cat .\travis-tool.sh.cmd
   bash -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
   cat .\.Rbuildignore
-  }
-  Else {
-    Progress "Skipping download of Rtools because src/ directory is missing."
-  }
 
   Progress "Setting PATH"
   $env:PATH = $RtoolsDrive + '\Rtools\bin;' + $RtoolsDrive + '\Rtools\MinGW\bin;' + $RtoolsDrive + '\Rtools\gcc-4.6.3\bin;' + $RDrive + '\R\bin\i386;' + $env:PATH
