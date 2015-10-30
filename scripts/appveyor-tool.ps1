@@ -71,6 +71,9 @@ Function Bootstrap {
   }
   echo "R is now available on drive $RDrive"
 
+  Progress "Setting PATH"
+  $env:PATH = $RDrive + '\R\bin\i386;' + $env:PATH
+
   if ( Test-Path "src" ) {
 
   Progress "Downloading Rtools.vhd"
@@ -88,6 +91,9 @@ Function Bootstrap {
     Throw "Failed to mount Rtools. Could not find directory: ${RtoolsDrive}\Rtools\bin"
   }
   echo "Rtools is now available on drive $RtoolsDrive"
+
+  Progress "Setting PATH"
+  $env:PATH = $RtoolsDrive + '\Rtools\bin;' + $RtoolsDrive + '\Rtools\MinGW\bin;' + $RtoolsDrive + '\Rtools\gcc-4.6.3\bin;' + $env:PATH
   }
   Else {
     Progress "Skipping download of Rtools because src/ directory is missing."
@@ -100,8 +106,6 @@ Function Bootstrap {
   bash -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
   cat .\.Rbuildignore
 
-  Progress "Setting PATH"
-  $env:PATH = $RtoolsDrive + '\Rtools\bin;' + $RtoolsDrive + '\Rtools\MinGW\bin;' + $RtoolsDrive + '\Rtools\gcc-4.6.3\bin;' + $RDrive + '\R\bin\i386;' + $env:PATH
   $env:PATH.Split(";")
 
   Progress "Setting R_LIBS_USER"
