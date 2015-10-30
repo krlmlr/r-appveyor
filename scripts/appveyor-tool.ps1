@@ -55,8 +55,8 @@ Function Bootstrap {
   tzutil /s "GMT Standard Time"
   tzutil /g
 
-  Progress "Downloading R.vhd and Rtools.vhd"
-  bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/Rtools.vhd.gz | gunzip -c > ../Rtools.vhd; curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.vhd.gz | gunzip -c > ../R.vhd'
+  Progress "Downloading R.vhd"
+  bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.vhd.gz | gunzip -c > ../R.vhd'
 
   Progress "Getting full path for R.vhd"
   $ImageFullPath = Get-ChildItem "..\R.vhd" | % { $_.FullName }
@@ -76,6 +76,11 @@ Function Bootstrap {
   $ImageSize = (Get-Item $ImageFullPath).length
   echo "$ImageFullPath [$ImageSize bytes]"
 
+  if ( Test-Path "src" ) {
+
+  Progress "Downloading Rtools.vhd"
+  bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/Rtools.vhd.gz | gunzip -c > ../Rtools.vhd'
+
   Progress "Mounting Rtools.vhd"
   $RtoolsDrive = [string](Mount-DiskImage -ImagePath $ImageFullPath -Passthru | Get-DiskImage | Get-Disk | Get-Partition | Get-Volume).DriveLetter + ":"
   # Assert that R was mounted properly
@@ -90,6 +95,10 @@ Function Bootstrap {
   cat .\travis-tool.sh.cmd
   bash -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
   cat .\.Rbuildignore
+  }
+  Else {
+    Progress "Skipping download of Rtools because src/ directory is missing."
+  }
 
   Progress "Setting PATH"
   $env:PATH = $RtoolsDrive + '\Rtools\bin;' + $RtoolsDrive + '\Rtools\MinGW\bin;' + $RtoolsDrive + '\Rtools\gcc-4.6.3\bin;' + $RDrive + '\R\bin\i386;' + $env:PATH
