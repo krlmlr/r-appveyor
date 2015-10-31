@@ -55,8 +55,8 @@ Function Bootstrap {
   tzutil /s "GMT Standard Time"
   tzutil /g
 
-  Progress "Downloading R.vhd and Rtools.vhd"
-  bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/Rtools.vhd.gz | gunzip -c > ../Rtools.vhd; curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.vhd.gz | gunzip -c > ../R.vhd'
+  Progress "Downloading R.vhd"
+  bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.vhd.gz | gunzip -c > ../R.vhd'
 
   Progress "Getting full path for R.vhd"
   $ImageFullPath = Get-ChildItem "..\R.vhd" | % { $_.FullName }
@@ -71,6 +71,14 @@ Function Bootstrap {
   }
   echo "R is now available on drive $RDrive"
 
+  Progress "Setting PATH"
+  $env:PATH = $RDrive + '\R\bin\i386;' + 'C:\MinGW\msys\1.0\bin;' + $env:PATH
+
+  if ( Test-Path "src" ) {
+
+  Progress "Downloading Rtools.vhd"
+  bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/Rtools.vhd.gz | gunzip -c > ../Rtools.vhd'
+
   Progress "Getting full path for Rtools.vhd"
   $ImageFullPath = Get-ChildItem "..\Rtools.vhd" | % { $_.FullName }
   $ImageSize = (Get-Item $ImageFullPath).length
@@ -84,6 +92,13 @@ Function Bootstrap {
   }
   echo "Rtools is now available on drive $RtoolsDrive"
 
+  Progress "Setting PATH"
+  $env:PATH = $RtoolsDrive + '\Rtools\bin;' + $RtoolsDrive + '\Rtools\MinGW\bin;' + $RtoolsDrive + '\Rtools\gcc-4.6.3\bin;' + $env:PATH
+  }
+  Else {
+    Progress "Skipping download of Rtools because src/ directory is missing."
+  }
+
   Progress "Downloading and installing travis-tool.sh"
   Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
   echo '@bash.exe ../travis-tool.sh %*' | Out-File -Encoding ASCII .\travis-tool.sh.cmd
@@ -91,8 +106,6 @@ Function Bootstrap {
   bash -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
   cat .\.Rbuildignore
 
-  Progress "Setting PATH"
-  $env:PATH = $RtoolsDrive + '\Rtools\bin;' + $RtoolsDrive + '\Rtools\MinGW\bin;' + $RtoolsDrive + '\Rtools\gcc-4.6.3\bin;' + $RDrive + '\R\bin\i386;' + $env:PATH
   $env:PATH.Split(";")
 
   Progress "Setting R_LIBS_USER"
