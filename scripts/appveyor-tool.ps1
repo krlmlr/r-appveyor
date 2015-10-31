@@ -1,14 +1,5 @@
 $CRAN = "http://cran.rstudio.com"
 
-# Set the path of gcc
-## The "c:\Rtools\" + $gcc_path + "\bin" will be added to $PATH
-if ( -not(Test-Path Env:\GCC_PATH) ) {
-    $gcc_path = "gcc-4.6.3"
-}
-Else {
-    $gcc_path = $env:GCC_PATH
-}
-
 # Found at http://zduck.com/2012/powershell-batch-files-exit-codes/
 Function Exec
 {
@@ -102,6 +93,20 @@ Function Bootstrap {
   echo "Rtools is now available on drive $RtoolsDrive"
 
   Progress "Setting PATH"
+  if ( -not(Test-Path Env:\GCC_PATH) ) {
+    echo "Detecting whether C++11 is required"
+    ${RDrive}\R\bin\Rscript -e "stopifnot(grepl('[cC]\\+\\+11', read.dcf('DESCRIPTION')[,'SystemRequirements']))"
+    if ($LastExitCode -ne 0) {
+      $gcc_path = "gcc-4.6.3"
+    }
+    Else {
+      echo "C++11 is detected!"
+      $gcc_path = "mingw_64"
+    }
+  }
+  Else {
+    $gcc_path = $env:GCC_PATH
+  }
   $env:PATH = $RtoolsDrive + '\Rtools\bin;' + $RtoolsDrive + '\Rtools\MinGW\bin;' + $RtoolsDrive + '\Rtools\' + $gcc_path + '\bin;' + $env:PATH
   }
   Else {
