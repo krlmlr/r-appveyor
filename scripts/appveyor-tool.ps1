@@ -95,7 +95,7 @@ Function Bootstrap {
   Progress "Setting PATH"
   if ( -not(Test-Path Env:\GCC_PATH) ) {
     echo "Detecting whether C++11 is required"
-    ${RDrive}\R\bin\Rscript -e "stopifnot(grepl('[cC]\\+\\+11', read.dcf('DESCRIPTION')[,'SystemRequirements']))"
+    Rscript -e "stopifnot(grepl('[cC]\\+\\+11', read.dcf('DESCRIPTION')[,'SystemRequirements']))"
     if ($LastExitCode -ne 0) {
       $gcc_path = "gcc-4.6.3"
     }
