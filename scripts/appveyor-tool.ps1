@@ -2,7 +2,7 @@ $CRAN = "http://cran.rstudio.com"
 
 # Set the path of gcc
 ## The "c:\Rtools\" + $gcc_path + "\bin" will be added to $PATH
-if ( -not(Test-Path variable:GCC_PATH) ) {
+if ( -not(Test-Path Env:\GCC_PATH) ) {
     $gcc_path = "gcc-4.6.3"
 }
 Else {
