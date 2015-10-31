@@ -72,7 +72,7 @@ Function Bootstrap {
   echo "R is now available on drive $RDrive"
 
   Progress "Setting PATH"
-  $env:PATH = $RDrive + '\R\bin\i386;' + $env:PATH
+  $env:PATH = $RDrive + '\R\bin\i386;' + 'C:\MinGW\msys\1.0\bin;' + $env:PATH
 
   if ( Test-Path "src" ) {
 
