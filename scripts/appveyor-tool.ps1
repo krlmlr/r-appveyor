@@ -101,7 +101,7 @@ Function Bootstrap {
     }
     Else {
       echo "C++11 is detected!"
-      $gcc_path = "mingw_64"
+      $gcc_path = "mingw_32"
     }
   }
   Else {
