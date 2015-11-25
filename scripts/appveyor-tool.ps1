@@ -93,7 +93,13 @@ Function Bootstrap {
   echo "Rtools is now available on drive $RtoolsDrive"
 
   Progress "Setting PATH"
-  $env:PATH = $RtoolsDrive + '\Rtools\bin;' + $RtoolsDrive + '\Rtools\MinGW\bin;' + $RtoolsDrive + '\Rtools\gcc-4.6.3\bin;' + $env:PATH
+  if ( -not(Test-Path Env:\GCC_PATH) ) {
+    $gcc_path = "gcc-4.6.3"
+  }
+  Else {
+    $gcc_path = $env:GCC_PATH
+  }
+  $env:PATH = $RtoolsDrive + '\Rtools\bin;' + $RtoolsDrive + '\Rtools\MinGW\bin;' + $RtoolsDrive + '\Rtools\' + $gcc_path + '\bin;' + $env:PATH
   }
   Else {
     Progress "Skipping download of Rtools because src/ directory is missing."
