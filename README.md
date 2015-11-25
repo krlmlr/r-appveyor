@@ -40,6 +40,8 @@ This wouldn't have been as easy without [r-travis](https://github.com/craigcitro
 Other branches
 --------------
 
+[![Build status for expected failure](https://ci.appveyor.com/api/projects/status/github/krlmlr/r-appveyor?branch=master-mingw32&svg=true)](https://ci.appveyor.com/project/krlmlr/r-appveyor/branch/master-mingw32) ([`master-mingw32` branch](https://github.com/krlmlr/r-appveyor/tree/master-mingw32), success expected)
+
 [![Build status for expected failure](https://ci.appveyor.com/api/projects/status/github/krlmlr/r-appveyor?branch=master-fail&svg=true)](https://ci.appveyor.com/project/krlmlr/r-appveyor/branch/master-fail) ([`master-fail` branch](https://github.com/krlmlr/r-appveyor/tree/master-fail), failure expected)
 
 [![Build status for run without copying R](https://ci.appveyor.com/api/projects/status/github/krlmlr/r-appveyor?branch=master-nocopy&svg=true)](https://ci.appveyor.com/project/krlmlr/r-appveyor/branch/master-nocopy) ([`master-nocopy` branch](https://github.com/krlmlr/r-appveyor/tree/master-nocopy), probably will fail until an [issue with R](https://bugs.r-project.org/bugzilla/show_bug.cgi?id=15942) is resolved)
