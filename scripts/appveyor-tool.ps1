@@ -74,7 +74,7 @@ Function Bootstrap {
   Progress "Setting PATH"
   $env:PATH = $RDrive + '\R\bin\i386;' + 'C:\MinGW\msys\1.0\bin;' + $env:PATH
 
-  if ( Test-Path "src" -or Test-Path variable:global:Rtools) {
+  if ( Test-Path "src" -Or Test-Path variable:global:Rtools) {
 
   Progress "Downloading Rtools.vhd"
   bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/Rtools.vhd.gz | gunzip -c > ../Rtools.vhd'
