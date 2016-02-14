@@ -77,9 +77,6 @@ Function InstallR {
   $RDrive = "C:"
   echo "R is now available on drive $RDrive"
 
-  dir C:\
-  dir C:\R
-
   Progress "Setting PATH"
   $env:PATH = $RDrive + '\R\bin\i386;' + 'C:\MinGW\msys\1.0\bin;' + $env:PATH
 
