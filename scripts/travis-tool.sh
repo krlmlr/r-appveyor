@@ -265,8 +265,10 @@ DumpLogs() {
 RunTests() {
     echo "Building with: R CMD build ${R_BUILD_ARGS}"
     if [[ "${OS:0:5}" == "MINGW" ]]; then
-        rm -rf vignettes
-        sed -i '/^VignetteBuilder:/d' DESCRIPTION
+        if [[ -d vignettes ]]; then
+            rm -rf vignettes
+            Rscript -e "d <- read.dcf('DESCRIPTION'); d[, 'VignetteBuilder'] <- NA; write.dcf(d, 'DESCRIPTION')"
+        fi
     fi
     R CMD build ${R_BUILD_ARGS} .
     # We want to grab the version we just built.
