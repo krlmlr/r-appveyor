@@ -84,7 +84,7 @@ Function InstallRtools {
   $rtoolsurl = "https://cran.rstudio.com/bin/windows/Rtools/Rtools$rtoolsver.exe"
 
   Progress ("Downloading Rtools from: " + $rtoolsurl)
-  bash -c ("curl -o ../Rtools-current.exe -L " + $rtoolsurl)
+  bash -c ("curl --silent -o ../Rtools-current.exe -L " + $rtoolsurl)
 
   Progress "Running Rtools installer"
   ..\Rtools-current.exe /VERYSILENT
