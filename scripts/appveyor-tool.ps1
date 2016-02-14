@@ -79,20 +79,17 @@ Function InstallR {
 }
 
 Function InstallRtools {
-  Progress "Downloading Rtools.vhd"
-  bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/Rtools.vhd.gz | gunzip -c > ../Rtools.vhd'
+  Progress "Determining Rtools version"
+  $rtoolsver = $(Invoke-WebRequest http://cran.r-project.org/bin/windows/Rtools/VERSION.txt).Content.Split(' ')[2].Split('.')[0..1] -Join ''
+  $rtoolsurl = "https://cran.rstudio.com/bin/windows/Rtools/Rtools$rtoolsver.exe"
 
-  Progress "Getting full path for Rtools.vhd"
-  $ImageFullPath = Get-ChildItem "..\Rtools.vhd" | % { $_.FullName }
-  $ImageSize = (Get-Item $ImageFullPath).length
-  echo "$ImageFullPath [$ImageSize bytes]"
+  Progress ("Downloading Rtools from: " + $rtoolsurl)
+  bash -c ("curl -o ../Rtools-current.exe -L " + $rtoolsurl)
 
-  Progress "Mounting Rtools.vhd"
-  $RtoolsDrive = [string](Mount-DiskImage -ImagePath $ImageFullPath -Passthru | Get-DiskImage | Get-Disk | Get-Partition | Get-Volume).DriveLetter + ":"
-  # Assert that R was mounted properly
-  if ( -not (Test-Path "${RtoolsDrive}\Rtools\bin" -PathType Container) ) {
-    Throw "Failed to mount Rtools. Could not find directory: ${RtoolsDrive}\Rtools\bin"
-  }
+  Progress "Running Rtools installer"
+  ..\Rtools-current.exe /VERYSILENT
+
+  $RtoolsDrive = "C:"
   echo "Rtools is now available on drive $RtoolsDrive"
 
   Progress "Setting PATH"
