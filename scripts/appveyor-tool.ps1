@@ -66,6 +66,10 @@ Function InstallR {
     $url_path = ""
     $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-release).Content).version + "patched"
   }
+  ElseIf ($version -eq "oldrel") {
+    $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-oldrel).Content).version
+    $url_path = ("old/" + $version + "/")
+  }
   Else {
       $url_path = ("old/" + $version + "/")
   }
