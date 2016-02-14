@@ -72,7 +72,13 @@ Function InstallR {
   bash -c ("curl --silent -o ../R-win.exe -L " + $rurl)
 
   Progress "Running R installer"
-  ..\R-win.exe /VERYSILENT
+  ..\R-win.exe /VERYSILENT /DIR="C:\R"
+
+  $RDrive = "C:"
+  echo "R is now available on drive $RDrive"
+
+  Progress "Setting PATH"
+  $env:PATH = $RDrive + '\R\bin\i386;' + 'C:\MinGW\msys\1.0\bin;' + $env:PATH
 
   Progress "Testing R installation"
   Rscript -e "sessionInfo()"
