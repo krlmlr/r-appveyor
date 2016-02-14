@@ -69,7 +69,7 @@ Function InstallR {
   $rurl = "https://cran.rstudio.com/bin/windows/base/" + $url_path + "R-" + $version + "-win.exe"
 
   Progress ("Downloading R from: " + $rurl)
-  bash -c ("curl --silent -o ../R-win.exe -L " + $rurl)
+  Exec { bash -c ("curl --silent -o ../R-win.exe -L " + $rurl) }
 
   Progress "Running R installer"
   Exec { ..\R-win.exe /VERYSILENT /DIR="C:\R" }
