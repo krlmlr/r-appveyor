@@ -10,7 +10,7 @@ environment:
   - R_VERSION: patched
 
   - R_VERSION: oldrel
-  - CRAN: http://cran.rstudio.com
+    CRAN: http://cran.rstudio.com
 
 init:
   ps: |
