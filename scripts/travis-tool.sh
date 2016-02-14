@@ -266,6 +266,7 @@ RunTests() {
     echo "Building with: R CMD build ${R_BUILD_ARGS}"
     if [[ "${OS:0:5}" == "MINGW" ]]; then
         rm -rf vignettes
+        sed -i '/^VignetteBuilder:/d' DESCRIPTION
     fi
     R CMD build ${R_BUILD_ARGS} .
     # We want to grab the version we just built.
