@@ -71,9 +71,6 @@ Function InstallR {
   Progress ("Downloading R from: " + $rurl)
   Exec { bash -c ("curl --silent -o ../R-win.exe -L " + $rurl) }
 
-  dir .
-  dir ..
-
   Progress "Running R installer"
   Start-Process -FilePath ..\R-win.exe -ArgumentList "/VERYSILENT /DIR=C:\R" -NoNewWindow -Wait
 
