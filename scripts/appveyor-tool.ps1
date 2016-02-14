@@ -74,6 +74,8 @@ Function InstallR {
   dir .
   dir ..
 
+  $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
   Progress "Running R installer"
   Exec { ..\R-win.exe /VERYSILENT /DIR="C:\R" }
 
