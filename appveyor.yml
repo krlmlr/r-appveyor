@@ -1,5 +1,15 @@
 environment:
-  WARNINGS_ARE_ERRORS: 1
+  global:
+    WARNINGS_ARE_ERRORS: 1
+
+  matrix:
+  -
+
+  - R_VERSION: stable
+
+  - R_VERSION: patched
+
+  - R_VERSION: oldrel
 
 init:
   ps: |
