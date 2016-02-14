@@ -69,10 +69,16 @@ Function InstallR {
   $rurl = "https://cran.rstudio.com/bin/windows/base/" + $url_path + "R-" + $version + "-win.exe"
 
   Progress ("Downloading R from: " + $rurl)
-  bash -c ("curl -s -o ../R-win.exe -L " + $rurl)
+  Exec { bash -c ("curl --silent -o ../R-win.exe -L " + $rurl) }
 
   Progress "Running R installer"
-  ..\R-win.exe /VERYSILENT
+  Start-Process -FilePath ..\R-win.exe -ArgumentList "/VERYSILENT /DIR=C:\R" -NoNewWindow -Wait
+
+  $RDrive = "C:"
+  echo "R is now available on drive $RDrive"
+
+  Progress "Setting PATH"
+  $env:PATH = $RDrive + '\R\bin\i386;' + 'C:\MinGW\msys\1.0\bin;' + $env:PATH
 
   Progress "Testing R installation"
   Rscript -e "sessionInfo()"
