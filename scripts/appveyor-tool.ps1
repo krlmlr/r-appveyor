@@ -72,7 +72,7 @@ Function InstallR {
   bash -c ("curl --silent -o ../R-win.exe -L " + $rurl)
 
   Progress "Running R installer"
-  ..\R-win.exe /VERYSILENT /DIR="C:\R"
+  Exec ..\R-win.exe /VERYSILENT /DIR="C:\R"
 
   $RDrive = "C:"
   echo "R is now available on drive $RDrive"
