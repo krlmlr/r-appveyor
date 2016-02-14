@@ -64,6 +64,8 @@ Function InstallR {
       $url_path = ("old/" + $version + "/")
   }
 
+  Progress ("URL path: " + $url_path)
+
   $rurl = "https://cran.rstudio.com/bin/windows/base/" + $url_path + "R-" + $version + "-win.exe"
 
   Progress "Downloading R installer from " + $rurl
