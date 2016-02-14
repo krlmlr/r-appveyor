@@ -93,7 +93,7 @@ Function InstallRtools {
   bash -c ("curl --silent -o ../Rtools-current.exe -L " + $rtoolsurl)
 
   Progress "Running Rtools installer"
-  ..\Rtools-current.exe /VERYSILENT
+  Start-Process -FilePath ..\Rtools-current.exe -ArgumentList /VERYSILENT -NoNewWindow -Wait
 
   $RtoolsDrive = "C:"
   echo "Rtools is now available on drive $RtoolsDrive"
