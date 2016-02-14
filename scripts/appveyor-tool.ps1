@@ -41,19 +41,9 @@ Function TravisTool
   Exec { bash.exe ../travis-tool.sh $Params }
 }
 
-Function Bootstrap {
+Function InstallR {
   [CmdletBinding()]
   Param()
-
-  Progress "Bootstrap: Start"
-
-  Progress "Adding GnuWin32 tools to PATH"
-  $env:PATH = "C:\Program Files (x86)\Git\bin;" + $env:PATH
-
-  Progress "Setting time zone"
-  tzutil /g
-  tzutil /s "GMT Standard Time"
-  tzutil /g
 
   Progress "Downloading R.vhd"
   bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.vhd.gz | gunzip -c > ../R.vhd'
@@ -73,8 +63,9 @@ Function Bootstrap {
 
   Progress "Setting PATH"
   $env:PATH = $RDrive + '\R\bin\i386;' + 'C:\MinGW\msys\1.0\bin;' + $env:PATH
+}
 
-  if ( Test-Path "/**/src" ) {
+Function InstallRtools {
   Progress "Downloading Rtools.vhd"
   bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/Rtools.vhd.gz | gunzip -c > ../Rtools.vhd'
 
@@ -99,6 +90,26 @@ Function Bootstrap {
     $gcc_path = $env:GCC_PATH
   }
   $env:PATH = $RtoolsDrive + '\Rtools\bin;' + $RtoolsDrive + '\Rtools\MinGW\bin;' + $RtoolsDrive + '\Rtools\' + $gcc_path + '\bin;' + $env:PATH
+}
+
+Function Bootstrap {
+  [CmdletBinding()]
+  Param()
+
+  Progress "Bootstrap: Start"
+
+  Progress "Adding GnuWin32 tools to PATH"
+  $env:PATH = "C:\Program Files (x86)\Git\bin;" + $env:PATH
+
+  Progress "Setting time zone"
+  tzutil /g
+  tzutil /s "GMT Standard Time"
+  tzutil /g
+
+  InstallR
+
+  if ( Test-Path "/**/src" ) {
+    InstallRtools
   }
   Else {
     Progress "Skipping download of Rtools because src/ directory is missing."
