@@ -70,7 +70,7 @@ Function InstallR {
   bash -c ('curl -o ../R-win.exe -L ' + $rurl)
 
   Progress "Running R installer"
-  ../R-win.exe
+  ../R-win.exe /VERYSILENT
 
   Progress "Testing R installation"
   Rscript -e "sessionInfo()"
