@@ -24,7 +24,7 @@ PANDOC_URL="https://s3.amazonaws.com/rstudio-buildtools/pandoc-${PANDOC_VERSION}
 PATH="${PATH}:/usr/texbin"
 
 R_BUILD_ARGS=${R_BUILD_ARGS-"--no-build-vignettes --no-manual"}
-R_CHECK_ARGS=${R_CHECK_ARGS-"--ignore-vignettes --no-manual --as-cran"}
+R_CHECK_ARGS=${R_CHECK_ARGS-"--ignore-vignettes --as-cran"}
 
 R_USE_BIOC_CMDS="source('${BIOC}');"\
 " tryCatch(useDevel(${BIOC_USE_DEVEL}),"\
