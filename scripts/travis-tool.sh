@@ -264,6 +264,9 @@ DumpLogs() {
 
 RunTests() {
     echo "Building with: R CMD build ${R_BUILD_ARGS}"
+    if [[ "${OS:0:5}" == "MINGW" ]]; then
+        rm -rf vignettes
+    fi
     R CMD build ${R_BUILD_ARGS} .
     # We want to grab the version we just built.
     FILE=$(ls -1t *.tar.gz | head -n 1)
@@ -271,7 +274,6 @@ RunTests() {
     # Create binary package (currently Windows only)
     if [[ "${OS:0:5}" == "MINGW" ]]; then
         R_CHECK_INSTALL_ARGS="--install-args=--build"
-        rm -rf vignettes
     fi
 
     echo "Testing with: R CMD check \"${FILE}\" ${R_CHECK_ARGS} ${R_CHECK_INSTALL_ARGS}"
