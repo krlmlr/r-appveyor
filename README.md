@@ -12,17 +12,12 @@ Usage
 
 1. Sign up to [AppVeyor](http://appveyor.com).
 2. [Enable testing](https://ci.appveyor.com/projects/new) for your project.
-3. Save a copy of [`sample.appveyor.yml`](/sample.appveyor.yml) as `appveyor.yml` to the root of your project.
+3. Run `devtools::use_appveyor()` in your project.
 4. (Optional) Adapt `appveyor.yml` to your needs according to the [documentation](http://www.appveyor.com/docs/appveyor-yml).
-5. Add the following line to `.Rbuildignore` of your project:
-
-    ```
-    ^appveyor\.yml$
-    ```
+5. (Optional) Add a badge as described by the output of `devtools::use_appveyor()`.
 6. Be sure to supply a `.gitattributes` file that takes care of fixing CRLF conversion settings that are relevant on Windows.  [The one in this repo](/.gitattributes) can be used for starters.
 7. Push to your repo to start building.
-8. (Optional) Add a badge as described in the "Badges" section of [your project's](https://ci.appveyor.com/projects) "SETTINGS" to your `README.md`.
-9. Enjoy!
+8. Enjoy!
 
 
 Artifacts
