@@ -45,10 +45,16 @@ Function InstallR {
   [CmdletBinding()]
   Param()
 
-  $version = "stable"
+  if ( -not(Test-Path Env:\R_VERSION) ) {
+    $version = "devel"
+  }
+  Else {
+    $version = $env:R_VERSION
+  }
+
   Progress ("Version: " + $version)
 
-  If ($version -eq "master") {
+  If ($version -eq "devel") {
     $url_path = ""
     $version = "devel"
   }
