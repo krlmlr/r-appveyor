@@ -45,10 +45,16 @@ Function InstallR {
   [CmdletBinding()]
   Param()
 
-  $version = "stable"
+  if ( -not(Test-Path Env:\R_VERSION) ) {
+    $version = "devel"
+  }
+  Else {
+    $version = $env:R_VERSION
+  }
+
   Progress ("Version: " + $version)
 
-  If ($version -eq "master") {
+  If ($version -eq "devel") {
     $url_path = ""
     $version = "devel"
   }
@@ -59,6 +65,10 @@ Function InstallR {
   ElseIf ($version -eq "patched") {
     $url_path = ""
     $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-release).Content).version + "patched"
+  }
+  ElseIf ($version -eq "oldrel") {
+    $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-oldrel).Content).version
+    $url_path = ("old/" + $version + "/")
   }
   Else {
       $url_path = ("old/" + $version + "/")
