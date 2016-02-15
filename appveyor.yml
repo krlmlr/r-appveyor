@@ -5,6 +5,13 @@ environment:
   matrix:
   - R_VERSION:
 
+  - R_ARCH: x64
+
+  - GCC_PATH: mingw32
+
+  - R_ARCH: x64
+    GCC_PATH: mingw64
+
   - R_VERSION: stable
 
   - R_VERSION: patched
