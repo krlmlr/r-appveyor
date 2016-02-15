@@ -276,7 +276,7 @@ RunTests() {
 
     # Create binary package (currently Windows only)
     if [[ "${OS:0:5}" == "MINGW" ]]; then
-        R_CHECK_INSTALL_ARGS="--install-args=--build"
+        R_CHECK_INSTALL_ARGS="--install-args='--build --no-multiarch'"
     fi
 
     echo "Testing with: R CMD check \"${FILE}\" ${R_CHECK_ARGS} ${R_CHECK_INSTALL_ARGS}"
