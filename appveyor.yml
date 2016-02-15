@@ -7,10 +7,10 @@ environment:
 
   - R_ARCH: x64
 
-  - GCC_PATH: mingw32
+  - GCC_PATH: mingw_32
 
   - R_ARCH: x64
-    GCC_PATH: mingw64
+    GCC_PATH: mingw_64
 
   - R_VERSION: stable
 
