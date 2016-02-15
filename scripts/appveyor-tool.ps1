@@ -52,6 +52,13 @@ Function InstallR {
     $version = $env:R_VERSION
   }
 
+  if ( -not(Test-Path Env:\R_ARCH) ) {
+    $arch = "i386"
+  }
+  Else {
+    $arch = $env:R_ARCH
+  }
+
   Progress ("Version: " + $version)
 
   If ($version -eq "devel") {
@@ -88,7 +95,7 @@ Function InstallR {
   echo "R is now available on drive $RDrive"
 
   Progress "Setting PATH"
-  $env:PATH = $RDrive + '\R\bin\i386;' + 'C:\MinGW\msys\1.0\bin;' + $env:PATH
+  $env:PATH = $RDrive + '\R\bin\' + $arch + ';' + 'C:\MinGW\msys\1.0\bin;' + $env:PATH
 
   Progress "Testing R installation"
   Rscript -e "sessionInfo()"
