@@ -23,13 +23,13 @@ Usage
 Environment variables
 ---------------------
 
-These can be set in the `appveyor.yml`, overriding the defaults.
+These can be set in the `appveyor.yml`, overriding the defaults. [This repo](https://github.com/krlmlr/r-appveyor/blob/master/appveyor.yml#L1) tests several configurations at once in a build matrix, see also the [build status](https://ci.appveyor.com/project/krlmlr/r-appveyor/branch/master).
 
 - `R_VERSION`: The version of R to be used for testing. Specify `devel`, `patched`, `release`, `oldrel`, or a version number.
 - `R_ARCH`: The architecture to be used for testing, one of `i386` (default) or `x64`.
 - `GCC_PATH`: The path to GCC in the Rtools installation, currently one of `gcc-4.6.3` (default), `mingw_32` or `mingw_64`.
 - `WARNINGS_ARE_ERRORS`: Set to 1 to treat all warnings as errors.
-- `CRAN`: The CRAN mirror to use, defaults to RStudio's CDN via HTTPS. Change to HTTP for `oldrel` or earlier.
+- `CRAN`: The CRAN mirror to use, defaults to [RStudio's CDN via HTTPS](https://cran.rstudio.com). Change to [HTTP](http://cran.rstudio.com) for R 3.1.3 or earlier.
 - `R_BUILD_ARGS`: Arguments passed to `R CMD build`, defaults to `--no-manual`.
 - `R_CHECK_ARGS`: Arguments passed to `R CMD check`, defaults to `--no-manual --as-cran`.
 
@@ -50,7 +50,5 @@ This wouldn't have been as easy without [r-travis](https://github.com/craigcitro
 
 Other branches
 --------------
-
-[![Build status for expected success](https://ci.appveyor.com/api/projects/status/github/krlmlr/r-appveyor?branch=master-mingw32&svg=true)](https://ci.appveyor.com/project/krlmlr/r-appveyor/branch/master-mingw32) ([`master-mingw32` branch](https://github.com/krlmlr/r-appveyor/tree/master-mingw32), success expected)
 
 [![Build status for expected failure](https://ci.appveyor.com/api/projects/status/github/krlmlr/r-appveyor?branch=master-fail&svg=true)](https://ci.appveyor.com/project/krlmlr/r-appveyor/branch/master-fail) ([`master-fail` branch](https://github.com/krlmlr/r-appveyor/tree/master-fail), failure expected)
