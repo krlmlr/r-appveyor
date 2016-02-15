@@ -45,41 +45,74 @@ Function InstallR {
   [CmdletBinding()]
   Param()
 
-  Progress "Downloading R.vhd"
-  bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/R.vhd.gz | gunzip -c > ../R.vhd'
-
-  Progress "Getting full path for R.vhd"
-  $ImageFullPath = Get-ChildItem "..\R.vhd" | % { $_.FullName }
-  $ImageSize = (Get-Item $ImageFullPath).length
-  echo "$ImageFullPath [$ImageSize bytes]"
-
-  Progress "Mounting R.vhd"
-  $RDrive = [string](Mount-DiskImage -ImagePath $ImageFullPath -Passthru | Get-DiskImage | Get-Disk | Get-Partition | Get-Volume).DriveLetter + ":"
-  # Assert that R was mounted properly
-  if ( -not (Test-Path "${RDrive}\R\bin" -PathType Container) ) {
-    Throw "Failed to mount R. Could not find directory: ${RDrive}\R\bin"
+  if ( -not(Test-Path Env:\R_VERSION) ) {
+    $version = "devel"
   }
+  Else {
+    $version = $env:R_VERSION
+  }
+
+  if ( -not(Test-Path Env:\R_ARCH) ) {
+    $arch = "i386"
+  }
+  Else {
+    $arch = $env:R_ARCH
+  }
+
+  Progress ("Version: " + $version)
+
+  If ($version -eq "devel") {
+    $url_path = ""
+    $version = "devel"
+  }
+  ElseIf ($version -eq "stable") {
+    $url_path = ""
+    $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-release).Content).version
+  }
+  ElseIf ($version -eq "patched") {
+    $url_path = ""
+    $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-release).Content).version + "patched"
+  }
+  ElseIf ($version -eq "oldrel") {
+    $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-oldrel).Content).version
+    $url_path = ("old/" + $version + "/")
+  }
+  Else {
+      $url_path = ("old/" + $version + "/")
+  }
+
+  Progress ("URL path: " + $url_path)
+
+  $rurl = "https://cran.rstudio.com/bin/windows/base/" + $url_path + "R-" + $version + "-win.exe"
+
+  Progress ("Downloading R from: " + $rurl)
+  Exec { bash -c ("curl --silent -o ../R-win.exe -L " + $rurl) }
+
+  Progress "Running R installer"
+  Start-Process -FilePath ..\R-win.exe -ArgumentList "/VERYSILENT /DIR=C:\R" -NoNewWindow -Wait
+
+  $RDrive = "C:"
   echo "R is now available on drive $RDrive"
 
   Progress "Setting PATH"
-  $env:PATH = $RDrive + '\R\bin\i386;' + 'C:\MinGW\msys\1.0\bin;' + $env:PATH
+  $env:PATH = $RDrive + '\R\bin\' + $arch + ';' + 'C:\MinGW\msys\1.0\bin;' + $env:PATH
+
+  Progress "Testing R installation"
+  Rscript -e "sessionInfo()"
 }
 
 Function InstallRtools {
-  Progress "Downloading Rtools.vhd"
-  bash -c 'curl -s -L https://rportable.blob.core.windows.net/r-portable/master/Rtools.vhd.gz | gunzip -c > ../Rtools.vhd'
+  Progress "Determining Rtools version"
+  $rtoolsver = $(Invoke-WebRequest http://cran.r-project.org/bin/windows/Rtools/VERSION.txt).Content.Split(' ')[2].Split('.')[0..1] -Join ''
+  $rtoolsurl = "https://cran.rstudio.com/bin/windows/Rtools/Rtools$rtoolsver.exe"
 
-  Progress "Getting full path for Rtools.vhd"
-  $ImageFullPath = Get-ChildItem "..\Rtools.vhd" | % { $_.FullName }
-  $ImageSize = (Get-Item $ImageFullPath).length
-  echo "$ImageFullPath [$ImageSize bytes]"
+  Progress ("Downloading Rtools from: " + $rtoolsurl)
+  bash -c ("curl --silent -o ../Rtools-current.exe -L " + $rtoolsurl)
 
-  Progress "Mounting Rtools.vhd"
-  $RtoolsDrive = [string](Mount-DiskImage -ImagePath $ImageFullPath -Passthru | Get-DiskImage | Get-Disk | Get-Partition | Get-Volume).DriveLetter + ":"
-  # Assert that R was mounted properly
-  if ( -not (Test-Path "${RtoolsDrive}\Rtools\bin" -PathType Container) ) {
-    Throw "Failed to mount Rtools. Could not find directory: ${RtoolsDrive}\Rtools\bin"
-  }
+  Progress "Running Rtools installer"
+  Start-Process -FilePath ..\Rtools-current.exe -ArgumentList /VERYSILENT -NoNewWindow -Wait
+
+  $RtoolsDrive = "C:"
   echo "Rtools is now available on drive $RtoolsDrive"
 
   Progress "Setting PATH"

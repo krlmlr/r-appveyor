@@ -14,7 +14,7 @@ Imports:
     Rcpp
 Suggests:
     testthat,
-    knitr
+    rmarkdown
 VignetteBuilder: knitr
 LinkingTo: Rcpp
 RoxygenNote: 5.0.0
