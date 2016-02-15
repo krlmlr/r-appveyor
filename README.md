@@ -20,6 +20,21 @@ Usage
 8. Enjoy!
 
 
+Environment variables
+---------------------
+
+These can be set in the `appveyor.yml`, overriding the defaults.
+
+- `VERSION`: The version of R to be used for testing. Specify `devel`, `patched`, `release`, `oldrel`, or a version number.
+- `GCC_PATH`: The path to GCC in the Rtools installation, currently one of `gcc-4.6.3`, `mingw_32` or `mingw_64`.
+- `WARNINGS_ARE_ERRORS`: Set to 1 to treat all warnings as errors.
+- `CRAN`: The CRAN mirror to use, defaults to RStudio's CDN via HTTPS. Change to HTTP for `oldrel` or earlier.
+- `R_BUILD_ARGS`: Arguments passed to `R CMD build`, defaults to `--no-manual`.
+- `R_CHECK_ARGS`: Arguments passed to `R CMD check`, defaults to `--no-manual --as-cran`.
+
+Currently, all builds use the `--no-multiarch` switch for checking, and all vignettes (and the `VignetteBuilder` entry in `DESCRIPTION`) are removed prior to building (due to the absence of pandoc and LaTeX which are likely to be needed).
+
+
 Artifacts
 ---------
 
