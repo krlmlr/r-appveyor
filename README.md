@@ -48,7 +48,19 @@ Acknowledgements
 This wouldn't have been as easy without [r-travis](https://github.com/craigcitro/r-travis) and the experience gained there. Thanks!
 
 
+See also
+--------
+
+The [win-builder project](http://win-builder.r-project.org/) has been around much longer and provides more comprehensive testing; you still might want to use this service before submitting to CRAN.
+
+
 Other branches
 --------------
 
 [![Build status for expected failure](https://ci.appveyor.com/api/projects/status/github/krlmlr/r-appveyor?branch=master-fail&svg=true)](https://ci.appveyor.com/project/krlmlr/r-appveyor/branch/master-fail) ([`master-fail` branch](https://github.com/krlmlr/r-appveyor/tree/master-fail), failure expected)
+
+
+License
+-------
+
+MIT © [Kirill Müller](https://github.com/krlmlr).
