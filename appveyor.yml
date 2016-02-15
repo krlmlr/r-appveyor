@@ -12,6 +12,9 @@ environment:
   - R_VERSION: oldrel
     CRAN: http://cran.rstudio.com
 
+  - R_VERSION: 3.0.3
+    CRAN: http://cran.rstudio.com
+
 init:
   ps: |
         Get-Date
