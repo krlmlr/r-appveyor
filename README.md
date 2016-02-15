@@ -25,8 +25,9 @@ Environment variables
 
 These can be set in the `appveyor.yml`, overriding the defaults.
 
-- `VERSION`: The version of R to be used for testing. Specify `devel`, `patched`, `release`, `oldrel`, or a version number.
-- `GCC_PATH`: The path to GCC in the Rtools installation, currently one of `gcc-4.6.3`, `mingw_32` or `mingw_64`.
+- `R_VERSION`: The version of R to be used for testing. Specify `devel`, `patched`, `release`, `oldrel`, or a version number.
+- `R_ARCH`: The architecture to be used for testing, one of `i386` (default) or `x64`.
+- `GCC_PATH`: The path to GCC in the Rtools installation, currently one of `gcc-4.6.3` (default), `mingw_32` or `mingw_64`.
 - `WARNINGS_ARE_ERRORS`: Set to 1 to treat all warnings as errors.
 - `CRAN`: The CRAN mirror to use, defaults to RStudio's CDN via HTTPS. Change to HTTP for `oldrel` or earlier.
 - `R_BUILD_ARGS`: Arguments passed to `R CMD build`, defaults to `--no-manual`.
