@@ -6,7 +6,7 @@ set -e
 # Comment out this line for quieter output:
 set -x
 
-CRAN=${CRAN:-"http://cran.rstudio.com"}
+CRAN=${CRAN:-"https://cran.rstudio.com"}
 BIOC=${BIOC:-"http://bioconductor.org/biocLite.R"}
 BIOC_USE_DEVEL=${BIOC_USE_DEVEL:-"TRUE"}
 OS=$(uname -s)
@@ -23,8 +23,8 @@ PANDOC_URL="https://s3.amazonaws.com/rstudio-buildtools/pandoc-${PANDOC_VERSION}
 # root path.
 PATH="${PATH}:/usr/texbin"
 
-R_BUILD_ARGS=${R_BUILD_ARGS-"--no-build-vignettes --no-manual"}
-R_CHECK_ARGS=${R_CHECK_ARGS-"--no-build-vignettes --no-manual --as-cran"}
+R_BUILD_ARGS=${R_BUILD_ARGS-"--no-manual"}
+R_CHECK_ARGS=${R_CHECK_ARGS-"--no-manual --as-cran"}
 
 R_USE_BIOC_CMDS="source('${BIOC}');"\
 " tryCatch(useDevel(${BIOC_USE_DEVEL}),"\
@@ -264,13 +264,19 @@ DumpLogs() {
 
 RunTests() {
     echo "Building with: R CMD build ${R_BUILD_ARGS}"
+    if [[ "${OS:0:5}" == "MINGW" ]]; then
+        if [[ -d vignettes ]]; then
+            rm -rf vignettes
+            Rscript -e "d <- read.dcf('DESCRIPTION'); d[, 'VignetteBuilder'] <- NA; write.dcf(d, 'DESCRIPTION')"
+        fi
+    fi
     R CMD build ${R_BUILD_ARGS} .
     # We want to grab the version we just built.
     FILE=$(ls -1t *.tar.gz | head -n 1)
 
     # Create binary package (currently Windows only)
     if [[ "${OS:0:5}" == "MINGW" ]]; then
-        R_CHECK_INSTALL_ARGS="--install-args=--build"
+        R_CHECK_INSTALL_ARGS="--install-args=--build --no-multiarch"
     fi
 
     echo "Testing with: R CMD check \"${FILE}\" ${R_CHECK_ARGS} ${R_CHECK_INSTALL_ARGS}"
