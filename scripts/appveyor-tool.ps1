@@ -107,7 +107,7 @@ Function InstallRtools {
     $rtoolsver = $(Invoke-WebRequest http://cran.r-project.org/bin/windows/Rtools/VERSION.txt).Content.Split(' ')[2].Split('.')[0..1] -Join ''
   }
   Else {
-    $version = $env:RTOOLS_VERSION
+    $rtoolsver = $env:RTOOLS_VERSION
   }
 
   $rtoolsurl = "https://cran.rstudio.com/bin/windows/Rtools/Rtools$rtoolsver.exe"
