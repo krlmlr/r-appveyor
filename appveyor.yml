@@ -3,11 +3,13 @@
 # Download script file from GitHub
 init:
   ps: |
+        Get-Date
         $ErrorActionPreference = "Stop"
-        Import-Module '.\scripts\appveyor-tool.ps1'
 
 install:
-  ps: Bootstrap
+  ps: |
+        Import-Module '..\appveyor-tool.ps1'
+        Bootstrap
 
 # Adapt as necessary starting from here
 
