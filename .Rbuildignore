@@ -5,3 +5,4 @@
 ^Makefile$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.travis\.yml$
