@@ -267,7 +267,7 @@ RunTests() {
     if [[ "${OS:0:5}" == "MINGW" ]]; then
         if [[ -d vignettes ]]; then
             rm -rf vignettes
-            Rscript -e "d <- read.dcf('DESCRIPTION'); d[, 'VignetteBuilder'] <- NA; write.dcf(d, 'DESCRIPTION')"
+            Rscript -e "d <- read.dcf('DESCRIPTION'); d[, colnames(d) == 'VignetteBuilder'] <- NA; write.dcf(d, 'DESCRIPTION')"
         fi
     fi
     R CMD build ${R_BUILD_ARGS} .
