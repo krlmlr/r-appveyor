@@ -65,7 +65,7 @@ Function InstallR {
     $url_path = ""
     $version = "devel"
   }
-  ElseIf ($version -eq "stable") {
+  ElseIf (($version -eq "stable") -or ($version -eq "release")) {
     $url_path = ""
     $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-release).Content).version
   }
@@ -102,8 +102,14 @@ Function InstallR {
 }
 
 Function InstallRtools {
-  Progress "Determining Rtools version"
-  $rtoolsver = $(Invoke-WebRequest http://cran.r-project.org/bin/windows/Rtools/VERSION.txt).Content.Split(' ')[2].Split('.')[0..1] -Join ''
+  if ( -not(Test-Path Env:\RTOOLS_VERSION) ) {
+    Progress "Determining Rtools version"
+    $rtoolsver = $(Invoke-WebRequest http://cran.r-project.org/bin/windows/Rtools/VERSION.txt).Content.Split(' ')[2].Split('.')[0..1] -Join ''
+  }
+  Else {
+    $rtoolsver = $env:RTOOLS_VERSION
+  }
+
   $rtoolsurl = "https://cran.rstudio.com/bin/windows/Rtools/Rtools$rtoolsver.exe"
 
   Progress ("Downloading Rtools from: " + $rtoolsurl)
