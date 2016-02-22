@@ -65,7 +65,7 @@ Function InstallR {
     $url_path = ""
     $version = "devel"
   }
-  ElseIf (($version -eq "stable") -o ($version -eq "release")) {
+  ElseIf (($version -eq "stable") -or ($version -eq "release")) {
     $url_path = ""
     $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-release).Content).version
   }
