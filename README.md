@@ -22,7 +22,7 @@ Environment variables
 
 These can be set in the `appveyor.yml`, overriding the defaults. [This repo](https://github.com/krlmlr/r-appveyor/blob/master/appveyor.yml#L15) tests several configurations at once in a build matrix, see also the [build status](https://ci.appveyor.com/project/krlmlr/r-appveyor/branch/master).
 
-- `R_VERSION`: The version of R to be used for testing. Specify `devel`, `patched`, `release`, `oldrel`, or a version number.
+- `R_VERSION`: The version of R to be used for testing. Specify `devel`, `patched`, `stable` (or `release`), `oldrel`, or a version number.
 - `R_ARCH`: The architecture to be used for testing, one of `i386` (default) or `x64`.
 - `RTOOLS_VERSION`: The version of Rtools to be used for testing, defaults to the most recent Rtools. Specify e.g. `33` for Rtools 3.3.
 - `GCC_PATH`: The path to GCC in the Rtools installation, currently one of `gcc-4.6.3` (default), `mingw_32` or `mingw_64`.
