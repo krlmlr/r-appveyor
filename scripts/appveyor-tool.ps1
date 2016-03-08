@@ -147,7 +147,7 @@ Function Bootstrap {
 
   InstallR
 
-  if ( Test-Path "/**/src" ) {
+  if ( Test-Path "src" ) {
     InstallRtools
   }
   Else {
