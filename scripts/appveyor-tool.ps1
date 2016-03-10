@@ -1,4 +1,4 @@
-$CRAN = "http://cran.rstudio.com"
+$CRAN = "https://cloud.r-project.org"
 
 # Found at http://zduck.com/2012/powershell-batch-files-exit-codes/
 Function Exec
@@ -83,7 +83,7 @@ Function InstallR {
 
   Progress ("URL path: " + $url_path)
 
-  $rurl = "https://cran.rstudio.com/bin/windows/base/" + $url_path + "R-" + $version + "-win.exe"
+  $rurl = $CRAN + "/bin/windows/base/" + $url_path + "R-" + $version + "-win.exe"
 
   Progress ("Downloading R from: " + $rurl)
   Exec { bash -c ("curl --silent -o ../R-win.exe -L " + $rurl) }
@@ -104,13 +104,13 @@ Function InstallR {
 Function InstallRtools {
   if ( -not(Test-Path Env:\RTOOLS_VERSION) ) {
     Progress "Determining Rtools version"
-    $rtoolsver = $(Invoke-WebRequest http://cran.r-project.org/bin/windows/Rtools/VERSION.txt).Content.Split(' ')[2].Split('.')[0..1] -Join ''
+    $rtoolsver = $(Invoke-WebRequest ($CRAN + "/bin/windows/Rtools/VERSION.txt")).Content.Split(' ')[2].Split('.')[0..1] -Join ''
   }
   Else {
     $rtoolsver = $env:RTOOLS_VERSION
   }
 
-  $rtoolsurl = "https://cran.rstudio.com/bin/windows/Rtools/Rtools$rtoolsver.exe"
+  $rtoolsurl = $CRAN + "/bin/windows/Rtools/Rtools$rtoolsver.exe"
 
   Progress ("Downloading Rtools from: " + $rtoolsurl)
   bash -c ("curl --silent -o ../Rtools-current.exe -L " + $rtoolsurl)
