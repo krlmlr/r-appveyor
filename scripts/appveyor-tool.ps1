@@ -165,7 +165,9 @@ Function Bootstrap {
 
   Progress "Setting R_LIBS_USER"
   $env:R_LIBS_USER = 'c:\RLibrary'
-  mkdir $env:R_LIBS_USER
+  if ( -not(Test-Path $env:R_LIBS_USER) ) {
+    mkdir $env:R_LIBS_USER
+  }
 
   Progress "Bootstrap: Done"
 }
