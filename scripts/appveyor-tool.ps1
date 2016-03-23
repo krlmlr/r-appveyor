@@ -147,7 +147,7 @@ Function Bootstrap {
 
   InstallR
 
-  if ((Test-Path 'src') -or ($env:USE_RTOOLS)) {
+  if ((Test-Path "src") -or ($env:USE_RTOOLS)) {
     InstallRtools
   }
   Else {
