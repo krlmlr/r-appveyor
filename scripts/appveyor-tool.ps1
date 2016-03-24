@@ -46,7 +46,7 @@ Function InstallR {
   Param()
 
   if ( -not(Test-Path Env:\R_VERSION) ) {
-    $version = "devel"
+    $version = "patched"
   }
   Else {
     $version = $env:R_VERSION
