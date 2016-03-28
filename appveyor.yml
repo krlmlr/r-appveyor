@@ -19,11 +19,6 @@ environment:
 
   matrix:
   - R_VERSION: devel
-
-  - R_VERSION: devel
-    R_ARCH: x64
-
-  - R_VERSION: devel
     GCC_PATH: mingw_32
 
   - R_VERSION: devel
