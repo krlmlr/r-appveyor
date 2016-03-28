@@ -129,6 +129,7 @@ Function InstallRtools {
     $gcc_path = $env:GCC_PATH
   }
   $env:PATH = $RtoolsDrive + '\Rtools\bin;' + $RtoolsDrive + '\Rtools\MinGW\bin;' + $RtoolsDrive + '\Rtools\' + $gcc_path + '\bin;' + $env:PATH
+  $env:BINPREF=$RtoolsDrive + '/Rtools/mingw_$(WIN)/bin/'
 }
 
 Function Bootstrap {
