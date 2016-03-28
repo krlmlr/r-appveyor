@@ -128,13 +128,13 @@ Function InstallRtools {
   Else {
     $gcc_path = $env:GCC_PATH
   }
-  $env:PATH = $RtoolsDrive + '\Rtools\bin;' + $RtoolsDrive + '\Rtools\MinGW\bin;' + $env:PATH
 
   If ($gcc_path -eq "gcc-4.6.3") {
-    $env:BINPREF = $RtoolsDrive + '/Rtools/gcc-4.6.3/bin/'
+    $env:PATH = $RtoolsDrive + '\Rtools\bin;' + $RtoolsDrive + '\Rtools\gcc-4.6.3\bin;' + $env:PATH
   }
   Else {
     $env:BINPREF = $RtoolsDrive + '/Rtools/mingw_$(WIN)/bin/'
+    $env:PATH = $RtoolsDrive + '\Rtools\bin;' + $env:PATH
   }
 }
 
