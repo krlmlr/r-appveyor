@@ -17,6 +17,13 @@ Usage
 8. Enjoy!
 
 
+Build and test commands
+-----------------------
+
+The `travis-tool` used in `appveyor.yml` is a [modified copy](https://github.com/krlmlr/r-travis) of the r-travis project, documentation is available [on its wiki](https://github.com/craigcitro/r-travis/wiki#configuration-options).
+
+
+
 Environment variables
 ---------------------
 
