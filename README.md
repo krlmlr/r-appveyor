@@ -27,7 +27,7 @@ The `travis-tool` used in `appveyor.yml` is a [modified copy](https://github.com
 Environment variables
 ---------------------
 
-These can be set in the `appveyor.yml`, overriding the defaults. [This repo](https://github.com/krlmlr/r-appveyor/blob/master/appveyor.yml#L15) tests several configurations at once in a build matrix, see also the [build status](https://ci.appveyor.com/project/krlmlr/r-appveyor/branch/master).
+These can be set in the `appveyor.yml`, overriding the defaults. [This repo](https://github.com/krlmlr/r-appveyor/blob/master/appveyor.yml#L20) tests several configurations at once in a build matrix, see also the [build status](https://ci.appveyor.com/project/krlmlr/r-appveyor/branch/master).
 
 - `R_VERSION`: The version of R to be used for testing. Specify `devel`, `patched`, `stable` (or `release`), `oldrel`, or a version number.
 - `R_ARCH`: The architecture to be used for testing, one of `i386` (default) or `x64`.
