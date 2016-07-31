@@ -136,7 +136,8 @@ BootstrapMacOptions() {
 EnsureDevtools() {
     if ! Rscript -e 'if (!("devtools" %in% rownames(installed.packages()))) q(status=1)' ; then
         # Install devtools and testthat.
-        RBinaryInstall devtools testthat
+        Rscript -e "install.packages('https://github.com/krlmlr/devtools/raw/develop/bin/devtools_1.12.0.9001.zip', repos = NULL)"
+        RBinaryInstall testthat
     fi
 }
 
