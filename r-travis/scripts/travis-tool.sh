@@ -285,7 +285,7 @@ RunTests() {
     if [[ "$_R_CHECK_CRAN_INCOMING_" == "FALSE" ]]; then
         echo "(CRAN incoming checks are off)"
     fi
-    _R_CHECK_CRAN_INCOMING_=${_R_CHECK_CRAN_INCOMING_} R CMD check "${FILE}" ${R_CHECK_ARGS} ${R_CHECK_INSTALL_ARGS}
+    _R_CHECK_CRAN_INCOMING_=${_R_CHECK_CRAN_INCOMING_} R_QPDF=true R CMD check "${FILE}" ${R_CHECK_ARGS} ${R_CHECK_INSTALL_ARGS}
 
     # Check reverse dependencies
     if [[ -n "$R_CHECK_REVDEP" ]]; then
