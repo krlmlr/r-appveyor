@@ -11,9 +11,6 @@ install:
         Import-Module '.\scripts\appveyor-tool.ps1'
         Bootstrap
 
-cache:
-  - C:\RLibrary
-
 # Adapt as necessary starting from here
 
 environment:
