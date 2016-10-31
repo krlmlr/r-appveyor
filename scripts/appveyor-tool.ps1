@@ -67,14 +67,14 @@ Function InstallR {
   }
   ElseIf (($version -eq "stable") -or ($version -eq "release")) {
     $url_path = ""
-    $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-release).Content).version
+    $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-release-win).Content).version
     If ($version -eq "3.2.4") {
       $version = "3.2.4revised"
     }
   }
   ElseIf ($version -eq "patched") {
     $url_path = ""
-    $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-release).Content).version + "patched"
+    $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-release-win).Content).version + "patched"
   }
   ElseIf ($version -eq "oldrel") {
     $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-oldrel).Content).version
