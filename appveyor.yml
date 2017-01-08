@@ -33,7 +33,7 @@ environment:
   - R_VERSION: patched
 
   - R_VERSION: oldrel
-    RTOOLS_VERSION: 32
+    RTOOLS_VERSION: 33
     CRAN: http://cran.rstudio.com
 
   - R_VERSION: 3.1.3
