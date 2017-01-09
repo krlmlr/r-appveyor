@@ -40,10 +40,6 @@ environment:
     RTOOLS_VERSION: 32
     CRAN: http://cran.rstudio.com
 
-  - R_VERSION: 3.0.3
-    RTOOLS_VERSION: 31
-    CRAN: http://cran.rstudio.com
-
 matrix:
   fast_finish: true
 
