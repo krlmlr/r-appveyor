@@ -140,6 +140,13 @@ EnsureDevtools() {
     fi
 }
 
+EnsureRemotes() {
+    if ! Rscript -e 'if (!("remotes" %in% rownames(installed.packages()))) q(status=1)' ; then
+        # Install remotes.
+        RBinaryInstall remotes
+    fi
+}
+
 AptGetInstall() {
     if [[ "Linux" != "${OS}" ]]; then
         echo "Wrong OS: ${OS}"
@@ -215,16 +222,16 @@ RBinaryInstall() {
 }
 
 InstallGithub() {
-    EnsureDevtools
+    EnsureRemotes
 
     echo "Installing GitHub packages: $@"
     # Install the package.
-    Rscript -e 'library(devtools); library(methods); options(repos=c(CRAN="'"${CRAN}"'")); install_github(commandArgs(TRUE), build_vignettes = FALSE)' "$@"
+    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); remotes::install_github(commandArgs(TRUE), build_vignettes = FALSE)' "$@"
 }
 
 InstallDeps() {
-    EnsureDevtools
-    Rscript -e 'library(devtools); library(methods); options(repos=c(CRAN="'"${CRAN}"'")); install_deps(dependencies = c("Depends", "Imports", "LinkingTo", "Suggests"))'
+    EnsureRemotes
+    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); remotes::install_deps(dependencies = c("Depends", "Imports", "LinkingTo", "Suggests"))'
 }
 
 InstallBiocDeps() {
@@ -289,6 +296,7 @@ RunTests() {
     # Check reverse dependencies
     if [[ -n "$R_CHECK_REVDEP" ]]; then
         echo "Checking reverse dependencies"
+        EnsureDevtools
         Rscript -e 'library(devtools); checkOutput <- unlist(revdep_check(as.package(".")$package));if (!is.null(checkOutput)) {print(data.frame(pkg = names(checkOutput), error = checkOutput));for(i in seq_along(checkOutput)){;cat("\n", names(checkOutput)[i], " Check Output:\n  ", paste(readLines(regmatches(checkOutput[i], regexec("/.*\\.out", checkOutput[i]))[[1]]), collapse = "\n  ", sep = ""), "\n", sep = "")};q(status = 1, save = "no")}'
     fi
 
@@ -331,6 +339,11 @@ case $COMMAND in
         EnsureDevtools
         ;;
     ##
+    ## Ensure remotes is loaded (implicitly called)
+    "install_remotes"|"remotes_install")
+        EnsureRemotes
+        ;;
+    ##
     ## Install a binary deb package via apt-get
     "install_aptget"|"aptget_install")
         AptGetInstall "$@"
@@ -356,12 +369,12 @@ case $COMMAND in
         RBinaryInstall "$@"
         ;;
     ##
-    ## Install a package from github sources (needs devtools)
+    ## Install a package from github sources (needs remotes)
     "install_github"|"github_package")
         InstallGithub "$@"
         ;;
     ##
-    ## Install package dependencies from CRAN (needs devtools)
+    ## Install package dependencies from CRAN (needs remotes)
     "install_deps")
         InstallDeps
         ;;
