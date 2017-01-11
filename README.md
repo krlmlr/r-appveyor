@@ -38,6 +38,7 @@ These can be set in the `appveyor.yml`, overriding the defaults. [This repo](htt
 - `CRAN`: The CRAN mirror to use, defaults to [RStudio's CDN via HTTPS](https://cran.rstudio.com). Change to [HTTP](http://cran.rstudio.com) for R 3.1.3 or earlier.
 - `R_BUILD_ARGS`: Arguments passed to `R CMD build`, defaults to `--no-manual`.
 - `R_CHECK_ARGS`: Arguments passed to `R CMD check`, defaults to `--no-manual --as-cran`.
+- `PKGTYPE`: Passed as `type` to `install.packages()`, `remotes::install_deps()` and `devtools::install_deps()`.
 
 Currently, all builds use the `--no-multiarch` switch for checking, and all vignettes (and the `VignetteBuilder` entry in `DESCRIPTION`) are removed prior to building (due to the absence of pandoc and LaTeX which are likely to be needed).
 

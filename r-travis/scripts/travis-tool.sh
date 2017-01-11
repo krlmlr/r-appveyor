@@ -8,6 +8,7 @@ set -x
 
 CRAN=${CRAN:-"https://cran.rstudio.com"}
 BIOC=${BIOC:-"http://bioconductor.org/biocLite.R"}
+PKGTYPE=${PKGTYPE:-"both"}
 BIOC_USE_DEVEL=${BIOC_USE_DEVEL:-"TRUE"}
 OS=$(uname -s)
 
@@ -189,7 +190,7 @@ RInstall() {
     fi
 
     echo "Installing R package(s): $@"
-    Rscript -e 'install.packages(commandArgs(TRUE), repos="'"${CRAN}"'", INSTALL_opts="--no-multiarch", type="both")' "$@"
+    Rscript -e 'install.packages(commandArgs(TRUE), repos="'"${CRAN}"'", INSTALL_opts="--no-multiarch", type="'"${PKGTYPE}"'")' "$@"
 }
 
 BiocInstall() {
@@ -231,12 +232,12 @@ InstallGithub() {
 
 InstallDeps() {
     EnsureRemotes
-    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); remotes::install_deps(dependencies = TRUE, type = "both")'
+    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); remotes::install_deps(dependencies = TRUE, type="'"${PKGTYPE}"'")'
 }
 
 InstallBiocDeps() {
     EnsureDevtools
-    Rscript -e "${R_USE_BIOC_CMDS}"' library(devtools); install_deps(dependencies = TRUE)'
+    Rscript -e "${R_USE_BIOC_CMDS}"' library(devtools); install_deps(dependencies = TRUE, type="'"${PKGTYPE}"'")'
 }
 
 DumpSysinfo() {
