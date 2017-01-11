@@ -148,7 +148,7 @@ EnsureRemotes() {
     fi
     if ! Rscript -e 'if (!("remotes" %in% rownames(installed.packages()))) q(status=1)' ; then
         # Fallback: Install remotes from URL.
-        Rscript -e 'path <- file.path(tempdir(), "remotes_1.0.0.tar.gz"); download.file("http://cran.r-project.org/src/contrib/remotes_1.0.0.tar.gz", path); install.packages(path, repos = NULL)'
+        Rscript -e 'path <- file.path(tempdir(), "remotes_1.0.0.tar.gz"); download.file("http://cran.r-project.org/src/contrib/remotes_1.0.0.tar.gz", path); install.packages(path, repos = NULL, type = "source")'
     fi
 }
 
