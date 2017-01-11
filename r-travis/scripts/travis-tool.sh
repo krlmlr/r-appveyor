@@ -232,12 +232,12 @@ InstallGithub() {
 
 InstallDeps() {
     EnsureRemotes
-    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); remotes::install_deps(dependencies = TRUE, type = "both")'
+    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); remotes::install_deps(dependencies = TRUE, type="'"${PKGTYPE}"'")'
 }
 
 InstallBiocDeps() {
     EnsureDevtools
-    Rscript -e "${R_USE_BIOC_CMDS}"' library(devtools); install_deps(dependencies = TRUE)'
+    Rscript -e "${R_USE_BIOC_CMDS}"' library(devtools); install_deps(dependencies = TRUE, type="'"${PKGTYPE}"'")'
 }
 
 DumpSysinfo() {
