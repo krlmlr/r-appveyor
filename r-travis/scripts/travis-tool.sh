@@ -146,6 +146,10 @@ EnsureRemotes() {
         # Install remotes.
         RBinaryInstall remotes
     fi
+    if ! Rscript -e 'if (!("remotes" %in% rownames(installed.packages()))) q(status=1)' ; then
+        # Fallback: Install remotes from URL.
+        Rscript -e 'install.packages("https://cran.r-project.org/src/contrib/remotes_1.0.0.tar.gz", repos = NULL)'
+    fi
 }
 
 AptGetInstall() {
