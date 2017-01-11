@@ -231,7 +231,7 @@ InstallGithub() {
 
     echo "Installing GitHub packages: $@"
     # Install the package.
-    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); remotes::install_github(commandArgs(TRUE), build_vignettes = FALSE)' "$@"
+    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); remotes::install_github(commandArgs(TRUE))' "$@"
 }
 
 InstallDeps() {
