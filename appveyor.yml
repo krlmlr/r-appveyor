@@ -19,12 +19,12 @@ environment:
 
   matrix:
   - R_VERSION: 3.0.3
-    RTOOLS_VERSION: 32
+    RTOOLS_VERSION: 31
     CRAN: http://cran.rstudio.com
     PKGTYPE: source
 
   - R_VERSION: 3.0.0
-    RTOOLS_VERSION: 32
+    RTOOLS_VERSION: 31
     CRAN: http://cran.rstudio.com
     PKGTYPE: source
 
