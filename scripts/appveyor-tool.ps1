@@ -89,7 +89,7 @@ Function InstallR {
   $rurl = $CRAN + "/bin/windows/base/" + $url_path + "R-" + $version + "-win.exe"
 
   Progress ("Downloading R from: " + $rurl)
-  Exec { bash -c ("curl --silent -o ../R-win.exe -L " + $rurl) }
+  Exec { bash -c ("'/c/Program Files/Git/usr/bin/curl' --silent -o ../R-win.exe -L " + $rurl) }
 
   Progress "Running R installer"
   Start-Process -FilePath ..\R-win.exe -ArgumentList "/VERYSILENT /DIR=C:\R" -NoNewWindow -Wait
@@ -116,7 +116,7 @@ Function InstallRtools {
   $rtoolsurl = $CRAN + "/bin/windows/Rtools/Rtools$rtoolsver.exe"
 
   Progress ("Downloading Rtools from: " + $rtoolsurl)
-  bash -c ("curl --silent -o ../Rtools-current.exe -L " + $rtoolsurl)
+  bash -c ("'/c/Program Files/Git/usr/bin/curl' --silent -o ../Rtools-current.exe -L " + $rtoolsurl)
 
   Progress "Running Rtools installer"
   Start-Process -FilePath ..\Rtools-current.exe -ArgumentList /VERYSILENT -NoNewWindow -Wait
