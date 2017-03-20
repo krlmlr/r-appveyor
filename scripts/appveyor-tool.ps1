@@ -122,7 +122,7 @@ Function InstallRtools {
   $rtoolsurl = $CRAN + "/bin/windows/Rtools/Rtools$rtoolsver.exe"
 
   Progress ("Downloading Rtools from: " + $rtoolsurl)
-  Exec { "'C:\Program Files\Git\usr\bin\curl.exe' --silent -o ../Rtools-current.exe -L " + $rtoolsurl }
+  & "C:\Program Files\Git\mingw64\bin\curl.exe" -s -o ../Rtools-current.exe -L $rtoolsurl
 
   Progress "Running Rtools installer"
   Start-Process -FilePath ..\Rtools-current.exe -ArgumentList /VERYSILENT -NoNewWindow -Wait
