@@ -88,6 +88,12 @@ Function InstallR {
 
   $rurl = $CRAN + "/bin/windows/base/" + $url_path + "R-" + $version + "-win.exe"
 
+  Dir "C:\"
+  Dir "C:\Program Files"
+  Dir "C:\Program Files\Git"
+  Dir "C:\Program Files\Git\usr"
+  Dir "C:\Program Files\Git\usr\bin"
+
   Progress ("Downloading R from: " + $rurl)
   Exec { '"C:\Program Files\Git\usr\bin\curl.exe"' "--silent -o ../R-win.exe -L " + $rurl }
 
