@@ -91,11 +91,11 @@ Function InstallR {
   Dir "C:\"
   Dir "C:\Program Files"
   Dir "C:\Program Files\Git"
-  Dir "C:\Program Files\Git\usr"
-  Dir "C:\Program Files\Git\usr\bin"
+  Dir "C:\Program Files\Git\mingw64"
+  Dir "C:\Program Files\Git\mingw64\bin"
 
   Progress ("Downloading R from: " + $rurl)
-  Exec { '"C:\Program Files\Git\usr\bin\curl.exe" --silent -o ../R-win.exe -L ' + $rurl }
+  Exec { '"C:\Program Files\Git\mingw64\bin\curl.exe" --silent -o ../R-win.exe -L ' + $rurl }
 
   Progress "Running R installer"
   Start-Process -FilePath ..\R-win.exe -ArgumentList "/VERYSILENT /DIR=C:\R" -NoNewWindow -Wait
