@@ -59,7 +59,7 @@ Function InstallR {
     $arch = $env:R_ARCH
   }
 
-  If (arch -eq "i386") {
+  If ($arch -eq "i386") {
     $mingw_path = "mingw_32"
   }
   Else {
