@@ -173,5 +173,8 @@ Function Bootstrap {
     mkdir $env:R_LIBS_USER
   }
 
+  Progress "Setting TAR to 'internal'"
+  $env:TAR = 'internal'
+
   Progress "Bootstrap: Done"
 }
