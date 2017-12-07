@@ -16,6 +16,6 @@ is_three <- function(x) {
 #' @import MASS
 MASS_huber <- function() MASS::huber
 
-#' @useDynLib fakepackage
+#' @useDynLib fakepackage, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
 NULL
