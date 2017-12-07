@@ -9,4 +9,3 @@ MASS_huber()
 \description{
 Use something from MASS
 }
-

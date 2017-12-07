@@ -59,6 +59,13 @@ Function InstallR {
     $arch = $env:R_ARCH
   }
 
+  If ($arch -eq "i386") {
+    $mingw_path = "mingw_32"
+  }
+  Else {
+    $mingw_path = "mingw_64"
+  }
+
   Progress ("Version: " + $version)
 
   If ($version -eq "devel") {
@@ -98,7 +105,7 @@ Function InstallR {
   echo "R is now available on drive $RDrive"
 
   Progress "Setting PATH"
-  $env:PATH = $RDrive + '\R\bin\' + $arch + ';' + 'C:\MinGW\msys\1.0\bin;' + $env:PATH
+  $env:PATH = $RDrive + '\R\bin\' + $arch + ';' + 'C:\Rtools\' + $mingw_path + '\bin;' + 'C:\MinGW\msys\1.0\bin;' + $env:PATH
 
   Progress "Testing R installation"
   Rscript -e "sessionInfo()"

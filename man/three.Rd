@@ -9,4 +9,3 @@ three()
 \description{
 Returns 3.
 }
-
