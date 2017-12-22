@@ -12,7 +12,7 @@ PKGTYPE=${PKGTYPE:-"both"}
 BIOC_USE_DEVEL=${BIOC_USE_DEVEL:-"TRUE"}
 OS=$(uname -s)
 
-PANDOC_VERSION='1.13.1'
+PANDOC_VERSION=${PANDOC_VERSION:-"1.19.2.1"}
 PANDOC_DIR="${HOME}/opt/pandoc"
 PANDOC_URL="https://s3.amazonaws.com/rstudio-buildtools/pandoc-${PANDOC_VERSION}.zip"
 
