@@ -21,6 +21,9 @@ test_script:
 on_failure:
   - travis-tool.sh dump_logs
 
+environment:
+  NOT_CRAN: true
+
 artifacts:
   - path: '*.Rcheck\**\*.log'
     name: Logs
