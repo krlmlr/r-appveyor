@@ -29,6 +29,12 @@ Environment variables
 
 These can be set in the `appveyor.yml`, overriding the defaults. [This repo](https://github.com/krlmlr/r-appveyor/blob/master/appveyor.yml#L20) tests several configurations at once in a build matrix, see also the [build status](https://ci.appveyor.com/project/krlmlr/r-appveyor/branch/master).
 
+Example:
+```
+environment:
+  VARIABLE: value
+```
+
 - `R_VERSION`: The version of R to be used for testing. Specify `devel`, `patched`, `stable` (or `release`), `oldrel`, or a version number.
 - `R_ARCH`: The architecture to be used for testing, one of `i386` (default) or `x64`.
 - `RTOOLS_VERSION`: The version of Rtools to be used for testing, defaults to the most recent Rtools. Specify e.g. `33` for Rtools 3.3.
@@ -39,7 +45,8 @@ These can be set in the `appveyor.yml`, overriding the defaults. [This repo](htt
 - `R_BUILD_ARGS`: Arguments passed to `R CMD build`, defaults to `--no-manual`.
 - `R_CHECK_ARGS`: Arguments passed to `R CMD check`, defaults to `--no-manual --as-cran`.
 - `PKGTYPE`: Passed as `type` to `install.packages()`, `remotes::install_deps()` and `devtools::install_deps()`.
-
+- `NOT_CRAN`: Set this to `true` to avoid `testthat::skip_on_cran()` skipping tests.
+ 
 Currently, all builds use the `--no-multiarch` switch for checking, and all vignettes (and the `VignetteBuilder` entry in `DESCRIPTION`) are removed prior to building (due to the absence of pandoc and LaTeX which are likely to be needed).
 
 
