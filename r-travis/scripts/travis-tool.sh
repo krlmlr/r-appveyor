@@ -194,7 +194,7 @@ RInstall() {
     fi
 
     echo "Installing R package(s): $@"
-    Rscript -e 'install.packages(commandArgs(TRUE), repos="'"${CRAN}"'", INSTALL_opts="--no-multiarch", type="'"${PKGTYPE}"'")' "$@"
+    Rscript -e 'install.packages(commandArgs(TRUE), repos="'"${CRAN}"'", INSTALL_opts="", type="'"${PKGTYPE}"'")' "$@"
 }
 
 BiocInstall() {
@@ -288,7 +288,7 @@ RunTests() {
 
     # Create binary package (currently Windows only)
     if [[ "${OS:0:5}" == "MINGW" || "${OS:0:4}" == "MSYS" ]]; then
-        R_CHECK_INSTALL_ARGS="--install-args=--build --no-multiarch"
+        R_CHECK_INSTALL_ARGS="--install-args=--build"
     fi
 
     echo "Testing with: R CMD check \"${FILE}\" ${R_CHECK_ARGS} ${R_CHECK_INSTALL_ARGS}"
