@@ -53,7 +53,7 @@ Function InstallR {
   }
 
   if ( -not(Test-Path Env:\R_ARCH) ) {
-    $arch = "i386"
+    $arch = "x64"
   }
   Else {
     $arch = $env:R_ARCH
