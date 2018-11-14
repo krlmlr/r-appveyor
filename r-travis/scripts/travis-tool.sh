@@ -7,6 +7,7 @@ set -e
 set -x
 
 CRAN=${CRAN:-"https://cran.rstudio.com"}
+BIOC=${BIOC:-"http://bioconductor.org/biocLite.R"}
 PKGTYPE=${PKGTYPE:-"both"}
 BIOC_USE_DEVEL=${BIOC_USE_DEVEL:-"TRUE"}
 OS=$(uname -s)
@@ -26,11 +27,23 @@ PATH="${PATH}:/usr/texbin"
 R_BUILD_ARGS=${R_BUILD_ARGS-"--no-manual"}
 R_CHECK_ARGS=${R_CHECK_ARGS-"--no-manual --as-cran"}
 
-R_USE_BIOC_CMDS="if (!requireNamespace('BiocManager', quietly=TRUE))"\
+R_VERSION_TEST="paste(R.Version()$major, R.Version()$minor, sep = '.') >="\
+" package_version('3.5.0')"
+
+R_USE_BIOC_INST="source('${BIOC}');"\
+" tryCatch(useDevel(${BIOC_USE_DEVEL}),"\
+" error=function(e) {if (!grepl('already in use', e$message)) {e}});"\
+" options(repos=biocinstallRepos())"
+
+R_USE_BIOC_MNGR="if (!requireNamespace('BiocManager', quietly=TRUE))"\
 " install.packages('BiocManager');"\
 " if (${BIOC_USE_DEVEL})"\
 " BiocManager::install(version = 'devel');"\
-" options(repos=BiocManager::repositories());"
+" options(repos=BiocManager::repositories())"
+
+R_USE_BIOC_CMDS="if (${R_VERSION_TEST}) {${R_USE_BIOC_MNGR}} else {${R_USE_BIOC_INST}};"
+
+BIOC_INSTALL="{if (${R_VERSION_TEST}) BiocManager::install else BiocInstaller::biocLite}"
 
 Bootstrap() {
     if [[ "Darwin" == "${OS}" ]]; then
@@ -204,7 +217,7 @@ BiocInstall() {
     fi
 
     echo "Installing R Bioconductor package(s): $@"
-    Rscript -e "${R_USE_BIOC_CMDS}"' BiocManager::install(commandArgs(TRUE))' "$@"
+    Rscript -e "${R_USE_BIOC_CMDS}"" ${BIOC_INSTALL}(commandArgs(TRUE))" "$@"
 }
 
 RBinaryInstall() {
