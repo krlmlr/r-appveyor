@@ -27,8 +27,7 @@ PATH="${PATH}:/usr/texbin"
 R_BUILD_ARGS=${R_BUILD_ARGS-"--no-manual"}
 R_CHECK_ARGS=${R_CHECK_ARGS-"--no-manual --as-cran"}
 
-R_VERSION_TEST="paste(R.Version()$major, R.Version()$minor, sep = '.') >="\
-" package_version('3.5.0')"
+R_VERSION_TEST="getRversion() >= '3.5.0'"
 
 R_USE_BIOC_INST="source('${BIOC}');"\
 " tryCatch(useDevel(${BIOC_USE_DEVEL}),"\
