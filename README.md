@@ -36,7 +36,7 @@ environment:
 ```
 
 - `R_VERSION`: The version of R to be used for testing. Specify `devel`, `patched`, `stable` (or `release`), `oldrel`, or a version number.
-- `R_ARCH`: The architecture to be used for testing, one of `i386` (default) or `x64`.
+- `R_ARCH`: The architecture to be used for testing, one of `x64` (default) or `i386`.
 - `RTOOLS_VERSION`: The version of Rtools to be used for testing, defaults to the most recent Rtools. Specify e.g. `33` for Rtools 3.3.
 - `USE_RTOOLS`: Set `USE_RTOOLS: true` if Rtools needs to be installed, e.g. if you use install_github or if there are packages in Remotes: in your DESCRIPTION file. Defaults to `false`.
 - `GCC_PATH`: The path to GCC in the Rtools installation, currently one of `gcc-4.6.3` (default), `mingw_32` or `mingw_64`.
