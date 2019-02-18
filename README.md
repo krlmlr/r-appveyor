@@ -38,7 +38,7 @@ environment:
 - `R_VERSION`: The version of R to be used for testing. Specify `devel`, `patched`, `stable` (or `release`), `oldrel`, or a version number.
 - `R_ARCH`: The architecture to be used for testing, one of `x64` (default) or `i386`.
 - `RTOOLS_VERSION`: The version of Rtools to be used for testing, defaults to the most recent Rtools. Specify e.g. `33` for Rtools 3.3.
-- `USE_RTOOLS`: Set `USE_RTOOLS: true` if Rtools needs to be installed, e.g. if you use install_github or if there are packages in Remotes: in your DESCRIPTION file. The default behavior is to only install RTOOLS if the package contains the subdirectory `src/`. Set `USE_RTOOLS: false` to override this behavior.
+- `USE_RTOOLS`: Set `USE_RTOOLS: true` (or `USE_RTOOLS: yes`) if Rtools needs to be installed, e.g. if you use install_github or if there are packages in Remotes: in your DESCRIPTION file. The default behavior is to only install RTOOLS if the package contains the subdirectory `src/`. Set `USE_RTOOLS: false` to override this behavior.
 - `GCC_PATH`: The path to GCC in the Rtools installation, currently one of `gcc-4.6.3` (default), `mingw_32` or `mingw_64`.
 - `WARNINGS_ARE_ERRORS`: Set to 1 to treat all warnings as errors, otherwise leave empty.
 - `CRAN`: The CRAN mirror to use, defaults to [RStudio's CDN via HTTPS](https://cran.rstudio.com). Change to [HTTP](http://cran.rstudio.com) for R 3.1.3 or earlier.
