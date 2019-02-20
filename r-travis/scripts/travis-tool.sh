@@ -35,7 +35,7 @@ R_USE_BIOC_INST="source('${BIOC}');"\
 " options(repos=biocinstallRepos())"
 
 R_USE_BIOC_MNGR="if (!requireNamespace('BiocManager', quietly=TRUE))"\
-" install.packages('BiocManager');"\
+" install.packages('BiocManager', repos=c(CRAN='${CRAN}'));"\
 " if (${BIOC_USE_DEVEL})"\
 " BiocManager::install(version = 'devel');"\
 " options(repos=BiocManager::repositories())"
