@@ -11,6 +11,7 @@ BIOC=${BIOC:-"http://bioconductor.org/biocLite.R"}
 PKGTYPE=${PKGTYPE:-"both"}
 BIOC_USE_DEVEL=${BIOC_USE_DEVEL:-"TRUE"}
 OS=$(uname -s)
+WARNINGS_ARE_ERRORS=1
 
 PANDOC_VERSION='1.13.1'
 PANDOC_DIR="${HOME}/opt/pandoc"
