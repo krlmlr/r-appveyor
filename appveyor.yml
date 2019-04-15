@@ -29,6 +29,7 @@ environment:
     R_ARCH: x64
 
   - R_VERSION: stable
+    R_COMPILE_AND_INSTALL_PACKAGES: always
 
   - R_VERSION: patched
 
@@ -36,11 +37,19 @@ environment:
     RTOOLS_VERSION: 33
     CRAN: http://cran.rstudio.com
 
-  - R_VERSION: 3.1.3
-    RTOOLS_VERSION: 32
+  - R_VERSION: 3.3.3
     CRAN: http://cran.rstudio.com
 
-  - R_VERSION: 3.1.0
+  - R_VERSION: 3.3.0
+    CRAN: http://cran.rstudio.com
+    PKGTYPE: source
+
+  - R_VERSION: 3.2.5
+    RTOOLS_VERSION: 32
+    CRAN: http://cran.rstudio.com
+    R_COMPILE_AND_INSTALL_PACKAGES: always
+
+  - R_VERSION: 3.2.0
     RTOOLS_VERSION: 32
     CRAN: http://cran.rstudio.com
     PKGTYPE: source

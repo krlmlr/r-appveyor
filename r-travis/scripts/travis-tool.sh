@@ -10,6 +10,8 @@ CRAN=${CRAN:-"https://cran.rstudio.com"}
 BIOC=${BIOC:-"http://bioconductor.org/biocLite.R"}
 PKGTYPE=${PKGTYPE:-"both"}
 BIOC_USE_DEVEL=${BIOC_USE_DEVEL:-"TRUE"}
+R_COMPILE_AND_INSTALL_PACKAGES=${R_COMPILE_AND_INSTALL_PACKAGES:-"never"}
+
 OS=$(uname -s)
 
 PANDOC_VERSION='1.13.1'
