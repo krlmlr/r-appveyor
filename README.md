@@ -38,13 +38,13 @@ environment:
 - `R_VERSION`: The version of R to be used for testing. Specify `devel`, `patched`, `stable` (or `release`), `oldrel`, or a version number.
 - `R_ARCH`: The architecture to be used for testing, one of `x64` (default) or `i386`.
 - `RTOOLS_VERSION`: The version of Rtools to be used for testing, defaults to the most recent Rtools. Specify e.g. `33` for Rtools 3.3.
-- `USE_RTOOLS`: Set `USE_RTOOLS: true` if Rtools needs to be installed. Defaults to `true` if your package has a `src/` directory and `false` otherwise. Rtools may be needed if you use `install_github()`, if there are packages in `Remotes:` in your DESCRIPTION file, or if one of your dependencies has updated, but the associated Windows binary is not yet available from CRAN.
+- `USE_RTOOLS`: Set `USE_RTOOLS: true` (or `USE_RTOOLS: yes`) if Rtools needs to be installed. Defaults to `true` if your package has a `src/` directory and `false` otherwise. Rtools may be needed if you use `install_github()`, if there are packages in `Remotes:` in your `DESCRIPTION` file, or if one of your dependencies has updated, but the associated Windows binary is not yet available from CRAN. (Set `PKGTYPE=binary` to avoid installing packages from source.)
 - `GCC_PATH`: The path to GCC in the Rtools installation, currently one of `gcc-4.6.3` (default), `mingw_32` or `mingw_64`.
 - `WARNINGS_ARE_ERRORS`: Set to 1 to treat all warnings as errors, otherwise leave empty.
 - `CRAN`: The CRAN mirror to use, defaults to [RStudio's CDN via HTTPS](https://cran.rstudio.com). Change to [HTTP](http://cran.rstudio.com) for R 3.1.3 or earlier.
 - `R_BUILD_ARGS`: Arguments passed to `R CMD build`, defaults to `--no-manual`.
 - `R_CHECK_ARGS`: Arguments passed to `R CMD check`, defaults to `--no-manual --as-cran`.
-- `PKGTYPE`: Passed as `type` to `install.packages()`, `remotes::install_deps()` and `devtools::install_deps()`.
+- `PKGTYPE`: Passed as `type` to `install.packages()`, `remotes::install_deps()` and `devtools::install_deps()`. Set to `binary` to avoid installing packages from source.
 - `NOT_CRAN`: Set this to `true` to avoid `testthat::skip_on_cran()` skipping tests.
 - `R_REMOTES_STANDALONE`: Set this to `true` if builds are failing due to the inability to update infrastructure packages such as curl, git2r and rlang. Read more in the [docs for the remotes package](https://github.com/r-lib/remotes#standalone-mode).
  
