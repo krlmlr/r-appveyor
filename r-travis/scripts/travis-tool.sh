@@ -248,6 +248,7 @@ InstallGithub() {
 
 InstallDeps() {
     EnsureRemotes
+    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); rownames(available.packages())'
     Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); remotes::install_deps(dependencies = TRUE, type="'"${PKGTYPE}"'")'
 }
 
