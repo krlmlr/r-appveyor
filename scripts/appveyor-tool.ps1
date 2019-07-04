@@ -1,4 +1,10 @@
-$CRAN = "https://cloud.r-project.org"
+if ( -not(Test-Path Env:\CRAN) ) {
+  $CRAN = "https://cloud.r-project.org"
+}
+Else {
+  $CRAN = $env:CRAN
+}
+
 
 # Found at http://zduck.com/2012/powershell-batch-files-exit-codes/
 Function Exec
