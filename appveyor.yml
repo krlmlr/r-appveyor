@@ -21,11 +21,11 @@ environment:
   - R_VERSION: 3.2.0
     _R_CHECK_FORCE_SUGGESTS_: false
     PKGTYPE: source
-    RTOOLS_VERSION: 32
+    RTOOLS_VERSION: 33
 
   - R_VERSION: 3.2.3
     PKGTYPE: source
-    RTOOLS_VERSION: 32
+    RTOOLS_VERSION: 33
 
   - R_VERSION: 3.5.3
     RTOOLS_VERSION: 35
