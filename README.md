@@ -57,6 +57,20 @@ Artifacts
 In contrast to Travis-CI, AppVeyor offers facilities for hosting artifacts.  This can be configured by adding a section to the `appveyor.yml`.  The sample file is configured to deploy logs, and source and **binary** versions of the built package.  Check the "ARTIFACTS" section for [your project at AppVeyor](https://ci.appveyor.com/projects).
 
 
+Other software
+--------------
+
+The [Chocolatey installer](https://chocolatey.org/) is a convenient way to install other software.
+See below for a Pandoc example from the [reprex repository](https://github.com/tidyverse/reprex/blob/2d505dd8a5c26366896a33d3a3f6a2c9092786d5/appveyor.yml#L21-L24)
+
+```yaml
+before_test:
+  - cinst pandoc
+  - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
+  - pandoc -v
+```
+
+
 Troubleshooting
 ---------------
 
