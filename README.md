@@ -47,6 +47,7 @@ environment:
 - `PKGTYPE`: Passed as `type` to `install.packages()`, `remotes::install_github()` and `remotes::install_deps()`. Set to `both` to install packages from source if the source version is more recent than the binary version.
 - `NOT_CRAN`: Set this to `true` if you are using [testthat](https://testthat.r-lib.org/) and want to avoid tests marked with `testthat::skip_on_cran()`.
 - `R_REMOTES_STANDALONE`: Set this to `true` if builds are failing due to the inability to update infrastructure packages such as curl, git2r and rlang. Read more in the [docs for the remotes package](https://github.com/r-lib/remotes#standalone-mode).
+- `_R_CHECK_FORCE_SUGGESTS_`: Set this to `false` to avoid errors of the form "Package suggested but not available".
 
 Currently, all vignettes (and the `VignetteBuilder` entry in `DESCRIPTION`) are removed prior to building (due to the absence of pandoc and LaTeX which are likely to be needed).
 
