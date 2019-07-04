@@ -242,8 +242,6 @@ RBinaryInstall() {
 InstallGithub() {
     EnsureRemotes
 
-    Rscript -e 'options(repos = c(CRAN = "'"${CRAN}"'"), download.file.method = "'"${DOWNLOAD_FILE_METHOD}"'"); rownames(available.packages())'
-
     echo "Installing GitHub packages: $@"
     # Install the package.
     Rscript -e 'options(repos = c(CRAN = "'"${CRAN}"'"), download.file.method = "'"${DOWNLOAD_FILE_METHOD}"'"); remotes::install_github(commandArgs(TRUE), type="'"${PKGTYPE}"'")' "$@"
@@ -251,7 +249,6 @@ InstallGithub() {
 
 InstallDeps() {
     EnsureRemotes
-    Rscript -e 'options(repos = c(CRAN = "'"${CRAN}"'"), download.file.method = "'"${DOWNLOAD_FILE_METHOD}"'"); rownames(available.packages())'
 
     echo "Installing dependencies"
     Rscript -e 'options(repos = c(CRAN = "'"${CRAN}"'"), download.file.method = "'"${DOWNLOAD_FILE_METHOD}"'"); remotes::install_deps(dependencies = TRUE, type="'"${PKGTYPE}"'")'
