@@ -241,19 +241,19 @@ RBinaryInstall() {
 InstallGithub() {
     EnsureRemotes
 
-    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'", download.file.method = "wininet")); rownames(available.packages())'
+    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'"), download.file.method = "wininet"); rownames(available.packages())'
 
     echo "Installing GitHub packages: $@"
     # Install the package.
-    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'", download.file.method = "wininet")); remotes::install_github(commandArgs(TRUE), type="'"${PKGTYPE}"'")' "$@"
+    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'"), download.file.method = "wininet"); remotes::install_github(commandArgs(TRUE), type="'"${PKGTYPE}"'")' "$@"
 }
 
 InstallDeps() {
     EnsureRemotes
-    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'", download.file.method = "wininet")); rownames(available.packages())'
+    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'"), download.file.method = "wininet"); rownames(available.packages())'
 
     echo "Installing dependencies"
-    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'", download.file.method = "wininet")); remotes::install_deps(dependencies = TRUE, type="'"${PKGTYPE}"'")'
+    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'"), download.file.method = "wininet"); remotes::install_deps(dependencies = TRUE, type="'"${PKGTYPE}"'")'
 }
 
 InstallBiocDeps() {
