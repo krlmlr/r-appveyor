@@ -18,6 +18,18 @@ environment:
     WARNINGS_ARE_ERRORS: 1
 
   matrix:
+  - R_VERSION: 3.5.3
+
+  - R_VERSION: 3.4.4
+
+  - R_VERSION: 3.3.3
+
+  - R_VERSION: 3.2.5
+    RTOOLS_VERSION: 33
+
+  - R_VERSION: 3.2.0
+    PKGTYPE: source
+
   - R_VERSION: devel
     GCC_PATH: mingw_32
 
@@ -31,23 +43,6 @@ environment:
   - R_VERSION: stable
 
   - R_VERSION: patched
-
-  - R_VERSION: 3.5.3
-    RTOOLS_VERSION: 35
-    CRAN: http://cran.rstudio.com
-
-  - R_VERSION: 3.4.4
-    RTOOLS_VERSION: 34
-    CRAN: http://cran.rstudio.com
-
-  - R_VERSION: 3.2.5
-    RTOOLS_VERSION: 33
-    CRAN: http://cran.rstudio.com
-
-  - R_VERSION: 3.2.0
-    RTOOLS_VERSION: 33
-    CRAN: http://cran.rstudio.com
-    PKGTYPE: source
 
 matrix:
   fast_finish: true
