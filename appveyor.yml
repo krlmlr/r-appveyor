@@ -18,6 +18,10 @@ environment:
     WARNINGS_ARE_ERRORS: 1
 
   matrix:
+  - R_VERSION: 3.2.0
+    _R_CHECK_FORCE_SUGGESTS_: false
+    PKGTYPE: source
+
   - R_VERSION: 3.5.3
 
   - R_VERSION: 3.4.4
@@ -26,9 +30,6 @@ environment:
 
   - R_VERSION: 3.2.5
     RTOOLS_VERSION: 33
-
-  - R_VERSION: 3.2.0
-    PKGTYPE: source
 
   - R_VERSION: devel
     GCC_PATH: mingw_32
