@@ -1,4 +1,4 @@
-$CRAN = "http://cran.rstudio.com"
+$CRAN = "https://cloud.r-project.org"
 
 # Found at http://zduck.com/2012/powershell-batch-files-exit-codes/
 Function Exec
@@ -46,17 +46,24 @@ Function InstallR {
   Param()
 
   if ( -not(Test-Path Env:\R_VERSION) ) {
-    $version = "devel"
+    $version = "patched"
   }
   Else {
     $version = $env:R_VERSION
   }
 
   if ( -not(Test-Path Env:\R_ARCH) ) {
-    $arch = "i386"
+    $arch = "x64"
   }
   Else {
     $arch = $env:R_ARCH
+  }
+
+  If ($arch -eq "i386") {
+    $mingw_path = "mingw_32"
+  }
+  Else {
+    $mingw_path = "mingw_64"
   }
 
   Progress ("Version: " + $version)
@@ -67,11 +74,14 @@ Function InstallR {
   }
   ElseIf (($version -eq "stable") -or ($version -eq "release")) {
     $url_path = ""
-    $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-release).Content).version
+    $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-release-win).Content).version
+    If ($version -eq "3.2.4") {
+      $version = "3.2.4revised"
+    }
   }
   ElseIf ($version -eq "patched") {
     $url_path = ""
-    $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-release).Content).version + "patched"
+    $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-release-win).Content).version + "patched"
   }
   ElseIf ($version -eq "oldrel") {
     $version = $(ConvertFrom-JSON $(Invoke-WebRequest http://rversions.r-pkg.org/r-oldrel).Content).version
@@ -83,10 +93,10 @@ Function InstallR {
 
   Progress ("URL path: " + $url_path)
 
-  $rurl = "https://cran.rstudio.com/bin/windows/base/" + $url_path + "R-" + $version + "-win.exe"
+  $rurl = $CRAN + "/bin/windows/base/" + $url_path + "R-" + $version + "-win.exe"
 
   Progress ("Downloading R from: " + $rurl)
-  Exec { bash -c ("curl --silent -o ../R-win.exe -L " + $rurl) }
+  & "C:\Program Files\Git\mingw64\bin\curl.exe" -s -o ../R-win.exe -L $rurl
 
   Progress "Running R installer"
   Start-Process -FilePath ..\R-win.exe -ArgumentList "/VERYSILENT /DIR=C:\R" -NoNewWindow -Wait
@@ -95,7 +105,7 @@ Function InstallR {
   echo "R is now available on drive $RDrive"
 
   Progress "Setting PATH"
-  $env:PATH = $RDrive + '\R\bin\' + $arch + ';' + 'C:\MinGW\msys\1.0\bin;' + $env:PATH
+  $env:PATH = $RDrive + '\R\bin\' + $arch + ';' + 'C:\Rtools\' + $mingw_path + '\bin;' + 'C:\MinGW\msys\1.0\bin;' + $env:PATH
 
   Progress "Testing R installation"
   Rscript -e "sessionInfo()"
@@ -104,16 +114,16 @@ Function InstallR {
 Function InstallRtools {
   if ( -not(Test-Path Env:\RTOOLS_VERSION) ) {
     Progress "Determining Rtools version"
-    $rtoolsver = $(Invoke-WebRequest http://cran.r-project.org/bin/windows/Rtools/VERSION.txt).Content.Split(' ')[2].Split('.')[0..1] -Join ''
+    $rtoolsver = $(Invoke-WebRequest ($CRAN + "/bin/windows/Rtools/VERSION.txt")).Content.Split(' ')[2].Split('.')[0..1] -Join ''
   }
   Else {
     $rtoolsver = $env:RTOOLS_VERSION
   }
 
-  $rtoolsurl = "https://cran.rstudio.com/bin/windows/Rtools/Rtools$rtoolsver.exe"
+  $rtoolsurl = $CRAN + "/bin/windows/Rtools/Rtools$rtoolsver.exe"
 
   Progress ("Downloading Rtools from: " + $rtoolsurl)
-  bash -c ("curl --silent -o ../Rtools-current.exe -L " + $rtoolsurl)
+  & "C:\Program Files\Git\mingw64\bin\curl.exe" -s -o ../Rtools-current.exe -L $rtoolsurl
 
   Progress "Running Rtools installer"
   Start-Process -FilePath ..\Rtools-current.exe -ArgumentList /VERYSILENT -NoNewWindow -Wait
@@ -129,6 +139,7 @@ Function InstallRtools {
     $gcc_path = $env:GCC_PATH
   }
   $env:PATH = $RtoolsDrive + '\Rtools\bin;' + $RtoolsDrive + '\Rtools\MinGW\bin;' + $RtoolsDrive + '\Rtools\' + $gcc_path + '\bin;' + $env:PATH
+  $env:BINPREF=$RtoolsDrive + '/Rtools/mingw_$(WIN)/bin/'
 }
 
 Function Bootstrap {
@@ -147,7 +158,7 @@ Function Bootstrap {
 
   InstallR
 
-  if ( Test-Path "/**/src" ) {
+  if ((Test-Path "src") -or ($env:USE_RTOOLS -eq "true") -or ($env:USE_RTOOLS -eq "yes")) {
     InstallRtools
   }
   Else {
@@ -155,17 +166,22 @@ Function Bootstrap {
   }
 
   Progress "Downloading and installing travis-tool.sh"
-  Invoke-WebRequest http://raw.github.com/krlmlr/r-travis/master/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
+  Invoke-WebRequest https://raw.githubusercontent.com/krlmlr/r-appveyor/master/r-travis/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
   echo '@bash.exe ../travis-tool.sh %*' | Out-File -Encoding ASCII .\travis-tool.sh.cmd
   cat .\travis-tool.sh.cmd
-  bash -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
+  bash -c "( echo; echo '^travis-tool\.sh\.cmd$' ) >> .Rbuildignore"
   cat .\.Rbuildignore
 
   $env:PATH.Split(";")
 
   Progress "Setting R_LIBS_USER"
   $env:R_LIBS_USER = 'c:\RLibrary'
-  mkdir $env:R_LIBS_USER
+  if ( -not(Test-Path $env:R_LIBS_USER) ) {
+    mkdir $env:R_LIBS_USER
+  }
+
+  Progress "Setting TAR to 'internal'"
+  $env:TAR = 'internal'
 
   Progress "Bootstrap: Done"
 }

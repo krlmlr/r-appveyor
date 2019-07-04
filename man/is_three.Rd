@@ -12,4 +12,3 @@ is_three(x)
 \description{
 Check to see if our argument is three.
 }
-
