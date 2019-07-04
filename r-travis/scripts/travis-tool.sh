@@ -288,10 +288,12 @@ DumpLogs() {
 
 RunTests() {
     echo "Building with: R CMD build ${R_BUILD_ARGS}"
-    if [[ "${OS:0:5}" == "MINGW" || "${OS:0:4}" == "MSYS" ]]; then
-        if [[ -d vignettes ]]; then
-            rm -rf vignettes
-            Rscript -e "d <- read.dcf('DESCRIPTION'); d[, colnames(d) == 'VignetteBuilder'] <- NA; write.dcf(d, 'DESCRIPTION')"
+    if [[ "${KEEP_VIGNETTES}" == "" ]]; then
+        if [[ "${OS:0:5}" == "MINGW" || "${OS:0:4}" == "MSYS" ]]; then
+            if [[ -d vignettes ]]; then
+                rm -rf vignettes
+                Rscript -e "d <- read.dcf('DESCRIPTION'); d[, colnames(d) == 'VignetteBuilder'] <- NA; write.dcf(d, 'DESCRIPTION')"
+            fi
         fi
     fi
     R CMD build ${R_BUILD_ARGS} .

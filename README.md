@@ -48,8 +48,7 @@ environment:
 - `NOT_CRAN`: Set this to `true` if you are using [testthat](https://testthat.r-lib.org/) and want to avoid tests marked with `testthat::skip_on_cran()`.
 - `R_REMOTES_STANDALONE`: Set this to `true` if builds are failing due to the inability to update infrastructure packages such as curl, git2r and rlang. Read more in the [docs for the remotes package](https://github.com/r-lib/remotes#standalone-mode).
 - `_R_CHECK_FORCE_SUGGESTS_`: Set this to `false` to avoid errors of the form "Package suggested but not available".
-
-Currently, all vignettes (and the `VignetteBuilder` entry in `DESCRIPTION`) are removed prior to building (due to the absence of pandoc and LaTeX which are likely to be needed).
+- `KEEP_VIGNETTES`: Set this to a nonempty value build vignettes. You will likely need LaTeX and/or Pandoc, see below for installation instructions. By default, all vignettes are purged and the `VignetteBuilder` entry in `DESCRIPTION` is removed.
 
 
 Artifacts
@@ -58,11 +57,17 @@ Artifacts
 In contrast to Travis-CI, AppVeyor offers facilities for hosting artifacts.  This can be configured by adding a section to the `appveyor.yml`.  The sample file is configured to deploy logs, and source and **binary** versions of the built package.  Check the "ARTIFACTS" section for [your project at AppVeyor](https://ci.appveyor.com/projects).
 
 
-Other software
---------------
+LaTeX
+-----
+
+See [the example contributed by @pat-s](https://github.com/krlmlr/r-appveyor/issues/10#issuecomment-423832887) for a way to install LaTeX.
+The [tinytex package](https://yihui.name/tinytex/) is another option.
+
+Pandoc and other software
+-------------------------
 
 The [Chocolatey installer](https://chocolatey.org/) is a convenient way to install other software.
-See below for a Pandoc example from the [reprex repository](https://github.com/tidyverse/reprex/blob/2d505dd8a5c26366896a33d3a3f6a2c9092786d5/appveyor.yml#L21-L24)
+See below for a Pandoc example from the [reprex repository](https://github.com/tidyverse/reprex/blob/2d505dd8a5c26366896a33d3a3f6a2c9092786d5/appveyor.yml#L21-L24):
 
 ```yaml
 before_test:
