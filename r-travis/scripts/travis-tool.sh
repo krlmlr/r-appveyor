@@ -6,7 +6,7 @@ set -e
 # Comment out this line for quieter output:
 set -x
 
-CRAN=${CRAN:-"https://cran.rstudio.com"}
+CRAN=${CRAN:-"https://cloud.r-project.org"}
 BIOC=${BIOC:-"http://bioconductor.org/biocLite.R"}
 PKGTYPE=${PKGTYPE:-"win.binary"}
 BIOC_USE_DEVEL=${BIOC_USE_DEVEL:-"TRUE"}

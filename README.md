@@ -41,7 +41,7 @@ environment:
 - `USE_RTOOLS`: Set `USE_RTOOLS: true` (or `USE_RTOOLS: yes`) if Rtools needs to be installed. Defaults to `true` if your package has a `src/` directory and `false` otherwise. Rtools may be needed if you use `install_github()`, if there are packages in `Remotes:` in your `DESCRIPTION` file, or if one of your dependencies has updated, but the associated Windows binary is not yet available from CRAN. (Set `PKGTYPE=binary` to avoid installing packages from source.)
 - `GCC_PATH`: The path to GCC in the Rtools installation, currently one of `gcc-4.6.3` (default), `mingw_32` or `mingw_64`.
 - `WARNINGS_ARE_ERRORS`: Set to 1 to treat all warnings as errors, otherwise leave empty.
-- `CRAN`: The CRAN mirror to use, defaults to [RStudio's CDN via HTTPS](https://cran.rstudio.com). Change to [HTTP](http://cran.rstudio.com) for R 3.1.3 or earlier.
+- `CRAN`: The CRAN mirror to use, defaults to [RStudio's CDN via HTTPS](https://cloud.r-project.org). Change to [HTTP](http://cloud.r-project.org) for R 3.1.3 or earlier.
 - `R_BUILD_ARGS`: Arguments passed to `R CMD build`, defaults to `--no-manual`.
 - `R_CHECK_ARGS`: Arguments passed to `R CMD check`, defaults to `--no-manual --as-cran`.
 - `PKGTYPE`: Passed as `type` to `install.packages()`, `remotes::install_github()` and `remotes::install_deps()`. Set to `both` to install packages from source if the source version is more recent than the binary version.
