@@ -11,6 +11,7 @@ BIOC=${BIOC:-"http://bioconductor.org/biocLite.R"}
 PKGTYPE=${PKGTYPE:-"win.binary"}
 BIOC_USE_DEVEL=${BIOC_USE_DEVEL:-"TRUE"}
 OS=$(uname -s)
+DOWNLOAD_FILE_METHOD=${DOWNLOAD_FILE_METHOD:-"auto"}
 
 PANDOC_VERSION='1.13.1'
 PANDOC_DIR="${HOME}/opt/pandoc"
@@ -241,19 +242,19 @@ RBinaryInstall() {
 InstallGithub() {
     EnsureRemotes
 
-    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); rownames(available.packages())'
+    Rscript -e 'options(repos = c(CRAN = "'"${CRAN}"'"), download.file.method = "'"${DOWNLOAD_FILE_METHOD}"'"); rownames(available.packages())'
 
     echo "Installing GitHub packages: $@"
     # Install the package.
-    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); remotes::install_github(commandArgs(TRUE), type="'"${PKGTYPE}"'")' "$@"
+    Rscript -e 'options(repos = c(CRAN = "'"${CRAN}"'"), download.file.method = "'"${DOWNLOAD_FILE_METHOD}"'"); remotes::install_github(commandArgs(TRUE), type="'"${PKGTYPE}"'")' "$@"
 }
 
 InstallDeps() {
     EnsureRemotes
-    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); rownames(available.packages())'
+    Rscript -e 'options(repos = c(CRAN = "'"${CRAN}"'"), download.file.method = "'"${DOWNLOAD_FILE_METHOD}"'"); rownames(available.packages())'
 
     echo "Installing dependencies"
-    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); remotes::install_deps(dependencies = TRUE, type="'"${PKGTYPE}"'")'
+    Rscript -e 'options(repos = c(CRAN = "'"${CRAN}"'"), download.file.method = "'"${DOWNLOAD_FILE_METHOD}"'"); remotes::install_deps(dependencies = TRUE, type="'"${PKGTYPE}"'")'
 }
 
 InstallBiocDeps() {

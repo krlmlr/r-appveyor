@@ -49,6 +49,7 @@ environment:
 - `R_REMOTES_STANDALONE`: Set this to `true` if builds are failing due to the inability to update infrastructure packages such as curl, git2r and rlang. Read more in the [docs for the remotes package](https://github.com/r-lib/remotes#standalone-mode).
 - `_R_CHECK_FORCE_SUGGESTS_`: Set this to `false` to avoid errors of the form "Package suggested but not available".
 - `KEEP_VIGNETTES`: Set this to a nonempty value build vignettes. You will likely need LaTeX and/or Pandoc, see below for installation instructions. By default, all vignettes are purged and the `VignetteBuilder` entry in `DESCRIPTION` is removed.
+- `DOWNLOAD_FILE_METHOD`: On some versions of R, setting this to `wininet` appears to work better than the default `auto`.
 
 
 Artifacts
