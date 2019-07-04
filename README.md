@@ -44,10 +44,10 @@ environment:
 - `CRAN`: The CRAN mirror to use, defaults to [RStudio's CDN via HTTPS](https://cran.rstudio.com). Change to [HTTP](http://cran.rstudio.com) for R 3.1.3 or earlier.
 - `R_BUILD_ARGS`: Arguments passed to `R CMD build`, defaults to `--no-manual`.
 - `R_CHECK_ARGS`: Arguments passed to `R CMD check`, defaults to `--no-manual --as-cran`.
-- `PKGTYPE`: Passed as `type` to `install.packages()`, `remotes::install_deps()` and `devtools::install_deps()`. Set to `binary` to avoid installing packages from source.
+- `PKGTYPE`: Passed as `type` to `install.packages()`, `remotes::install_github()` and `remotes::install_deps()`. Set to `both` to install packages from source if the source version is more recent than the binary version.
 - `NOT_CRAN`: Set this to `true` to avoid `testthat::skip_on_cran()` skipping tests.
 - `R_REMOTES_STANDALONE`: Set this to `true` if builds are failing due to the inability to update infrastructure packages such as curl, git2r and rlang. Read more in the [docs for the remotes package](https://github.com/r-lib/remotes#standalone-mode).
- 
+
 Currently, all vignettes (and the `VignetteBuilder` entry in `DESCRIPTION`) are removed prior to building (due to the absence of pandoc and LaTeX which are likely to be needed).
 
 
@@ -64,20 +64,20 @@ Troubleshooting
 
 Some R packages, notably `rJava`, require a 64-bit installation of
 Windows and R.  If you try to install these packages on a 32-bit
-system you'll see a message similar to:  
+system you'll see a message similar to:
 ```
   Error: .onLoad failed in loadNamespace() for 'rJava', details:
     call: inDL(x, as.logical(local), as.logical(now), ...)
     error: unable to load shared object 'C:/Users/appveyor/AppData/Local/Temp/1/RtmpWa3KNC/RLIBS_bdc2913935/rJava/libs/i386/rJava.dll':
     LoadLibrary failure:  %1 is not a valid Win32 application.
-```	
-To solve this problem, add to your `appveyor.yml`:  
+```
+To solve this problem, add to your `appveyor.yml`:
 ```
 platform: x64
 
 environment:
   R_ARCH: x64
-```  
+```
 This will cause Appveyor to run your build on a 64-bit version of
 Windows Server, using the 64-bit R binary.
 

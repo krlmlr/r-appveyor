@@ -8,7 +8,7 @@ set -x
 
 CRAN=${CRAN:-"https://cran.rstudio.com"}
 BIOC=${BIOC:-"http://bioconductor.org/biocLite.R"}
-PKGTYPE=${PKGTYPE:-"both"}
+PKGTYPE=${PKGTYPE:-"win.binary"}
 BIOC_USE_DEVEL=${BIOC_USE_DEVEL:-"TRUE"}
 OS=$(uname -s)
 
@@ -243,7 +243,7 @@ InstallGithub() {
 
     echo "Installing GitHub packages: $@"
     # Install the package.
-    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); remotes::install_github(commandArgs(TRUE))' "$@"
+    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); remotes::install_github(commandArgs(TRUE), type="'"${PKGTYPE}"'")' "$@"
 }
 
 InstallDeps() {
