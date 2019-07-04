@@ -22,7 +22,6 @@ environment:
     _R_CHECK_FORCE_SUGGESTS_: false
     PKGTYPE: source
     RTOOLS_VERSION: 32
-    CRAN: http://cran.microsoft.com/snapshot/2019-04-15
 
   - R_VERSION: 3.5.3
     RTOOLS_VERSION: 35
