@@ -6,12 +6,13 @@ set -e
 # Comment out this line for quieter output:
 set -x
 
-CRAN=${CRAN:-"https://cran.rstudio.com"}
+CRAN=${CRAN:-"https://cloud.r-project.org"}
 BIOC=${BIOC:-"http://bioconductor.org/biocLite.R"}
-PKGTYPE=${PKGTYPE:-"both"}
+PKGTYPE=${PKGTYPE:-"win.binary"}
 BIOC_USE_DEVEL=${BIOC_USE_DEVEL:-"TRUE"}
 OS=$(uname -s)
 WARNINGS_ARE_ERRORS=1
+DOWNLOAD_FILE_METHOD=${DOWNLOAD_FILE_METHOD:-"auto"}
 
 PANDOC_VERSION='1.13.1'
 PANDOC_DIR="${HOME}/opt/pandoc"
@@ -38,7 +39,7 @@ R_USE_BIOC_INST="source('${BIOC}');"\
 R_USE_BIOC_MNGR="if (!requireNamespace('BiocManager', quietly=TRUE))"\
 " install.packages('BiocManager', repos=c(CRAN='${CRAN}'));"\
 " if (${BIOC_USE_DEVEL})"\
-" BiocManager::install(version = 'devel');"\
+" BiocManager::install(version = 'devel', ask = FALSE);"\
 " options(repos=BiocManager::repositories())"
 
 R_USE_BIOC_CMDS="if (${R_VERSION_TEST}) {${R_USE_BIOC_MNGR}} else {${R_USE_BIOC_INST}};"
@@ -161,7 +162,7 @@ EnsureRemotes() {
     fi
     if ! Rscript -e 'if (!("remotes" %in% rownames(installed.packages()))) q(status=1)' ; then
         # Fallback: Install remotes from URL.
-        Rscript -e 'path <- file.path(tempdir(), "remotes_1.0.0.tar.gz"); download.file("http://cran.r-project.org/src/contrib/remotes_1.0.0.tar.gz", path); install.packages(path, repos = NULL, type = "source")'
+        Rscript -e 'path <- file.path(tempdir(), "remotes_1.0.0.tar.gz"); download.file("http://cran.r-project.org/src/contrib/Archive/remotes/remotes_1.0.0.tar.gz", path); install.packages(path, repos = NULL, type = "source")'
     fi
 }
 
@@ -244,12 +245,14 @@ InstallGithub() {
 
     echo "Installing GitHub packages: $@"
     # Install the package.
-    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); remotes::install_github(commandArgs(TRUE))' "$@"
+    Rscript -e 'options(repos = c(CRAN = "'"${CRAN}"'"), download.file.method = "'"${DOWNLOAD_FILE_METHOD}"'"); remotes::install_github(commandArgs(TRUE), type="'"${PKGTYPE}"'")' "$@"
 }
 
 InstallDeps() {
     EnsureRemotes
-    Rscript -e 'options(repos=c(CRAN="'"${CRAN}"'")); remotes::install_deps(dependencies = TRUE, type="'"${PKGTYPE}"'")'
+
+    echo "Installing dependencies"
+    Rscript -e 'options(repos = c(CRAN = "'"${CRAN}"'"), download.file.method = "'"${DOWNLOAD_FILE_METHOD}"'"); remotes::install_deps(dependencies = TRUE, type="'"${PKGTYPE}"'")'
 }
 
 InstallBiocDeps() {
@@ -289,10 +292,12 @@ DumpLogs() {
 
 RunTests() {
     echo "Building with: R CMD build ${R_BUILD_ARGS}"
-    if [[ "${OS:0:5}" == "MINGW" || "${OS:0:4}" == "MSYS" ]]; then
-        if [[ -d vignettes ]]; then
-            rm -rf vignettes
-            Rscript -e "d <- read.dcf('DESCRIPTION'); d[, colnames(d) == 'VignetteBuilder'] <- NA; write.dcf(d, 'DESCRIPTION')"
+    if [[ "${KEEP_VIGNETTES}" == "" ]]; then
+        if [[ "${OS:0:5}" == "MINGW" || "${OS:0:4}" == "MSYS" ]]; then
+            if [[ -d vignettes ]]; then
+                rm -rf vignettes
+                Rscript -e "d <- read.dcf('DESCRIPTION'); d[, colnames(d) == 'VignetteBuilder'] <- NA; write.dcf(d, 'DESCRIPTION')"
+            fi
         fi
     fi
     R CMD build ${R_BUILD_ARGS} .

@@ -38,22 +38,44 @@ environment:
 - `R_VERSION`: The version of R to be used for testing. Specify `devel`, `patched`, `stable` (or `release`), `oldrel`, or a version number.
 - `R_ARCH`: The architecture to be used for testing, one of `x64` (default) or `i386`.
 - `RTOOLS_VERSION`: The version of Rtools to be used for testing, defaults to the most recent Rtools. Specify e.g. `33` for Rtools 3.3.
-- `USE_RTOOLS`: Set `USE_RTOOLS: true` if Rtools needs to be installed, e.g. if you use install_github or if there are packages in Remotes: in your DESCRIPTION file. Defaults to `false`.
+- `USE_RTOOLS`: Set `USE_RTOOLS: true` (or `USE_RTOOLS: yes`) if Rtools needs to be installed. Defaults to `true` if your package has a `src/` directory and `false` otherwise. Rtools may be needed if you use `install_github()`, if there are packages in `Remotes:` in your `DESCRIPTION` file, or if one of your dependencies has updated, but the associated Windows binary is not yet available from CRAN. (Set `PKGTYPE=binary` to avoid installing packages from source.)
 - `GCC_PATH`: The path to GCC in the Rtools installation, currently one of `gcc-4.6.3` (default), `mingw_32` or `mingw_64`.
 - `WARNINGS_ARE_ERRORS`: Set to 1 to treat all warnings as errors, otherwise leave empty.
-- `CRAN`: The CRAN mirror to use, defaults to [RStudio's CDN via HTTPS](https://cran.rstudio.com). Change to [HTTP](http://cran.rstudio.com) for R 3.1.3 or earlier.
+- `CRAN`: The CRAN mirror to use, defaults to [RStudio's CDN via HTTPS](https://cloud.r-project.org). Change to [HTTP](http://cloud.r-project.org) for R 3.1.3 or earlier.
 - `R_BUILD_ARGS`: Arguments passed to `R CMD build`, defaults to `--no-manual`.
 - `R_CHECK_ARGS`: Arguments passed to `R CMD check`, defaults to `--no-manual --as-cran`.
-- `PKGTYPE`: Passed as `type` to `install.packages()`, `remotes::install_deps()` and `devtools::install_deps()`.
-- `NOT_CRAN`: Set this to `true` to avoid `testthat::skip_on_cran()` skipping tests.
- 
-Currently, all vignettes (and the `VignetteBuilder` entry in `DESCRIPTION`) are removed prior to building (due to the absence of pandoc and LaTeX which are likely to be needed).
+- `PKGTYPE`: Passed as `type` to `install.packages()`, `remotes::install_github()` and `remotes::install_deps()`. Set to `both` to install packages from source if the source version is more recent than the binary version.
+- `NOT_CRAN`: Set this to `true` if you are using [testthat](https://testthat.r-lib.org/) and want to run tests marked with `testthat::skip_on_cran()`.
+- `R_REMOTES_STANDALONE`: Set this to `true` if builds are failing due to the inability to update infrastructure packages such as curl, git2r and rlang. Read more in the [docs for the remotes package](https://github.com/r-lib/remotes#standalone-mode).
+- `_R_CHECK_FORCE_SUGGESTS_`: Set this to `false` to avoid errors of the form "Package suggested but not available".
+- `KEEP_VIGNETTES`: Set this to a nonempty value build vignettes. You will likely need LaTeX and/or Pandoc, see below for installation instructions. By default, all vignettes are purged and the `VignetteBuilder` entry in `DESCRIPTION` is removed.
+- `DOWNLOAD_FILE_METHOD`: On some versions of R, setting this to `wininet` appears to work better than the default `auto`.
 
 
 Artifacts
 ---------
 
 In contrast to Travis-CI, AppVeyor offers facilities for hosting artifacts.  This can be configured by adding a section to the `appveyor.yml`.  The sample file is configured to deploy logs, and source and **binary** versions of the built package.  Check the "ARTIFACTS" section for [your project at AppVeyor](https://ci.appveyor.com/projects).
+
+
+LaTeX
+-----
+
+See [the example contributed by @pat-s](https://github.com/krlmlr/r-appveyor/issues/10#issuecomment-423832887) for a way to install LaTeX.
+The [tinytex package](https://yihui.name/tinytex/) is another option.
+
+Pandoc and other software
+-------------------------
+
+The [Chocolatey installer](https://chocolatey.org/) is a convenient way to install other software.
+See below for a Pandoc example from the [reprex repository](https://github.com/tidyverse/reprex/blob/2d505dd8a5c26366896a33d3a3f6a2c9092786d5/appveyor.yml#L21-L24):
+
+```yaml
+before_test:
+  - cinst pandoc
+  - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
+  - pandoc -v
+```
 
 
 Troubleshooting
@@ -63,20 +85,20 @@ Troubleshooting
 
 Some R packages, notably `rJava`, require a 64-bit installation of
 Windows and R.  If you try to install these packages on a 32-bit
-system you'll see a message similar to:  
+system you'll see a message similar to:
 ```
   Error: .onLoad failed in loadNamespace() for 'rJava', details:
     call: inDL(x, as.logical(local), as.logical(now), ...)
     error: unable to load shared object 'C:/Users/appveyor/AppData/Local/Temp/1/RtmpWa3KNC/RLIBS_bdc2913935/rJava/libs/i386/rJava.dll':
     LoadLibrary failure:  %1 is not a valid Win32 application.
-```	
-To solve this problem, add to your `appveyor.yml`:  
+```
+To solve this problem, add to your `appveyor.yml`:
 ```
 platform: x64
 
 environment:
   R_ARCH: x64
-```  
+```
 This will cause Appveyor to run your build on a 64-bit version of
 Windows Server, using the 64-bit R binary.
 

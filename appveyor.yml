@@ -32,18 +32,29 @@ environment:
 
   - R_VERSION: patched
 
-  - R_VERSION: oldrel
+  - R_VERSION: 3.5.3
+    RTOOLS_VERSION: 35
+
+  - R_VERSION: 3.4.4
+    RTOOLS_VERSION: 34
+
+  - R_VERSION: 3.3.3
     RTOOLS_VERSION: 33
-    CRAN: http://cran.rstudio.com
 
-  - R_VERSION: 3.1.3
-    RTOOLS_VERSION: 32
-    CRAN: http://cran.rstudio.com
+  - R_VERSION: 3.2.5
+    RTOOLS_VERSION: 33
 
-  - R_VERSION: 3.1.0
-    RTOOLS_VERSION: 32
-    CRAN: http://cran.rstudio.com
+  - R_VERSION: 3.2.3
+    _R_CHECK_FORCE_SUGGESTS_: false
     PKGTYPE: source
+    RTOOLS_VERSION: 33
+    DOWNLOAD_FILE_METHOD: wininet
+
+  - R_VERSION: 3.2.0
+    _R_CHECK_FORCE_SUGGESTS_: false
+    PKGTYPE: source
+    RTOOLS_VERSION: 32
+    DOWNLOAD_FILE_METHOD: wininet
 
 matrix:
   fast_finish: true

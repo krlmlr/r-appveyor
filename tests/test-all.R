@@ -1,2 +1,3 @@
-library(testthat)
-test_check("fakepackage")
+if (library(testthat, logical.return = TRUE)) {
+  test_check("fakepackage")
+}
