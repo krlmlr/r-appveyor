@@ -99,8 +99,29 @@ platform: x64
 environment:
   R_ARCH: x64
 ```
+
 This will cause Appveyor to run your build on a 64-bit version of
 Windows Server, using the 64-bit R binary.
+
+
+### R Check Multi-Architecture Installation Check Error 
+
+It might happen that during check installtion checks fail. Per default
+the checks try to install for both 32-bit and 64-bit R versions. If either of 
+them has no appropriate Java installed (32-bit or 64-bit) the check will fail. 
+
+To prevent this from happening, add to your  `appveyor.yml`:
+
+```
+environment:
+  R_CHECK_ARGS: '--no-manual --as-cran --no-multiarch'
+```
+
+That will make the checks skip installation checks for the other architecture. 
+
+
+
+
 
 Acknowledgements
 ----------------
