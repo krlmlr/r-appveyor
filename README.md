@@ -106,9 +106,29 @@ Windows Server, using the 64-bit R binary.
 
 ### R Check Multi-Architecture Installation Check Error 
 
-It might happen that during check installtion checks fail. Per default
-the checks try to install for both 32-bit and 64-bit R versions. If either of 
-them has no appropriate Java installed (32-bit or 64-bit) the check will fail. 
+It might happen that during package checking the installation checks fail. 
+Per default the checks try to install for both 32-bit and 64-bit R versions. 
+If either of them has no appropriate Java installed (32-bit or 64-bit) the check will fail. 
+
+The error message than looks like that: 
+
+```
+...
+
+** testing if installed package can be loaded from temporary location
+*** arch - i386
+Error: package or namespace load failed for 'rJava':
+ .onLoad failed in loadNamespace() for 'rJava', details:
+  call: inDL(x, as.logical(local), as.logical(now), ...)
+  error: unable to load shared object 'C:/Users/peter/R/win-library/3.6/rJava/libs/i386/rJava.dll':
+  LoadLibrary failure:  %1 is not a valid Win32 application.
+
+Error : package 'rJava' could not be loaded
+Error: loading failed
+Execution halted
+
+...
+```
 
 To prevent this from happening, add to your  `appveyor.yml`:
 
