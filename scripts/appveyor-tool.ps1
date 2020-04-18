@@ -100,6 +100,7 @@ Function InstallR {
   Progress ("URL path: " + $url_path)
 
   $rurl = $CRAN + "/bin/windows/base/" + $url_path + "R-" + $version + "-win.exe"
+  $global:rversion = $version
 
   Progress ("Downloading R from: " + $rurl)
   & "C:\Program Files\Git\mingw64\bin\curl.exe" -s -o ../R-win.exe -L $rurl
@@ -115,6 +116,19 @@ Function InstallR {
 
   Progress "Testing R installation"
   Rscript -e "sessionInfo()"
+}
+
+Function InstallRtools40 {
+  $rtoolsurl = $CRAN + "/bin/windows/Rtools/rtools40-x86_64.exe"
+
+  Progress ("Downloading Rtools40 from: " + $rtoolsurl)
+  & "C:\Program Files\Git\mingw64\bin\curl.exe" -s -o ../rtools40-x86_64.exe -L $rtoolsurl
+
+  Progress "Running Rtools40 installer"
+  Start-Process -FilePath ..\rtools40-x86_64.exe -ArgumentList /VERYSILENT -NoNewWindow -Wait
+
+  Progress "Setting PATH"
+  $env:PATH = 'c:\rtools40\usr\bin;c:\rtools40\mingw64\bin;' + $env:PATH
 }
 
 Function InstallRtools {
@@ -165,7 +179,11 @@ Function Bootstrap {
   InstallR
 
   if ((Test-Path "src") -or ($env:USE_RTOOLS -eq "true") -or ($env:USE_RTOOLS -eq "yes")) {
-    InstallRtools
+    if ($rversion.StartsWith("3")) {
+      InstallRtools
+    } Else {
+      InstallRtools40
+    }
   }
   Else {
     Progress "Skipping download of Rtools because src/ directory is missing."
