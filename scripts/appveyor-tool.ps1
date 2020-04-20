@@ -133,8 +133,7 @@ Function InstallRtools40 {
 
 Function InstallRtools {
   if ( -not(Test-Path Env:\RTOOLS_VERSION) ) {
-    Progress "Determining Rtools version"
-    $rtoolsver = $(Invoke-WebRequest ($CRAN + "/bin/windows/Rtools/VERSION.txt")).Content.Split(' ')[2].Split('.')[0..1] -Join ''
+    $rtoolsver = '35'
   }
   Else {
     $rtoolsver = $env:RTOOLS_VERSION
