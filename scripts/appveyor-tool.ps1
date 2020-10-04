@@ -198,10 +198,10 @@ Function Bootstrap {
   $env:PATH.Split(";")
 
   Progress "Setting R_LIBS_USER"
-  $env:R_LIBS_USER = 'c:\RLibrary\' + $rversion.Substring(0,3)
-  if ( -not(Test-Path $env:R_LIBS_USER) ) {
-    mkdir $env:R_LIBS_USER
+  if ( -not(Test-Path env:R_LIBS_USER) ) {
+    $env:R_LIBS_USER = 'c:\RLibrary\' + $rversion.Substring(0,3)
   }
+  New-Item -ItemType Directory -Force -Path $env:R_LIBS_USER
 
   Progress "Setting TAR to 'internal'"
   $env:TAR = 'internal'
