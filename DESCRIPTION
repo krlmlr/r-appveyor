@@ -18,4 +18,4 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 LinkingTo: Rcpp
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.2
