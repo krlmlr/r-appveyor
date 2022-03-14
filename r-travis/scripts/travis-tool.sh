@@ -11,6 +11,7 @@ BIOC=${BIOC:-"http://bioconductor.org/biocLite.R"}
 PKGTYPE=${PKGTYPE:-"win.binary"}
 BIOC_USE_DEVEL=${BIOC_USE_DEVEL:-"TRUE"}
 OS=$(uname -s)
+WARNINGS_ARE_ERRORS=1
 DOWNLOAD_FILE_METHOD=${DOWNLOAD_FILE_METHOD:-"auto"}
 
 PANDOC_VERSION='1.13.1'
